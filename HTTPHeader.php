@@ -154,9 +154,17 @@
             if ($value === false)
                 return false;
 
-            $content = explode(";", $value);
-            self::trim_whitespace($content);
-            return $content;
+            $params = explode(";", $value);
+            $return = array();
+
+            foreach ($params as $param) {
+                if (preg_match("/(charset|boundary)=([^=]+)/", $param, $match))
+                    $return[$match[1]] = $match[2];
+                else
+                    $return["type"] = $param;
+            }
+
+            return $return;
         }
 
         public static function Cookie($string = null) {
@@ -372,7 +380,6 @@
                 $return[$match[1]] = $match[2];
             }
 
-            self::trim_whitespace($return);
             return $return;
         }
 
@@ -415,7 +422,7 @@
             if ($value === false)
                 return false;
 
-            if (!preg_match("/^([a-zA-Z0-9]+)=(.+)$/", $values, $match))
+            if (!preg_match("/^([a-zA-Z0-9]+)=(.+)$/", $value, $match))
                 return false;
 
             $ranges = explode(",", $match[2]);
@@ -502,7 +509,17 @@
             else
                 $value = self::header_extract("User-Agent", $string);
 
-            return $value;
+            if ($value === false)
+                return false;
+
+            if (!preg_match("/^([^\/]+)\/([0-9\.]+) (.+)$/", $value, $match))
+                return false;
+
+            $return = array("product" => $match[1],
+                            "version" => $match[2],
+                            "comment" => $match[3]);
+
+            return $return;
         }
 
         public static function Via($string = null) {
