@@ -415,9 +415,15 @@
             if ($value === false)
                 return false;
 
-            $ranges = explode(",", $value);
-            self::trim_whitespace($ranges);
-            return $ranges;
+            if (!preg_match("/^([a-zA-Z0-9]+)=(.+)$/", $values, $match))
+                return false;
+
+            $ranges = explode(",", $match[2]);
+            $return = array("unit" => $match[1],
+                            "ranges" => $ranges);
+
+            self::trim_whitespace($return);
+            return $return;
         }
 
         public static function Referer($string = null) {
