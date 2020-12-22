@@ -268,8 +268,15 @@
             if ($value === false)
                 return false;
 
-            $host = parse_url($value);
-            return $host;
+            if (!preg_match("/^(.+?)(:([0-9]+))?$/", $value, $match))
+                return false;
+
+            $return = array("host" => $match[1]);
+
+            if (isset($match[3]))
+                $return["port"] = $match[3];
+
+            return $return;
         }
 
         public static function If_Match($string = null) {
