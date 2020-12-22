@@ -20,10 +20,11 @@
         private static function trim_whitespace(&$mixed) {
             if (is_array($mixed)) {
                 foreach ($mixed as &$item)
-                    $item = self::trim_whitespace($item);
+                    self::trim_whitespace($item);
             }
 
-            return is_string($mixed) ? trim($mixed, " ") : $mixed ;
+            if (is_string($mixed))
+                $mixed = trim($mixed, " ");
         }
 
         private static function q_sort($a, $b) {
