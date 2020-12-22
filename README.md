@@ -144,7 +144,7 @@ Returns an array of ETag values:
 
     Array
     (
-        [0] => "67ab43"
+        [0] => W/"67ab43"
         [1] => "54ed21"
         [2] => "7892dd"
     )
@@ -218,7 +218,7 @@ Returns an array containing the authorization type and credentials:
 
 ### `HTTPHeader::Range()`
 
-Returns an associative array containing the unit and range values:
+Returns an associative array containing the unit and ranges:
 
     Array
     (
