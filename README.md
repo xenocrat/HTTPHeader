@@ -8,7 +8,7 @@ HTTPHeader is a PHP class for inspecting HTTP request headers.
 
 ## Usage
 
-Methods will check for the corresponding header in the `$_SERVER` superglobal by default, but will also accept a string containing a complete header as an argument.
+Methods will check for the corresponding header in the `$_SERVER` superglobal by default, but will also accept a string containing a complete header as an argument. Methods will return `false` if the request header is not present or cannot be parsed.
 
 ### `HTTPHeader::Accept()`
 
@@ -74,12 +74,12 @@ Returns an array of directives:
 
 ### `HTTPHeader::Content_Type()`
 
-Returns an array containing the content type and additional directives:
+Returns an associative array containing the content type, charset and boundary if supplied:
 
     Array
     (
-        [0] => multipart/form-data
-        [1] => boundary=something
+        [type] => multipart/form-data
+        [boundary] => something
     )
 
 ### `HTTPHeader::Cookie()`
@@ -108,7 +108,7 @@ Returns 0, 1, or `null` if the value is indeterminate.
 
 ### `HTTPHeader::Forwarded()`
 
-Returns an array of fields, each containing one an associative array of directives:
+Returns an array of fields, each containing an associative array of directives:
 
     Array
     (
@@ -130,7 +130,7 @@ Returns a string containing the supplied email address.
 
 ### `HTTPHeader::Host()`
 
-Returns an associative array containing the host value, and port value if supplied:
+Returns an associative array containing the host, and port if supplied:
 
     Array
     (
@@ -263,7 +263,14 @@ Returns 0, 1, or `null` if the value is indeterminate.
 
 ### `HTTPHeader::User_Agent()`
 
-Returns a string containing the supplied user agent identifier.
+Returns an associative array containing the product, version, and comment:
+
+    Array
+    (
+        [product] => Mozilla
+        [version] => 5.0
+        [comment] => (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0
+    )
 
 ### `HTTPHeader::Via()`
 
@@ -285,7 +292,3 @@ Returns an array sorted by "q" value:
         [1] => SHA-512;q=0.3
         [2] => md5;q=0
     )
-
-## Return values
-
-Methods will return `false` if the request header is not present or cannot be parsed.
