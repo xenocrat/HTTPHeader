@@ -8,11 +8,13 @@ HTTPHeader is a PHP class for inspecting HTTP request headers.
 
 ## Usage
 
-Methods will check for the corresponding header in the `$_SERVER` superglobal by default, but will also accept a string containing a complete header as an argument. Methods will return `false` if the request header is not present or cannot be parsed.
+Methods will check for the corresponding header in the `$_SERVER` superglobal. Alternatively a string containing a complete header can be supplied as an argument. Methods will return `false` if the request header is not present or cannot be parsed.
 
 ### `HTTPHeader::Accept()`
 
-Returns an array sorted by "q" value:
+Returns an array sorted by "q" value.
+
+Example:
 
     Array
     (
@@ -25,7 +27,9 @@ Returns an array sorted by "q" value:
 
 ### `HTTPHeader::Accept_Encoding()`
 
-Returns an array sorted by "q" value:
+Returns an array sorted by "q" value.
+
+Example:
 
     Array
     (
@@ -35,7 +39,9 @@ Returns an array sorted by "q" value:
 
 ### `HTTPHeader::Accept_Language()`
 
-Returns an array sorted by "q" value:
+Returns an array sorted by "q" value.
+
+Example:
 
     Array
     (
@@ -46,7 +52,9 @@ Returns an array sorted by "q" value:
 
 ### `HTTPHeader::Authorization()`
 
-Returns an array containing the authorization type and credentials:
+Returns an array containing the authorization type and credentials.
+
+Example:
 
     Array
     (
@@ -56,7 +64,9 @@ Returns an array containing the authorization type and credentials:
 
 ### `HTTPHeader::Cache_Control()`
 
-Returns an array of directives:
+Returns an array of directives.
+
+Example:
 
     Array
     (
@@ -65,7 +75,9 @@ Returns an array of directives:
 
 ### `HTTPHeader::Connection()`
 
-Returns an array of directives:
+Returns an array of directives.
+
+Example:
 
     Array
     (
@@ -74,7 +86,9 @@ Returns an array of directives:
 
 ### `HTTPHeader::Content_Type()`
 
-Returns an associative array containing the content type, charset and boundary if supplied:
+Returns an associative array containing the content type, charset and boundary if supplied.
+
+Example:
 
     Array
     (
@@ -84,7 +98,9 @@ Returns an associative array containing the content type, charset and boundary i
 
 ### `HTTPHeader::Cookie()`
 
-Returns an associative array of cookie names and values:
+Returns an associative array of cookie names and values.
+
+Example:
 
     Array
     (
@@ -93,7 +109,9 @@ Returns an associative array of cookie names and values:
 
 ### `HTTPHeader::Date()`
 
-Returns a DateTimeImmutable object:
+Returns a DateTimeImmutable object.
+
+Example:
 
     DateTimeImmutable Object
     (
@@ -108,7 +126,9 @@ Returns 0, 1, or `null` if the value is indeterminate.
 
 ### `HTTPHeader::Forwarded()`
 
-Returns an array of fields, each containing an associative array of directives:
+Returns an array of fields, each containing an associative array of directives.
+
+Example:
 
     Array
     (
@@ -130,7 +150,9 @@ Returns a string containing the supplied email address.
 
 ### `HTTPHeader::Host()`
 
-Returns an associative array containing the host, and port if supplied:
+Returns an associative array containing the host, and port if supplied.
+
+Example:
 
     Array
     (
@@ -140,7 +162,9 @@ Returns an associative array containing the host, and port if supplied:
 
 ### `HTTPHeader::If_Match()`
 
-Returns an array of ETag values:
+Returns an array of ETag values.
+
+Example:
 
     Array
     (
@@ -151,7 +175,9 @@ Returns an array of ETag values:
 
 ### `HTTPHeader::If_Modified_Since()`
 
-Returns a DateTimeImmutable object:
+Returns a DateTimeImmutable object.
+
+Example:
 
     DateTimeImmutable Object
     (
@@ -162,7 +188,9 @@ Returns a DateTimeImmutable object:
 
 ### `HTTPHeader::If_None_Match()`
 
-Returns an array of ETag values:
+Returns an array of ETag values.
+
+Example:
 
     Array
     (
@@ -177,7 +205,9 @@ Returns a DateTimeImmutable object, or an array of ETag values.
 
 ### `HTTPHeader::If_Unmodified_Since()`
 
-Returns a DateTimeImmutable object:
+Returns a DateTimeImmutable object.
+
+Example:
 
     DateTimeImmutable Object
     (
@@ -188,7 +218,9 @@ Returns a DateTimeImmutable object:
 
 ### `HTTPHeader::Keep_Alive()`
 
-Returns an associative array of parameters:
+Returns an associative array of parameters.
+
+Example:
 
     Array
     (
@@ -198,7 +230,9 @@ Returns an associative array of parameters:
 
 ### `HTTPHeader::Origin()`
 
-Returns the result of `parse_url()` on the supplied value:
+Returns the result of `parse_url()` on the supplied value.
+
+Example:
 
     Array
     (
@@ -208,7 +242,9 @@ Returns the result of `parse_url()` on the supplied value:
 
 ### `HTTPHeader::Proxy_Authorization()`
 
-Returns an array containing the authorization type and credentials:
+Returns an array containing the authorization type and credentials.
+
+Example:
 
     Array
     (
@@ -218,7 +254,9 @@ Returns an array containing the authorization type and credentials:
 
 ### `HTTPHeader::Range()`
 
-Returns an associative array containing the unit and ranges:
+Returns an associative array containing the unit and ranges.
+
+Example:
 
     Array
     (
@@ -233,7 +271,9 @@ Returns an associative array containing the unit and ranges:
 
 ### `HTTPHeader::Referer()`
 
-Returns the result of `parse_url()` on the supplied value:
+Returns the result of `parse_url()` on the supplied value.
+
+Example:
 
     Array
     (
@@ -248,7 +288,9 @@ Returns 0 for falsey values, 1 for truthy values, or `null` if the value is inde
 
 ### `HTTPHeader::TE()`
 
-Returns an array sorted by "q" value:
+Returns an array sorted by "q" value.
+
+Example:
 
     Array
     (
@@ -263,7 +305,9 @@ Returns 0, 1, or `null` if the value is indeterminate.
 
 ### `HTTPHeader::User_Agent()`
 
-Returns an associative array containing the product, version, and comment:
+Returns an associative array containing the product, version, and comment.
+
+Example:
 
     Array
     (
@@ -274,7 +318,9 @@ Returns an associative array containing the product, version, and comment:
 
 ### `HTTPHeader::Via()`
 
-Returns an array of proxy identifiers:
+Returns an array of proxy identifiers.
+
+Example:
 
     Array
     (
@@ -284,7 +330,9 @@ Returns an array of proxy identifiers:
 
 ### `HTTPHeader::Want_Digest()`
 
-Returns an array sorted by "q" value: 
+Returns an array sorted by "q" value.
+
+Example:
 
     Array
     (
