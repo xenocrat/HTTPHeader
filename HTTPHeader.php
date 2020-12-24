@@ -196,7 +196,7 @@
             if ($value === false)
                 return false;
 
-            $date = new DateTimeImmutable($value);
+            $date = date_create_immutable($value);
             return $date;
         }
 
@@ -308,7 +308,7 @@
             if ($value === false)
                 return false;
 
-            $date = new DateTimeImmutable($value);
+            $date = date_create_immutable($value);
             return $date;
         }
 
@@ -335,7 +335,7 @@
             if ($value === false)
                 return false;
 
-            $date = new DateTimeImmutable($value);
+            $date = date_create_immutable($value);
 
             if ($date !== false)
                 return $date;
@@ -355,7 +355,7 @@
             if ($value === false)
                 return false;
 
-            $date = new DateTimeImmutable($value);
+            $date = date_create_immutable($value);
             return $date;
         }
 
