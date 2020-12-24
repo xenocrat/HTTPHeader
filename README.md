@@ -8,7 +8,7 @@ HTTPHeader is a PHP class for inspecting HTTP request headers.
 
 ## Usage
 
-Methods will check for the corresponding header in the `$_SERVER` superglobal. Alternatively a string containing a complete header can be supplied as an argument. Methods will return `false` if the request header is not present or cannot be parsed.
+Methods read from the corresponding header in the `$_SERVER` superglobal. Alternatively a string containing a complete header can be supplied as an argument. Methods will return `false` if the request header is not present or cannot be parsed.
 
 ### `HTTPHeader::Accept()`
 
@@ -279,7 +279,7 @@ Example:
     (
         [scheme] => https
         [host] => example.com
-        [path] => /en-US/
+        [path] => /foo/
     )
 
 ### `HTTPHeader::Save_Data()`
