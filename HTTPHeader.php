@@ -155,13 +155,11 @@
                 return false;
 
             $params = explode(";", $value);
-            $return = array();
+            $return = array("type" => array_shift($params));
 
             foreach ($params as $param) {
                 if (preg_match("/(charset|boundary)=([^=]+)/", $param, $match))
                     $return[$match[1]] = $match[2];
-                else
-                    $return["type"] = $param;
             }
 
             return $return;
