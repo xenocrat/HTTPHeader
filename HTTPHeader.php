@@ -7,8 +7,8 @@
             if (!is_string($string))
                 throw new Exception("HTTP header must be a string.");
 
-            if (preg_match("/^$name: (.+?)(\r\n)?$/", $string, $match))
-                return $match[1];
+            if (preg_match("/^($name: )?(.+?)(\r\n)?$/", $string, $match))
+                return $match[2];
 
             return false;
         }
