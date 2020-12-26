@@ -1,7 +1,7 @@
 <?php
     class HTTPHeader {
-        const HTTPHEADER_VERSION_MAJOR = 0;
-        const HTTPHEADER_VERSION_MINOR = 1;
+        const HTTPHEADER_VERSION_MAJOR = 1;
+        const HTTPHEADER_VERSION_MINOR = 0;
 
         private static function header_extract($name, $string) {
             if (!is_string($string))
