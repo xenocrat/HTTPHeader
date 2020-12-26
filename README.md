@@ -8,7 +8,7 @@ HTTPHeader is a PHP class for inspecting HTTP request headers.
 
 ## Usage
 
-Methods read from the `$_SERVER` superglobal. Alternatively a string containing a header can be supplied as an argument. Methods will return `false` if the request header is not present or cannot be parsed.
+Methods read from the `$_SERVER` superglobal. Alternatively a string containing a header (with or without field name) can be supplied as an argument. Methods will return `false` if the request header is not present or cannot be parsed.
 
 ### `HTTPHeader::Accept()`
 
