@@ -1,11 +1,13 @@
 <?php
+    namespace xenocrat;
+
     class HTTPHeader {
-        const HTTPHEADER_VERSION_MAJOR = 1;
+        const HTTPHEADER_VERSION_MAJOR = 2;
         const HTTPHEADER_VERSION_MINOR = 0;
 
         private static function header_extract($name, $string) {
             if (!is_string($string))
-                throw new Exception("HTTP header must be a string.");
+                throw new \Exception("HTTP header must be a string.");
 
             if (preg_match("/^($name: )?(.+?)(\r\n)?$/i", $string, $match))
                 return $match[2];
