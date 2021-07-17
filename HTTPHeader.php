@@ -3,7 +3,7 @@
 
     class HTTPHeader {
         const HTTPHEADER_VERSION_MAJOR = 2;
-        const HTTPHEADER_VERSION_MINOR = 0;
+        const HTTPHEADER_VERSION_MINOR = 1;
 
         private static function header_extract($name, $string) {
             if (!is_string($string))
@@ -467,6 +467,96 @@
                 default:
                     return null;
             }
+        }
+
+        public static function Sec_Fetch_Dest($string = null) {
+            if (!isset($string))
+                $value = self::header_request("HTTP_SEC_FETCH_DEST");
+            else
+                $value = self::header_extract("Sec-Fetch-Dest", $string);
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "audio":
+                case "audioworklet":
+                case "document":
+                case "embed":
+                case "empty":
+                case "font":
+                case "frame":
+                case "iframe":
+                case "image":
+                case "manifest":
+                case "object":
+                case "paintworklet":
+                case "report":
+                case "script":
+                case "serviceworker":
+                case "sharedworker":
+                case "style":
+                case "track":
+                case "video":
+                case "worker":
+                case "xslt":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
+        public static function Sec_Fetch_Mode($string = null) {
+            if (!isset($string))
+                $value = self::header_request("HTTP_SEC_FETCH_MODE");
+            else
+                $value = self::header_extract("Sec-Fetch-Mode", $string);
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "cors":
+                case "navigate":
+                case "no-cors":
+                case "same-origin":
+                case "websocket":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
+        public static function Sec_Fetch_Site($string = null) {
+            if (!isset($string))
+                $value = self::header_request("HTTP_SEC_FETCH_SITE");
+            else
+                $value = self::header_extract("Sec-Fetch-Site", $string);
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "cross-site":
+                case "same-origin":
+                case "same-site":
+                case "none":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
+        public static function Sec_Fetch_User($string = null) {
+            if (!isset($string))
+                $value = self::header_request("HTTP_SEC_FETCH_USER");
+            else
+                $value = self::header_extract("Sec-Fetch-User", $string);
+
+            if ($value === false)
+                return false;
+
+            return ($value === "?1") ? true : false ;
         }
 
         public static function TE($string = null) {
