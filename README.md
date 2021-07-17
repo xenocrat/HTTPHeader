@@ -286,6 +286,22 @@ Example:
 
 Returns 0 for falsey values, 1 for truthy values, or `null` if the value is indeterminate.
 
+### `HTTPHeader::Sec_Fetch_Dest()`
+
+Returns a directive or `null` if the value is invalid.
+
+### `HTTPHeader::Sec_Fetch_Mode()`
+
+Returns a directive or `null` if the value is invalid.
+
+### `HTTPHeader::Sec_Fetch_Site()`
+
+Returns a directive or `null` if the value is invalid.
+
+### `HTTPHeader::Sec_Fetch_User()`
+
+Returns `true` if the value is "?1" or `null` otherwise.
+
 ### `HTTPHeader::TE()`
 
 Returns an array sorted by "q" value.
