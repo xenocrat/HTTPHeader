@@ -556,7 +556,7 @@
             if ($value === false)
                 return false;
 
-            return ($value === "?1") ? true : false ;
+            return ($value === "?1") ? true : null ;
         }
 
         public static function TE($string = null) {
