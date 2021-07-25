@@ -302,6 +302,10 @@ Returns a directive or `null` if the value is invalid.
 
 Returns `true` if the value is "?1" or `null` otherwise.
 
+### `HTTPHeader::Sec_GPC()`
+
+Returns `true` if the value is "1" or `null` otherwise.
+
 ### `HTTPHeader::TE()`
 
 Returns an array sorted by "q" value.

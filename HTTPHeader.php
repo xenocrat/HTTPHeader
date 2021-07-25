@@ -3,7 +3,7 @@
 
     class HTTPHeader {
         const HTTPHEADER_VERSION_MAJOR = 2;
-        const HTTPHEADER_VERSION_MINOR = 1;
+        const HTTPHEADER_VERSION_MINOR = 2;
 
         private static function header_extract($name, $string) {
             if (!is_string($string))
@@ -557,6 +557,18 @@
                 return false;
 
             return ($value === "?1") ? true : null ;
+        }
+
+        public static function Sec_GPC($string = null) {
+            if (!isset($string))
+                $value = self::header_request("HTTP_SEC_GPC");
+            else
+                $value = self::header_extract("Sec-GPC", $string);
+
+            if ($value === false)
+                return false;
+
+            return ($value === "1") ? true : null ;
         }
 
         public static function TE($string = null) {
