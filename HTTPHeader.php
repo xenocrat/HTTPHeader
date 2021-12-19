@@ -3,11 +3,21 @@
 
     class HTTPHeader {
         const HTTPHEADER_VERSION_MAJOR = 2;
-        const HTTPHEADER_VERSION_MINOR = 2;
+        const HTTPHEADER_VERSION_MINOR = 3;
 
         private static function header_extract($name, $string) {
             if (!is_string($string))
                 throw new \Exception("HTTP header must be a string.");
+
+            if (strpos($string, "\r\n\r\n") !== false) {
+                $fields = strstr($string, "\r\n\r\n", true);
+                $fields = str_replace("\r\n", "\n", $fields);
+
+                if (preg_match_all("/^$name: (.+)$/im", $fields, $matches))
+                    return end($matches[1]);
+
+                return false;
+            }
 
             if (preg_match("/^($name: )?(.+?)(\r\n)?$/i", $string, $match))
                 return $match[2];
