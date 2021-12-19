@@ -10,13 +10,15 @@
                 throw new \Exception("HTTP header must be a string.");
 
             if (strpos($string, "\r\n\r\n") !== false) {
-                $fields = strstr($string, "\r\n\r\n", true);
-                $fields.= "\r";
+                $fields = explode("\r\n", strstr($string, "\r\n\r\n", true));
+                $return = false;
 
-                if (preg_match_all("/^$name: (.+)\r$/im", $fields, $matches))
-                    return end($matches[1]);
+                foreach ($fields as $field) {
+                    if (preg_match("/^$name: (.+?)$/i", $field, $match))
+                        $return = $match[1];
+                }
 
-                return false;
+                return $return;
             }
 
             if (preg_match("/^($name: )?(.+?)(\r\n)?$/i", $string, $match))
