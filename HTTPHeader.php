@@ -11,9 +11,9 @@
 
             if (strpos($string, "\r\n\r\n") !== false) {
                 $fields = strstr($string, "\r\n\r\n", true);
-                $fields = str_replace("\r\n", "\n", $fields);
+                $fields.= "\r";
 
-                if (preg_match_all("/^$name: (.+)$/im", $fields, $matches))
+                if (preg_match_all("/^$name: (.+)\r$/im", $fields, $matches))
                     return end($matches[1]);
 
                 return false;
