@@ -84,6 +84,10 @@ Example:
         [0] => keep-alive
     )
 
+### `HTTPHeader::Content_Length()`
+
+Returns the content length in decimal number of octets.
+
 ### `HTTPHeader::Content_Type()`
 
 Returns an associative array containing the content type, charset and boundary if supplied.
@@ -123,6 +127,10 @@ Example:
 ### `HTTPHeader::DNT()`
 
 Returns 0, 1, or `null` if the value is indeterminate.
+
+### `HTTPHeader::Expect()`
+
+Returns 100 if the value is "100-continue" or `null` otherwise.
 
 ### `HTTPHeader::Forwarded()`
 
