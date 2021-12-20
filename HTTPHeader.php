@@ -14,7 +14,7 @@
                 $return = false;
 
                 foreach ($fields as $field) {
-                    if (preg_match("/^$name: (.+?)$/i", $field, $match))
+                    if (preg_match("/^$name: (.+)$/i", $field, $match))
                         $return = $match[1];
                 }
 
@@ -159,6 +159,18 @@
             return $directives;
         }
 
+        public static function Content_Length($string = null) {
+            if (!isset($string))
+                $value = self::header_request("HTTP_CONTENT_LENGTH");
+            else
+                $value = self::header_extract("Content-Length", $string);
+
+            if ($value === false)
+                return false;
+
+            return preg_match("/^[0-9]+$/", $value) ? intval($value) : false ;
+        }
+
         public static function Content_Type($string = null) {
             if (!isset($string))
                 $value = self::header_request("HTTP_CONTENT_TYPE");
@@ -231,6 +243,18 @@
                 default:
                     return null;
             }
+        }
+
+        public static function Expect($string = null) {
+            if (!isset($string))
+                $value = self::header_request("HTTP_EXPECT");
+            else
+                $value = self::header_extract("Expect", $string);
+
+            if ($value === false)
+                return false;
+
+            return ($value === "100-continue") ? 100 : null ;
         }
 
         public static function Forwarded($string = null) {
