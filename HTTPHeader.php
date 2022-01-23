@@ -2,10 +2,10 @@
     namespace xenocrat;
 
     class HTTPHeader {
-        const HTTPHEADER_VERSION_MAJOR = 2;
-        const HTTPHEADER_VERSION_MINOR = 4;
+        const HTTPHEADER_VERSION_MAJOR = 3;
+        const HTTPHEADER_VERSION_MINOR = 0;
 
-        private static function header_extract($name, $string) {
+        private static function header_extract($name, $string): string|false {
             if (!is_string($string))
                 throw new \Exception("HTTP header must be a string.");
 
@@ -27,11 +27,11 @@
             return false;
         }
 
-        private static function header_request($name) {
+        private static function header_request($name): string|false {
             return isset($_SERVER[$name]) ? $_SERVER[$name] : false ;
         }
 
-        private static function trim_whitespace(&$mixed) {
+        private static function trim_whitespace(&$mixed): void {
             if (is_array($mixed)) {
                 foreach ($mixed as &$item)
                     self::trim_whitespace($item);
@@ -41,7 +41,7 @@
                 $mixed = trim($mixed, " ");
         }
 
-        private static function q_sort($a, $b) {
+        private static function q_sort($a, $b): int {
             $a_q = preg_match("/;q=([0-9\.]+)$/", $a, $a_match) ?
                 floatval($a_match[1]) : 1.0 ;
 
@@ -54,7 +54,7 @@
             return ($a_q > $b_q) ? -1 : 1 ;
         }
 
-        public static function Accept($string = null) {
+        public static function Accept($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_ACCEPT");
             else
@@ -69,7 +69,7 @@
             return $types;
         }
 
-        public static function Accept_Charset($string = null) {
+        public static function Accept_Charset($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_ACCEPT_CHARSET");
             else
@@ -84,7 +84,7 @@
             return $charsets;
         }
 
-        public static function Accept_Encoding($string = null) {
+        public static function Accept_Encoding($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_ACCEPT_ENCODING");
             else
@@ -99,7 +99,7 @@
             return $encodings;
         }
 
-        public static function Accept_Language($string = null) {
+        public static function Accept_Language($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_ACCEPT_LANGUAGE");
             else
@@ -114,7 +114,7 @@
             return $languages;
         }
 
-        public static function Authorization($string = null) {
+        public static function Authorization($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_AUTHORIZATION");
             else
@@ -131,7 +131,7 @@
             return array($array[0], $array[1]);
         }
 
-        public static function Cache_Control($string = null) {
+        public static function Cache_Control($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_CACHE_CONTROL");
             else
@@ -145,7 +145,7 @@
             return $directives;
         }
 
-        public static function Connection($string = null) {
+        public static function Connection($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_CONNECTION");
             else
@@ -159,7 +159,7 @@
             return $directives;
         }
 
-        public static function Content_Length($string = null) {
+        public static function Content_Length($string = null): int|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_CONTENT_LENGTH");
             else
@@ -171,7 +171,7 @@
             return preg_match("/^[0-9]+$/", $value) ? intval($value) : false ;
         }
 
-        public static function Content_Type($string = null) {
+        public static function Content_Type($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_CONTENT_TYPE");
             else
@@ -191,7 +191,7 @@
             return $return;
         }
 
-        public static function Cookie($string = null) {
+        public static function Cookie($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_COOKIE");
             else
@@ -213,7 +213,7 @@
             return $cookies;
         }
 
-        public static function Date($string = null) {
+        public static function Date($string = null): \DateTimeImmutable|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_DATE");
             else
@@ -226,7 +226,7 @@
             return $date;
         }
 
-        public static function DNT($string = null) {
+        public static function DNT($string = null): int|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_DNT");
             else
@@ -245,7 +245,7 @@
             }
         }
 
-        public static function Expect($string = null) {
+        public static function Expect($string = null): int|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_EXPECT");
             else
@@ -257,7 +257,7 @@
             return ($value === "100-continue") ? 100 : null ;
         }
 
-        public static function Forwarded($string = null) {
+        public static function Forwarded($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_FORWARDED");
             else
@@ -287,7 +287,7 @@
             return $return;
         }
 
-        public static function From($string = null) {
+        public static function From($string = null): string|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_FROM");
             else
@@ -303,7 +303,7 @@
             return $value;
         }
 
-        public static function Host($string = null) {
+        public static function Host($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_HOST");
             else
@@ -323,7 +323,7 @@
             return $return;
         }
 
-        public static function If_Match($string = null) {
+        public static function If_Match($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_IF_MATCH");
             else
@@ -337,7 +337,7 @@
             return $etags;
         }
 
-        public static function If_Modified_Since($string = null) {
+        public static function If_Modified_Since($string = null): \DateTimeImmutable|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_IF_MODIFIED_SINCE");
             else
@@ -350,7 +350,7 @@
             return $date;
         }
 
-        public static function If_None_Match($string = null) {
+        public static function If_None_Match($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_IF_NONE_MATCH");
             else
@@ -364,7 +364,7 @@
             return $etags;
         }
 
-        public static function If_Range($string = null) {
+        public static function If_Range($string = null): \DateTimeImmutable|string|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_IF_RANGE");
             else
@@ -384,7 +384,7 @@
             return false;
         }
 
-        public static function If_Unmodified_Since($string = null) {
+        public static function If_Unmodified_Since($string = null): \DateTimeImmutable|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_IF_UNMODIFIED_SINCE");
             else
@@ -397,7 +397,7 @@
             return $date;
         }
 
-        public static function Keep_Alive($string = null) {
+        public static function Keep_Alive($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_KEEP_ALIVE");
             else
@@ -419,7 +419,7 @@
             return $return;
         }
 
-        public static function Origin($string = null) {
+        public static function Origin($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_ORIGIN");
             else
@@ -432,7 +432,7 @@
             return $origin;
         }
 
-        public static function Proxy_Authorization($string = null) {
+        public static function Proxy_Authorization($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_PROXY_AUTHORIZATION");
             else
@@ -449,7 +449,7 @@
             return array($array[0], $array[1]);
         }
 
-        public static function Range($string = null) {
+        public static function Range($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_RANGE");
             else
@@ -469,7 +469,7 @@
             return $return;
         }
 
-        public static function Referer($string = null) {
+        public static function Referer($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_REFERER");
             else
@@ -482,7 +482,7 @@
             return $referer;
         }
 
-        public static function Save_Data($string = null) {
+        public static function Save_Data($string = null): int|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_SAVE_DATA");
             else
@@ -505,7 +505,7 @@
             }
         }
 
-        public static function Sec_Fetch_Dest($string = null) {
+        public static function Sec_Fetch_Dest($string = null): string|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_SEC_FETCH_DEST");
             else
@@ -542,7 +542,7 @@
             }
         }
 
-        public static function Sec_Fetch_Mode($string = null) {
+        public static function Sec_Fetch_Mode($string = null): string|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_SEC_FETCH_MODE");
             else
@@ -563,7 +563,7 @@
             }
         }
 
-        public static function Sec_Fetch_Site($string = null) {
+        public static function Sec_Fetch_Site($string = null): string|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_SEC_FETCH_SITE");
             else
@@ -583,7 +583,7 @@
             }
         }
 
-        public static function Sec_Fetch_User($string = null) {
+        public static function Sec_Fetch_User($string = null): ?bool {
             if (!isset($string))
                 $value = self::header_request("HTTP_SEC_FETCH_USER");
             else
@@ -595,7 +595,7 @@
             return ($value === "?1") ? true : null ;
         }
 
-        public static function Sec_GPC($string = null) {
+        public static function Sec_GPC($string = null): ?bool {
             if (!isset($string))
                 $value = self::header_request("HTTP_SEC_GPC");
             else
@@ -607,7 +607,7 @@
             return ($value === "1") ? true : null ;
         }
 
-        public static function TE($string = null) {
+        public static function TE($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_TE");
             else
@@ -622,7 +622,7 @@
             return $encodings;
         }
 
-        public static function Upgrade_Insecure_Requests($string = null) {
+        public static function Upgrade_Insecure_Requests($string = null): int|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_UPGRADE_INSECURE_REQUESTS");
             else
@@ -641,7 +641,7 @@
             }
         }
 
-        public static function User_Agent($string = null) {
+        public static function User_Agent($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_USER_AGENT");
             else
@@ -660,7 +660,7 @@
             return $return;
         }
 
-        public static function Via($string = null) {
+        public static function Via($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_VIA");
             else
@@ -674,7 +674,7 @@
             return $proxies;
         }
 
-        public static function Want_Digest($string = null) {
+        public static function Want_Digest($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_WANT_DIGEST");
             else
