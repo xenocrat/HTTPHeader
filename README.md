@@ -4,7 +4,7 @@ HTTPHeader is a PHP class for inspecting HTTP request headers.
 
 ## Requirements
 
-* PHP 5.4+
+* PHP 8.0+
 
 ## Usage
 
