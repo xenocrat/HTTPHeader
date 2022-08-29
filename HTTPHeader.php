@@ -3,7 +3,7 @@
 
     class HTTPHeader {
         const HTTPHEADER_VERSION_MAJOR = 3;
-        const HTTPHEADER_VERSION_MINOR = 0;
+        const HTTPHEADER_VERSION_MINOR = 1;
 
         private static function header_extract($name, $string): string|false {
             if (!is_string($string))
