@@ -462,8 +462,10 @@
                 return false;
 
             $ranges = explode(",", $match[2]);
-            $return = array("unit" => $match[1],
-                            "ranges" => $ranges);
+            $return = array(
+                "unit" => $match[1],
+                "ranges" => $ranges
+            );
 
             self::trim_whitespace($return);
             return $return;
@@ -653,9 +655,11 @@
             if (!preg_match("/^([^\/]+)\/([0-9\.]+) (.+)$/", $value, $match))
                 return false;
 
-            $return = array("product" => $match[1],
-                            "version" => $match[2],
-                            "comment" => $match[3]);
+            $return = array(
+                "product" => $match[1],
+                "version" => $match[2],
+                "comment" => $match[3]
+            );
 
             return $return;
         }
