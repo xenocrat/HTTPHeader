@@ -327,6 +327,18 @@ Example:
         [2] => deflate;q=0.5
     ) 
 
+### `HTTPHeader::Upgrade()`
+
+Returns an array of protocols in order of preference.
+
+Example:
+
+    Array
+    (
+        [0] => HTTP/2
+        [1] => HTTP/1.1
+    ) 
+
 ### `HTTPHeader::Upgrade_Insecure_Requests()`
 
 Returns 0, 1, or `null` if the value is indeterminate.
