@@ -624,6 +624,20 @@
             return $encodings;
         }
 
+        public static function Upgrade($string = null): array|false {
+            if (!isset($string))
+                $value = self::header_request("HTTP_UPGRADE");
+            else
+                $value = self::header_extract("Upgrade", $string);
+
+            if ($value === false)
+                return false;
+
+            $protocols = explode(",", $value);
+            self::trim_whitespace($protocols);
+            return $protocols;
+        }
+
         public static function Upgrade_Insecure_Requests($string = null): int|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_UPGRADE_INSECURE_REQUESTS");
