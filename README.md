@@ -160,6 +160,26 @@ Example:
         [2] => HEAD
     )
 
+### `HTTPHeader::Alt_Svc($string)`
+
+Returns an array of arrays containing the comma-separated parameters for each alternative service.
+
+Example:
+
+    Array
+    (
+        [0] => Array
+            (
+                [0] => h3-25=":443"
+                [1] => ma=3600
+            )
+        [1] => Array
+            (
+                [0] => h2=":443"
+                [1] => ma=3600
+            )
+    )
+
 ### `HTTPHeader::Authorization($string = null)`
 
 Returns an array containing the authorization type and an array of comma-separated parameters.
@@ -209,13 +229,37 @@ Example:
         [0] => keep-alive
     )
 
+### `HTTPHeader::Content_Disposition($string = null)`
+
+Returns an associative array containing the content disposition, field name and filename (if supplied), or `null` if the value is invalid.
+
+Example:
+
+    Array
+    (
+        [disposition] => attachment
+        [filename] => filename.jpg
+    )
+
+### `HTTPHeader::Content_Encoding($string)`
+
+Returns an array of encoding formats in the order in which they were applied, or `null` if the value is invalid.
+
+Example:
+
+    Array
+    (
+        [0] => deflate
+        [1] => gzip
+    )
+
 ### `HTTPHeader::Content_Length($string = null)`
 
 Returns the content length in decimal number of octets, or `null` if the value is invalid.
 
 ### `HTTPHeader::Content_Type($string = null)`
 
-Returns an associative array containing the content type, charset and boundary if supplied.
+Returns an associative array containing the content type, charset and boundary (if supplied), or `null` if the value is invalid.
 
 Example:
 
@@ -280,7 +324,7 @@ Example:
 
 ### `HTTPHeader::Forwarded($string = null)`
 
-Returns an array of fields, each containing an associative array of directives.
+Returns an array of fields, each containing an associative array of directives, or `null` if the value is invalid.
 
 Example:
 
@@ -372,7 +416,7 @@ Example:
 
 ### `HTTPHeader::Keep_Alive($string = null)`
 
-Returns an associative array of parameters.
+Returns an associative array of parameters, or `null` if the value is invalid.
 
 Example:
 

@@ -197,7 +197,7 @@
                     case "OPTIONS":
                     case "TRACE":
                     case "PATCH":
-                        continue;
+                        break;
                     default:
                         return null;
                 }
@@ -314,13 +314,28 @@
                     case "OPTIONS":
                     case "TRACE":
                     case "PATCH":
-                        continue;
+                        break;
                     default:
                         return null;
                 }
             }
 
             return $headers;
+        }
+
+        public static function Alt_Svc($string): array|false {
+            $value = self::header_extract("Alt-Svc", $string);
+
+            if ($value === false)
+                return false;
+
+            $services = explode(",", $value);
+
+            foreach ($services as &$service)
+                $service = explode(";", $service);
+
+            self::trim_whitespace($services);
+            return $services;
         }
 
         public static function Authorization($string = null): array|false {
@@ -381,6 +396,49 @@
             return $directives;
         }
 
+        public static function Content_Disposition($string): array|null|false {
+            $value = self::header_extract("Content-Disposition", $string);
+
+            if ($value === false)
+                return false;
+
+            $params = explode(";", $value);
+            $return = array("disposition" => array_shift($params));
+
+            foreach ($params as $param) {
+                if (!preg_match("/(name|filename\*?)=([^=]+)/", $param, $match))
+                    return null;
+
+                $return[$match[1]] = trim($match[2], " \"");
+            }
+
+            return $return;
+        }
+
+        public static function Content_Encoding($string): array|null|false {
+            $value = self::header_extract("Content-Encoding", $string);
+
+            if ($value === false)
+                return false;
+
+            $headers = explode(",", $value);
+            self::trim_whitespace($headers);
+
+            foreach ($headers as $header) {
+                switch ($header) {
+                    case "gzip":
+                    case "compress":
+                    case "deflate":
+                    case "br":
+                        break;
+                    default:
+                        return null;
+                }
+            }
+
+            return $headers;
+        }
+
         public static function Content_Length($string = null): int|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_CONTENT_LENGTH");
@@ -393,7 +451,7 @@
             return preg_match("/^[0-9]+$/", $value) ? intval($value) : null ;
         }
 
-        public static function Content_Type($string = null): array|false {
+        public static function Content_Type($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_CONTENT_TYPE");
             else
@@ -406,8 +464,10 @@
             $return = array("type" => array_shift($params));
 
             foreach ($params as $param) {
-                if (preg_match("/(charset|boundary)=([^=]+)/", $param, $match))
-                    $return[$match[1]] = $match[2];
+                if (!preg_match("/(charset|boundary)=([^=]+)/", $param, $match))
+                    return null;
+
+                $return[$match[1]] = $match[2];
             }
 
             return $return;
@@ -521,7 +581,7 @@
             return null;
         }
 
-        public static function Forwarded($string = null): array|false {
+        public static function Forwarded($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_FORWARDED");
             else
@@ -539,7 +599,7 @@
 
                 foreach ($parts as $part) {
                     if (!preg_match("/(by|for|host|proto)=([^=]+)/i", $part, $match))
-                        return false;
+                        return null;
 
                     $directive[strtolower($match[1])] = $match[2];
                 }
@@ -680,7 +740,7 @@
             return null;
         }
 
-        public static function Keep_Alive($string = null): array|false {
+        public static function Keep_Alive($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_KEEP_ALIVE");
             else
@@ -694,7 +754,7 @@
 
             foreach ($params as $param) {
                 if (!preg_match("/(timeout|max)=([^=]+)/", $param, $match))
-                    return false;
+                    return null;
 
                 $return[$match[1]] = $match[2];
             }
