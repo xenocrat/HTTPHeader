@@ -15,12 +15,24 @@
                 $fields = explode("\r\n", strstr($string, "\r\n\r\n", true));
 
                 foreach ($fields as $field) {
-                    if (preg_match("/^$name:(.+)$/i", $field, $match)) {
-                        $return = $match[1];
+                    if (
+                        preg_match(
+                            "/^($name:)(.+)$/i",
+                            $field,
+                            $match
+                        )
+                    ) {
+                        $return = $match[2];
                         self::trim_whitespace($return);
                     }
                 }
-            } elseif (preg_match("/^($name:)?(.+?)(\r\n)?$/i", $string, $match)) {
+            } elseif (
+                preg_match(
+                    "/^($name:)?(.+?)(\r\n)?$/i",
+                    $string,
+                    $match
+                )
+            ) {
                 $return = $match[2];
                 self::trim_whitespace($return);
             }
@@ -42,12 +54,32 @@
                 $mixed = trim($mixed, " ");
         }
 
-        private static function q_sort($a, $b): int {
-            $a_q = preg_match("/;q=([0-9\.]+)$/", $a, $a_match) ?
-                floatval($a_match[1]) : 1.0 ;
+        private static function filter_no_empty(&$array): void {
+            foreach ($array as &$value) {
+                if (is_array($value))
+                    self::filter_no_empty($value);
+            }
 
-            $b_q = preg_match("/;q=([0-9\.]+)$/", $b, $b_match) ?
-                floatval($b_match[1]) : 1.0 ;
+            $array = array_filter(
+                $array,
+                function($string) {
+                    return ($string !== "");
+                }
+            );
+        }
+
+        private static function q_sort($a, $b): int {
+            $a_q = preg_match(
+                "/;q=([0-9\.]+)$/",
+                $a,
+                $a_match
+            ) ? floatval($a_match[1]) : 1.0 ;
+
+            $b_q = preg_match(
+                "/;q=([0-9\.]+)$/",
+                $b,
+                $b_match
+            ) ? floatval($b_match[1]) : 1.0 ;
 
             if ($a_q == $b_q)
                 return 0;
@@ -66,6 +98,7 @@
 
             $types = explode(",", $value);
             self::trim_whitespace($types);
+            self::filter_no_empty($types);
             usort($types, "self::q_sort");
             return $types;
         }
@@ -78,6 +111,7 @@
 
             $hints = explode(",", $value);
             self::trim_whitespace($hints);
+            self::filter_no_empty($hints);
             return $hints;
         }
 
@@ -92,6 +126,7 @@
 
             $charsets = explode(",", $value);
             self::trim_whitespace($charsets);
+            self::filter_no_empty($charsets);
             usort($charsets, "self::q_sort");
             return $charsets;
         }
@@ -107,6 +142,7 @@
 
             $encodings = explode(",", $value);
             self::trim_whitespace($encodings);
+            self::filter_no_empty($encodings);
             usort($encodings, "self::q_sort");
             return $encodings;
         }
@@ -122,6 +158,7 @@
 
             $languages = explode(",", $value);
             self::trim_whitespace($languages);
+            self::filter_no_empty($languages);
             usort($languages, "self::q_sort");
             return $languages;
         }
@@ -134,6 +171,7 @@
 
             $types = explode(",", $value);
             self::trim_whitespace($types);
+            self::filter_no_empty($types);
             return $types;
         }
 
@@ -145,6 +183,7 @@
 
             $types = explode(",", $value);
             self::trim_whitespace($types);
+            self::filter_no_empty($types);
             return $types;
         }
 
@@ -157,7 +196,7 @@
             return $value;
         }
 
-        public static function Access_Control_Allow_Credentials($string = null): ?bool {
+        public static function Access_Control_Allow_Credentials($string): ?bool {
             $value = self::header_extract("Access-Control-Allow-Credentials", $string);
 
             if ($value === false)
@@ -174,6 +213,7 @@
 
             $headers = explode(",", $value);
             self::trim_whitespace($headers);
+            self::filter_no_empty($headers);
             return $headers;
         }
 
@@ -183,11 +223,12 @@
             if ($value === false)
                 return false;
 
-            $headers = explode(",", $value);
-            self::trim_whitespace($headers);
+            $methods = explode(",", $value);
+            self::trim_whitespace($methods);
+            self::filter_no_empty($methods);
 
-            foreach ($headers as $header) {
-                switch ($header) {
+            foreach ($methods as $method) {
+                switch ($method) {
                     case "GET":
                     case "HEAD":
                     case "POST":
@@ -203,7 +244,7 @@
                 }
             }
 
-            return $headers;
+            return $methods;
         }
 
         public static function Access_Control_Allow_Origin($string): string|array|null|false {
@@ -234,6 +275,7 @@
 
             $headers = explode(",", $value);
             self::trim_whitespace($headers);
+            self::filter_no_empty($headers);
             return $headers;
         }
 
@@ -243,7 +285,10 @@
             if ($value === false)
                 return false;
 
-            return preg_match("/^[0-9]+$/", $value) ? intval($value) : null ;
+            return preg_match(
+                "/^[0-9]+$/",
+                $value
+            ) ? intval($value) : null ;
         }
 
         public static function Access_Control_Request_Headers($string = null): array|false {
@@ -257,10 +302,11 @@
 
             $headers = explode(",", $value);
             self::trim_whitespace($headers);
+            self::filter_no_empty($headers);
             return $headers;
         }
 
-        public static function Access_Control_Request_Method($string): string|null|false {
+        public static function Access_Control_Request_Method($string = null): string|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_ACCESS_CONTROL_REQUEST_METHOD");
             else
@@ -291,7 +337,10 @@
             if ($value === false)
                 return false;
 
-            return preg_match("/^[0-9]+$/", $value) ? intval($value) : null ;
+            return preg_match(
+                "/^[0-9]+$/",
+                $value
+            ) ? intval($value) : null ;
         }
 
         public static function Allow($string): array|null|false {
@@ -300,11 +349,12 @@
             if ($value === false)
                 return false;
 
-            $headers = explode(",", $value);
-            self::trim_whitespace($headers);
+            $methods = explode(",", $value);
+            self::trim_whitespace($methods);
+            self::filter_no_empty($methods);
 
-            foreach ($headers as $header) {
-                switch ($header) {
+            foreach ($methods as $method) {
+                switch ($method) {
                     case "GET":
                     case "HEAD":
                     case "POST":
@@ -320,7 +370,7 @@
                 }
             }
 
-            return $headers;
+            return $methods;
         }
 
         public static function Alt_Svc($string): array|false {
@@ -335,6 +385,7 @@
                 $service = explode(";", $service);
 
             self::trim_whitespace($services);
+            self::filter_no_empty($services);
             return $services;
         }
 
@@ -347,7 +398,12 @@
             if ($value === false)
                 return false;
 
-            $array = preg_split("/ +/", $value, 2, PREG_SPLIT_NO_EMPTY);
+            $array = preg_split(
+                "/ +/",
+                $value,
+                2,
+                PREG_SPLIT_NO_EMPTY
+            );
 
             if (count($array) < 2)
                 return null;
@@ -367,6 +423,7 @@
 
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
             return $directives;
         }
 
@@ -378,6 +435,7 @@
 
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
             return $directives;
         }
 
@@ -392,6 +450,7 @@
 
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
             return $directives;
         }
 
@@ -401,8 +460,19 @@
             if ($value === false)
                 return false;
 
-            $params = preg_split("/(?<!\\\\);/", $value, 0, PREG_SPLIT_NO_EMPTY);
+            $params = preg_split(
+                "/(?<!\\\\);/",
+                $value,
+                0,
+                PREG_SPLIT_NO_EMPTY
+            );
+
             self::trim_whitespace($params);
+            self::filter_no_empty($params);
+
+            if (empty($params))
+                return null;
+
             $return = array("disposition" => array_shift($params));
 
             foreach ($params as $param) {
@@ -421,11 +491,12 @@
             if ($value === false)
                 return false;
 
-            $headers = explode(",", $value);
-            self::trim_whitespace($headers);
+            $directives = explode(",", $value);
+            self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
 
-            foreach ($headers as $header) {
-                switch ($header) {
+            foreach ($directives as $directive) {
+                switch ($directive) {
                     case "gzip":
                     case "compress":
                     case "deflate":
@@ -436,7 +507,22 @@
                 }
             }
 
-            return $headers;
+            return $directives;
+        }
+
+        public static function Content_Language($string = null): array|false {
+            if (!isset($string))
+                $value = self::header_request("HTTP_CONTENT_LANGUAGE");
+            else
+                $value = self::header_extract("Content-Language", $string);
+
+            if ($value === false)
+                return false;
+
+            $directives = explode(",", $value);
+            self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
+            return $directives;
         }
 
         public static function Content_Length($string = null): int|null|false {
@@ -448,7 +534,68 @@
             if ($value === false)
                 return false;
 
-            return preg_match("/^[0-9]+$/", $value) ? intval($value) : null ;
+            return preg_match(
+                "/^[0-9]+$/",
+                $value
+            ) ? intval($value) : null ;
+        }
+
+        public static function Content_Location($string): string|false {
+            $value = self::header_extract("Content-Location", $string);
+
+            if ($value === false)
+                return false;
+
+            return $value;
+        }
+
+        public static function Content_Range($string): array|null|false {
+            $value = self::header_extract("Content-Range", $string);
+
+            if ($value === false)
+                return false;
+
+            if (
+                !preg_match(
+                    "/^([a-zA-Z0-9]+) ([0-9]+\-[0-9]+|\*)\/([0-9]+|\*)$/",
+                    $value,
+                    $match
+                )
+            )
+                return null;
+
+            $return = array(
+                "unit" => $match[1],
+                "range" => $match[2],
+                "size" => $match[3]
+            );
+
+            self::trim_whitespace($return);
+            return $return;
+        }
+
+        public static function Content_Security_Policy($string): array|false {
+            $value = self::header_extract("Content-Security-Policy", $string);
+
+            if ($value === false)
+                return false;
+
+            $directives = explode(";", $value);
+            self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
+            return $directives;
+        }
+
+        public static function Content_Security_Policy_Report_Only($string): array|false {
+            $value = self::header_extract("Content-Security-Policy-Report-Only", $string);
+
+            if ($value === false)
+                return false;
+
+            $directives = explode(";", $value);
+            self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
+            return $directives;
         }
 
         public static function Content_Type($string = null): array|null|false {
@@ -462,10 +609,21 @@
 
             $params = explode(";", $value);
             self::trim_whitespace($params);
+            self::filter_no_empty($params);
+
+            if (empty($params))
+                return null;
+
             $return = array("type" => array_shift($params));
 
             foreach ($params as $param) {
-                if (!preg_match("/^(charset|boundary)=(.+)$/", $param, $match))
+                if (
+                    !preg_match(
+                        "/^(charset|boundary)=(.+)$/",
+                        $param,
+                        $match
+                    )
+                )
                     return null;
 
                 $return[$match[1]] = $match[2];
@@ -483,11 +641,29 @@
             if ($value === false)
                 return false;
 
-            $pairs = preg_split("/; /", $value, 0, PREG_SPLIT_NO_EMPTY);
+            $pairs = preg_split(
+                "/; /",
+                $value,
+                0,
+                PREG_SPLIT_NO_EMPTY
+            );
+
+            self::trim_whitespace($pairs);
+            self::filter_no_empty($pairs);
+
+            if (empty($pairs))
+                return null;
+
             $cookies = array();
 
             foreach ($pairs as $pair) {
-                if (!preg_match("/^\"?([^=]+)=(.+?)\"?$/", $pair, $match))
+                if (
+                    !preg_match(
+                        "/^\"?([^=]+)=(.+?)\"?$/",
+                        $pair,
+                        $match
+                    )
+                )
                     return null;
 
                 $cookies[str_replace(".", "_", $match[1])] = $match[2];
@@ -496,7 +672,55 @@
             return $cookies;
         }
 
-        public static function Date($string = null): \DateTimeImmutable|false {
+        public static function Cross_Origin_Embedder_Policy($string): string|null|false {
+            $value = self::header_extract("Cross-Origin-Embedder-Policy", $string);
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "unsafe-none":
+                case "require-corp":
+                case "credentialless":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
+        public static function Cross_Origin_Opener_Policy($string): string|null|false {
+            $value = self::header_extract("Cross-Origin-Opener-Policy", $string);
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "unsafe-none":
+                case "same-origin-allow-popups":
+                case "same-origin":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
+        public static function Cross_Origin_Resource_Policy($string): string|null|false {
+            $value = self::header_extract("Cross-Origin-Resource-Policy", $string);
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "same-site":
+                case "same-origin":
+                case "cross-origin":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
+        public static function Date($string = null): \DateTimeImmutable|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_DATE");
             else
@@ -522,7 +746,10 @@
             if ($value === false)
                 return false;
 
-            return preg_match("/^[0-9\.]+$/", $value) ? floatval($value) : null ;
+            return preg_match(
+                "/^[0-9\.]+$/",
+                $value
+            ) ? floatval($value) : null ;
         }
 
         public static function DNT($string = null): int|null|false {
@@ -550,7 +777,12 @@
             if ($value === false)
                 return false;
 
-            if (preg_match("/^(W\/)?\".+\"$/", $value))
+            if (
+                preg_match(
+                    "/^(W\/)?\".+\"$/",
+                    $value
+                )
+            )
                 return $value;
 
             return null;
@@ -568,7 +800,7 @@
             return ($value === "100-continue") ? 100 : null ;
         }
 
-        public static function Expires($string): \DateTimeImmutable|false {
+        public static function Expires($string): \DateTimeImmutable|null|false {
             $value = self::header_extract("Expires", $string);
 
             if ($value === false)
@@ -600,7 +832,13 @@
                 $directive = array();
 
                 foreach ($parts as $part) {
-                    if (!preg_match("/^(by|for|host|proto)=(.+)$/i", $part, $match))
+                    if (
+                        !preg_match(
+                            "/^(by|for|host|proto)=(.+)$/i",
+                            $part,
+                            $match
+                        )
+                    )
                         return null;
 
                     $directive[strtolower($match[1])] = $match[2];
@@ -610,6 +848,7 @@
             }
 
             self::trim_whitespace($return);
+            self::filter_no_empty($return);
             return $return;
         }
 
@@ -622,7 +861,12 @@
             if ($value === false)
                 return false;
 
-            if (!preg_match("/^[^@ ]+@[^@ ]+$/", $value))
+            if (
+                !preg_match(
+                    "/^[^@ ]+@[^@ ]+$/",
+                    $value
+                )
+            )
                 return null;
 
             return $value;
@@ -637,7 +881,13 @@
             if ($value === false)
                 return false;
 
-            if (!preg_match("/^(.+?)(:([0-9]+))?$/", $value, $match))
+            if (
+                !preg_match(
+                    "/^(.+?)(:([0-9]+))?$/",
+                    $value,
+                    $match
+                )
+            )
                 return null;
 
             $return = array("host" => $match[1]);
@@ -657,18 +907,30 @@
             if ($value === false)
                 return false;
 
-            $etags = preg_split("/(?<!\\\\),/", $value, 0, PREG_SPLIT_NO_EMPTY);
+            $etags = preg_split(
+                "/(?<!\\\\),/",
+                $value,
+                0,
+                PREG_SPLIT_NO_EMPTY
+            );
+
             self::trim_whitespace($etags);
+            self::filter_no_empty($etags);
 
             foreach ($etags as $etag) {
-                if (!preg_match("/^(W\/)?(\".+\"|\*)$/", $etag))
+                if (
+                    !preg_match(
+                        "/^(W\/)?(\".+\"|\*)$/",
+                        $etag
+                    )
+                )
                     return null;
             }
 
             return $etags;
         }
 
-        public static function If_Modified_Since($string = null): \DateTimeImmutable|false {
+        public static function If_Modified_Since($string = null): \DateTimeImmutable|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_IF_MODIFIED_SINCE");
             else
@@ -694,11 +956,22 @@
             if ($value === false)
                 return false;
 
-            $etags = preg_split("/(?<!\\\\),/", $value, 0, PREG_SPLIT_NO_EMPTY);
+            $etags = preg_split(
+                "/(?<!\\\\),/",
+                $value,
+                0,
+                PREG_SPLIT_NO_EMPTY
+            );
+
             self::trim_whitespace($etags);
 
             foreach ($etags as $etag) {
-                if (!preg_match("/^(W\/)?(\".+\"|\*)$/", $etag))
+                if (
+                    !preg_match(
+                        "/^(W\/)?(\".+\"|\*)$/",
+                        $etag
+                    )
+                )
                     return null;
             }
 
@@ -714,7 +987,12 @@
             if ($value === false)
                 return false;
 
-            if (preg_match("/^(W\/)?\".+\"$/", $value))
+            if (
+                preg_match(
+                    "/^(W\/)?\".+\"$/",
+                    $value
+                )
+            )
                 return $value;
 
             $date = date_create_immutable($value);
@@ -725,7 +1003,7 @@
             return null;
         }
 
-        public static function If_Unmodified_Since($string = null): \DateTimeImmutable|false {
+        public static function If_Unmodified_Since($string = null): \DateTimeImmutable|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_IF_UNMODIFIED_SINCE");
             else
@@ -756,7 +1034,13 @@
             $return = array();
 
             foreach ($params as $param) {
-                if (!preg_match("/^(timeout|max)=(.+)$/", $param, $match))
+                if (
+                    !preg_match(
+                        "/^(timeout|max)=(.+)$/",
+                        $param,
+                        $match
+                    )
+                )
                     return null;
 
                 $return[$match[1]] = $match[2];
@@ -765,7 +1049,7 @@
             return $return;
         }
 
-        public static function Last_Modified($string): \DateTimeImmutable|false {
+        public static function Last_Modified($string): \DateTimeImmutable|null|false {
             $value = self::header_extract("Last-Modified", $string);
 
             if ($value === false)
@@ -807,6 +1091,7 @@
 
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
             return $directives;
         }
 
@@ -823,9 +1108,15 @@
                 PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
             );
 
-            $array = array_filter($array, function($string) {
-                return preg_match("/^( +|, *)$/", $string) ? false : true ;
-            });
+            $array = array_filter(
+                $array,
+                function($string) {
+                    return preg_match(
+                        "/^( +|, *)$/",
+                        $string
+                    ) ? false : true ;
+                }
+            );
 
             $challenges = array();
             $count = 0;
@@ -864,7 +1155,12 @@
             if ($value === false)
                 return false;
 
-            $array = preg_split("/ +/", $value, 2, PREG_SPLIT_NO_EMPTY);
+            $array = preg_split(
+                "/ +/",
+                $value,
+                2,
+                PREG_SPLIT_NO_EMPTY
+            );
 
             if (count($array) < 2)
                 return null;
@@ -882,7 +1178,13 @@
             if ($value === false)
                 return false;
 
-            if (!preg_match("/^([a-zA-Z0-9]+)=([0-9 ,\-]+)$/", $value, $match))
+            if (
+                !preg_match(
+                    "/^([a-zA-Z0-9]+)=([0-9 ,\-]+)$/",
+                    $value,
+                    $match
+                )
+            )
                 return null;
 
             $return = array(
@@ -920,7 +1222,10 @@
             if ($value === false)
                 return false;
 
-            return preg_match("/^[0-9]+$/", $value) ? intval($value) : null ;
+            return preg_match(
+                "/^[0-9]+$/",
+                $value
+            ) ? intval($value) : null ;
         }
 
         public static function Save_Data($string = null): int|null|false {
@@ -1059,6 +1364,7 @@
 
             $encodings = explode(",", $value);
             self::trim_whitespace($encodings);
+            self::filter_no_empty($encodings);
             usort($encodings, "self::q_sort");
             return $encodings;
         }
@@ -1074,6 +1380,7 @@
 
             $protocols = explode(",", $value);
             self::trim_whitespace($protocols);
+            self::filter_no_empty($protocols);
             return $protocols;
         }
 
@@ -1105,7 +1412,13 @@
             if ($value === false)
                 return false;
 
-            if (!preg_match("/^([^\/]+)\/([0-9\.]+) (.+)$/", $value, $match))
+            if (
+                !preg_match(
+                    "/^([^\/]+)\/([0-9\.]+) (.+)$/",
+                    $value,
+                    $match
+                )
+            )
                 return null;
 
             $return = array(
@@ -1125,6 +1438,7 @@
 
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
             return $directives;
         }
 
@@ -1139,6 +1453,7 @@
 
             $proxies = explode(",", $value);
             self::trim_whitespace($proxies);
+            self::filter_no_empty($proxies);
             return $proxies;
         }
 
@@ -1153,6 +1468,7 @@
 
             $algorithms = explode(",", $value);
             self::trim_whitespace($algorithms);
+            self::filter_no_empty($algorithms);
             usort($algorithms, "self::q_sort");
             return $algorithms;
         }
@@ -1170,9 +1486,15 @@
                 PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
             );
 
-            $array = array_filter($array, function($string) {
-                return preg_match("/^( +|, *)$/", $string) ? false : true ;
-            });
+            $array = array_filter(
+                $array,
+                function($string) {
+                    return preg_match(
+                        "/^( +|, *)$/",
+                        $string
+                    ) ? false : true ;
+                }
+            );
 
             $challenges = array();
             $count = 0;

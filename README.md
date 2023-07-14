@@ -250,9 +250,54 @@ Example:
         [1] => gzip
     )
 
+### `HTTPHeader::Content_Language($string = null)`
+
+Returns an array of language tags.
+
+Example:
+
+    Array
+    (
+        [0] => en-GB
+        [1] => en
+    )
+
+### `HTTPHeader::Content_Location($string)`
+
+Returns a string.
+
 ### `HTTPHeader::Content_Length($string = null)`
 
 Returns the content length in decimal number of octets, or `null` if the value is invalid.
+
+### `HTTPHeader::Content_Range($string)`
+
+Returns an associative array containing the unit range, and size, or `null` if the value is invalid.
+
+Example:
+
+    Array
+    (
+        [unit] => bytes
+        [range] => 200-1000
+        [size] => 67589
+    )
+
+### `HTTPHeader::Content_Security_Policy($string)`
+
+Returns an array containing the policy directives.
+
+Example:
+
+    Array
+    (
+        [0] => default-src 'self'
+        [1] => form-action 'self'
+    )
+
+### `HTTPHeader::Content_Security_Policy_Report_Only($string)`
+
+See above.
 
 ### `HTTPHeader::Content_Type($string = null)`
 
@@ -276,6 +321,18 @@ Example:
     (
         [Session] => 0ae5ab57925bcbee58917d552acb4cd4
     )
+
+### `HTTPHeader::Cross_Origin_Embedder_Policy($string)`
+
+Returns a policy directive, or `null` if the value is invalid.
+
+### `HTTPHeader::Cross_Origin_Opener_Policy($string)`
+
+Returns a policy directive, or `null` if the value is invalid.
+
+### `HTTPHeader::Cross_Origin_Resource_Policy($string)`
+
+Returns a policy directive, or `null` if the value is invalid.
 
 ### `HTTPHeader::Date($string = null)`
 
@@ -479,7 +536,6 @@ Example:
         [0] => Basic
         [1] => YWxhZGRpbjpvcGVuc2VzYW1l
     )
-
 
 ### `HTTPHeader::Range($string = null)`
 
