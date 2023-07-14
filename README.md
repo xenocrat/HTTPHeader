@@ -182,17 +182,14 @@ Example:
 
 ### `HTTPHeader::Authorization($string = null)`
 
-Returns an array containing the authorization type and an array of comma-separated parameters.
+Returns an array containing the authorization type and comma-separated parameters, or `null` if the value is invalid.
 
 Example:
 
     Array
     (
         [0] => Basic
-        [1] => Array
-            (
-                [0] => YWxhZGRpbjpvcGVuc2VzYW1l
-            )
+        [1] => YWxhZGRpbjpvcGVuc2VzYW1l
     )
 
 ### `HTTPHeader::Cache_Control($string = null)`
@@ -271,7 +268,7 @@ Example:
 
 ### `HTTPHeader::Cookie($string = null)`
 
-Returns an associative array of cookie names and values.
+Returns an associative array of cookie names and values, or `null` if the value is invalid.
 
 Example:
 
@@ -451,20 +448,38 @@ Example:
         [host] => example.com
     )
 
+### `HTTPHeader::Proxy_Authenticate($string)`
+
+Returns an array of arrays containing the authentication type and comma-separated parameters, or `null` if the value is invalid.
+
+Example:
+
+    Array
+    (
+        [0] => Array
+            (
+                [0] => Basic
+                [1] => realm="foo"
+            )
+        [1] => Array
+            (
+                [0] => Other
+                [1] => realm="bar",
+            )
+    )
+
 ### `HTTPHeader::Proxy_Authorization($string = null)`
 
-Returns an array containing the authorization type and an array of comma-separated parameters.
+Returns an array containing the authorization type and comma-separated parameters, or `null` if the value is invalid.
 
 Example:
 
     Array
     (
         [0] => Basic
-        [1] => Array
-            (
-                [0] => YWxhZGRpbjpvcGVuc2VzYW1l
-            )
+        [1] => YWxhZGRpbjpvcGVuc2VzYW1l
     )
+
 
 ### `HTTPHeader::Range($string = null)`
 
@@ -593,18 +608,24 @@ Example:
 
 ### `HTTPHeader::WWW_Authenticate($string)`
 
-Returns an array containing the authorization type and an array of comma-separated parameters.
+Returns an array of arrays containing the authentication type and comma-separated parameters, or `null` if the value is invalid.
 
 Example:
 
     Array
     (
-        [0] => auth-scheme
+        [0] => Array
+            (
+                [0] => Basic
+                [1] => realm="foo", auth-param1=auth-param1-token, auth-param2=auth-param2-token
+            )
         [1] => Array
             (
-                [0] => realm=realm
-                [1] => token68
-                [2] => auth-param1=auth-param1-token
-                [3] => auth-param2=auth-param2-token
+                [0] => Foobar
+                [1] => realm="bar"
+            )
+        [2] => Array
+            (
+                [0] => Barbaz
             )
     )

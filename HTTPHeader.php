@@ -9,22 +9,23 @@
             if (!is_string($string))
                 throw new \Exception("HTTP header must be a string.");
 
+            $return = false;
+
             if (strpos($string, "\r\n\r\n") !== false) {
                 $fields = explode("\r\n", strstr($string, "\r\n\r\n", true));
-                $return = false;
 
                 foreach ($fields as $field) {
-                    if (preg_match("/^$name: (.+)$/i", $field, $match))
+                    if (preg_match("/^$name:(.+)$/i", $field, $match)) {
                         $return = $match[1];
+                        self::trim_whitespace($return);
+                    }
                 }
-
-                return $return;
+            } elseif (preg_match("/^($name:)?(.+?)(\r\n)?$/i", $string, $match)) {
+                $return = $match[2];
+                self::trim_whitespace($return);
             }
 
-            if (preg_match("/^($name: )?(.+?)(\r\n)?$/i", $string, $match))
-                return $match[2];
-
-            return false;
+            return $return;
         }
 
         private static function header_request($name): string|false {
@@ -153,7 +154,6 @@
             if ($value === false)
                 return false;
 
-            self::trim_whitespace($value);
             return $value;
         }
 
@@ -338,7 +338,7 @@
             return $services;
         }
 
-        public static function Authorization($string = null): array|false {
+        public static function Authorization($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_AUTHORIZATION");
             else
@@ -347,14 +347,13 @@
             if ($value === false)
                 return false;
 
-            $array = explode(" ", $value, 2);
+            $array = preg_split("/ +/", $value, 2, PREG_SPLIT_NO_EMPTY);
 
             if (count($array) < 2)
-                return false;
+                return null;
 
-            $parameters = explode(",", $array[1]);
-            self::trim_whitespace($parameters);
-            return array($array[0], $parameters);
+            self::trim_whitespace($array);
+            return $array;
         }
 
         public static function Cache_Control($string = null): array|false {
@@ -402,14 +401,15 @@
             if ($value === false)
                 return false;
 
-            $params = explode(";", $value);
+            $params = preg_split("/(?<!\\\\);/", $value, 0, PREG_SPLIT_NO_EMPTY);
+            self::trim_whitespace($params);
             $return = array("disposition" => array_shift($params));
 
             foreach ($params as $param) {
-                if (!preg_match("/(name|filename\*?)=([^=]+)/", $param, $match))
+                if (!preg_match("/^(name|filename\*?)=\"(.+)\"$/", $param, $match))
                     return null;
 
-                $return[$match[1]] = trim($match[2], " \"");
+                $return[$match[1]] = $match[2];
             }
 
             return $return;
@@ -461,10 +461,11 @@
                 return false;
 
             $params = explode(";", $value);
+            self::trim_whitespace($params);
             $return = array("type" => array_shift($params));
 
             foreach ($params as $param) {
-                if (!preg_match("/(charset|boundary)=([^=]+)/", $param, $match))
+                if (!preg_match("/^(charset|boundary)=(.+)$/", $param, $match))
                     return null;
 
                 $return[$match[1]] = $match[2];
@@ -473,7 +474,7 @@
             return $return;
         }
 
-        public static function Cookie($string = null): array|false {
+        public static function Cookie($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_COOKIE");
             else
@@ -482,12 +483,12 @@
             if ($value === false)
                 return false;
 
-            $pairs = explode("; ", $value);
+            $pairs = preg_split("/; /", $value, 0, PREG_SPLIT_NO_EMPTY);
             $cookies = array();
 
             foreach ($pairs as $pair) {
-                if (!preg_match("/([^=]+)=([^=]+)/", $pair, $match))
-                    return false;
+                if (!preg_match("/^\"?([^=]+)=(.+?)\"?$/", $pair, $match))
+                    return null;
 
                 $cookies[str_replace(".", "_", $match[1])] = $match[2];
             }
@@ -595,10 +596,11 @@
 
             foreach ($fields as $field) {
                 $parts = explode(";", $field);
+                self::trim_whitespace($parts);
                 $directive = array();
 
                 foreach ($parts as $part) {
-                    if (!preg_match("/(by|for|host|proto)=([^=]+)/i", $part, $match))
+                    if (!preg_match("/^(by|for|host|proto)=(.+)$/i", $part, $match))
                         return null;
 
                     $directive[strtolower($match[1])] = $match[2];
@@ -620,7 +622,7 @@
             if ($value === false)
                 return false;
 
-            if (!preg_match("/[^@ ]+@[^@ ]+/", $value))
+            if (!preg_match("/^[^@ ]+@[^@ ]+$/", $value))
                 return null;
 
             return $value;
@@ -655,11 +657,11 @@
             if ($value === false)
                 return false;
 
-            $etags = explode(",", $value);
+            $etags = preg_split("/(?<!\\\\),/", $value, 0, PREG_SPLIT_NO_EMPTY);
             self::trim_whitespace($etags);
 
             foreach ($etags as $etag) {
-                if (!preg_match("/^((W\/)?\".+\"|\*)$/", $etag))
+                if (!preg_match("/^(W\/)?(\".+\"|\*)$/", $etag))
                     return null;
             }
 
@@ -692,11 +694,11 @@
             if ($value === false)
                 return false;
 
-            $etags = explode(",", $value);
+            $etags = preg_split("/(?<!\\\\),/", $value, 0, PREG_SPLIT_NO_EMPTY);
             self::trim_whitespace($etags);
 
             foreach ($etags as $etag) {
-                if (!preg_match("/^((W\/)?\".+\"|\*)$/", $etag))
+                if (!preg_match("/^(W\/)?(\".+\"|\*)$/", $etag))
                     return null;
             }
 
@@ -750,10 +752,11 @@
                 return false;
 
             $params = explode(",", $value);
+            self::trim_whitespace($params);
             $return = array();
 
             foreach ($params as $param) {
-                if (!preg_match("/(timeout|max)=([^=]+)/", $param, $match))
+                if (!preg_match("/^(timeout|max)=(.+)$/", $param, $match))
                     return null;
 
                 $return[$match[1]] = $match[2];
@@ -807,7 +810,52 @@
             return $directives;
         }
 
-        public static function Proxy_Authorization($string = null): array|false {
+        public static function Proxy_Authenticate($string): array|null|false {
+            $value = self::header_extract("Proxy-Authenticate", $string);
+
+            if ($value === false)
+                return false;
+
+            $array = preg_split(
+                "/(^|, *)([a-zA-Z0-9_\-]+)( |$)/",
+                $value,
+                0,
+                PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
+            );
+
+            $array = array_filter($array, function($string) {
+                return preg_match("/^( +|, *)$/", $string) ? false : true ;
+            });
+
+            $challenges = array();
+            $count = 0;
+
+            foreach ($array as $chunk) {
+                if (
+                    preg_match(
+                        "/^[a-zA-Z0-9_\-]+$/",
+                        $chunk,
+                        $match,
+                    )
+                ) {
+                    if (isset($challenges[$count]))
+                        $count++;
+
+                    $challenges[$count] = array($chunk);
+                    continue;
+                }
+
+                if (!isset($challenges[$count]))
+                    return null;
+
+                $challenges[$count][] = $chunk;
+            }
+
+            self::trim_whitespace($challenges);
+            return $challenges;
+        }
+
+        public static function Proxy_Authorization($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_PROXY_AUTHORIZATION");
             else
@@ -816,14 +864,13 @@
             if ($value === false)
                 return false;
 
-            $array = explode(" ", $value, 2);
+            $array = preg_split("/ +/", $value, 2, PREG_SPLIT_NO_EMPTY);
 
             if (count($array) < 2)
-                return false;
+                return null;
 
-            $parameters = explode(",", $array[1]);
-            self::trim_whitespace($parameters);
-            return array($array[0], $parameters);
+            self::trim_whitespace($array);
+            return $array;
         }
 
         public static function Range($string = null): array|null|false {
@@ -835,13 +882,12 @@
             if ($value === false)
                 return false;
 
-            if (!preg_match("/^([a-zA-Z0-9]+)=(.+)$/", $value, $match))
+            if (!preg_match("/^([a-zA-Z0-9]+)=([0-9 ,\-]+)$/", $value, $match))
                 return null;
 
-            $ranges = explode(",", $match[2]);
             $return = array(
                 "unit" => $match[1],
-                "ranges" => $ranges
+                "ranges" => explode(",", $match[2])
             );
 
             self::trim_whitespace($return);
@@ -1111,22 +1157,48 @@
             return $algorithms;
         }
 
-        public static function WWW_Authenticate($string): array|false {
+        public static function WWW_Authenticate($string): array|null|false {
             $value = self::header_extract("WWW-Authenticate", $string);
 
             if ($value === false)
                 return false;
 
-            $array = explode(",", $value);
-            self::trim_whitespace($array);
+            $array = preg_split(
+                "/(^|, *)([a-zA-Z0-9_\-]+)( |$)/",
+                $value,
+                0,
+                PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
+            );
 
-            $parameters = array();
+            $array = array_filter($array, function($string) {
+                return preg_match("/^( +|, *)$/", $string) ? false : true ;
+            });
+
+            $challenges = array();
+            $count = 0;
 
             foreach ($array as $chunk) {
-                $pieces = explode(" ", $chunk);
-                $parameters = array_merge($parameters, $pieces);
+                if (
+                    preg_match(
+                        "/^[a-zA-Z0-9_\-]+$/",
+                        $chunk,
+                        $match,
+                    )
+                ) {
+                    if (isset($challenges[$count]))
+                        $count++;
+
+                    $challenges[$count] = array($chunk);
+                    continue;
+                }
+
+                if (!isset($challenges[$count]))
+                    return null;
+
+                $challenges[$count][] = $chunk;
             }
 
-            return array(array_shift($parameters), $parameters);
+            self::trim_whitespace($challenges);
+            return $challenges;
         }
     }
