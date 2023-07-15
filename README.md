@@ -347,9 +347,13 @@ Example:
         [timezone] => GMT
     )
 
+### `HTTPHeader::Device_Memory($string = null)`
+
+Returns a non-negative float representing the device memory in GiB, or `null` if the value is invalid.
+
 ### `HTTPHeader::Downlink($string = null)`
 
-Returns a non-negative integer representing the downlink rate in Mbps, or `null` if the value is invalid.
+Returns a non-negative float representing the downlink rate in Mbps, or `null` if the value is invalid.
 
 ### `HTTPHeader::DNT($string = null)`
 
@@ -491,6 +495,33 @@ Example:
         [date] => 2015-10-21 07:28:00.000000
         [timezone_type] => 2
         [timezone] => GMT
+    )
+
+### `HTTPHeader::Link($string)`
+
+Returns an array of arrays containing the link URI and an associative array of parameters, or `null` if the value is invalid.
+
+Example:
+
+    Array
+    (
+        [0] => Array
+            (
+                [0] => https://one.example.com
+                [1] => Array
+                    (
+                        [rel] => "preconnect"
+                    )
+            )
+        [1] => Array
+            (
+                [0] => https://two.example.com
+                [1] => Array
+                    (
+                        [rel] => "preconnect"
+                        [foo] => bar
+                    )
+            )
     )
 
 ### `HTTPHeader::Origin($string = null)`

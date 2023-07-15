@@ -479,7 +479,7 @@
                 if (!preg_match("/^(name|filename\*?)=\"(.+)\"$/", $param, $match))
                     return null;
 
-                $return[$match[1]] = $match[2];
+                $return[$match[1]] = stripslashes($match[2]);
             }
 
             return $return;
@@ -737,6 +737,21 @@
             return null;
         }
 
+        public static function Device_Memory($string = null): float|null|false {
+            if (!isset($string))
+                $value = self::header_request("HTTP_DEVICE_MEMORY");
+            else
+                $value = self::header_extract("Device-Memory", $string);
+
+            if ($value === false)
+                return false;
+
+            return preg_match(
+                "/^[0-9\.]+$/",
+                $value
+            ) ? floatval($value) : null ;
+        }
+
         public static function Downlink($string = null): float|null|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_DOWNLINK");
@@ -824,11 +839,14 @@
                 return false;
 
             $fields = explode(",", $value);
+            self::trim_whitespace($fields);
+            self::filter_no_empty($fields);
             $return = array();
 
             foreach ($fields as $field) {
                 $parts = explode(";", $field);
                 self::trim_whitespace($parts);
+                self::filter_no_empty($parts);
                 $directive = array();
 
                 foreach ($parts as $part) {
@@ -848,7 +866,6 @@
             }
 
             self::trim_whitespace($return);
-            self::filter_no_empty($return);
             return $return;
         }
 
@@ -1061,6 +1078,69 @@
                 return $date;
 
             return null;
+        }
+
+        public static function Link($string): array|null|false {
+            $value = self::header_extract("Link", $string);
+
+            if ($value === false)
+                return false;
+
+            $fields = preg_split(
+                "/(?<!\\\\),/",
+                $value,
+                0,
+                PREG_SPLIT_NO_EMPTY
+            );
+
+            self::trim_whitespace($fields);
+            self::filter_no_empty($fields);
+            $return = array();
+
+            foreach ($fields as $field) {
+                $params = preg_split(
+                    "/(?<!\\\\);/",
+                    $field,
+                    0,
+                    PREG_SPLIT_NO_EMPTY
+                );
+
+                self::trim_whitespace($params);
+                self::filter_no_empty($params);
+
+                if (empty($params))
+                    return null;
+
+                $uri = array_shift($params);
+
+                if (
+                    !preg_match(
+                        "/^<(.+)>$/",
+                        $uri,
+                        $extracted
+                    )
+                )
+                    return null;
+
+                $directive = array($extracted[1], array());
+
+                foreach ($params as $param) {
+                    if (
+                        !preg_match(
+                            "/^([^=]+)=(\"?.+?\"?)$/",
+                            $param,
+                            $match
+                        )
+                    )
+                        return null;
+
+                    $directive[1][str_replace(".", "_", $match[1])] = $match[2];
+                }
+
+                $return[] = $directive;
+            }
+
+            return $return;
         }
 
         public static function Origin($string = null): array|null|false {
