@@ -580,10 +580,18 @@
             if ($value === false)
                 return false;
 
-            $directives = explode(";", $value);
-            self::trim_whitespace($directives);
-            self::filter_no_empty($directives);
-            return $directives;
+            $policy = explode(";", $value);
+            self::trim_whitespace($policy);
+            self::filter_no_empty($policy);
+
+            foreach ($policy as &$directive) {
+                $params = explode(" ", $directive);
+                $directive = array(array_shift($params), $params);
+            }
+
+            self::trim_whitespace($policy);
+            self::filter_no_empty($policy);
+            return $policy;
         }
 
         public static function Content_Security_Policy_Report_Only($string): array|false {
@@ -592,10 +600,18 @@
             if ($value === false)
                 return false;
 
-            $directives = explode(";", $value);
-            self::trim_whitespace($directives);
-            self::filter_no_empty($directives);
-            return $directives;
+            $policy = explode(";", $value);
+            self::trim_whitespace($policy);
+            self::filter_no_empty($policy);
+
+            foreach ($policy as &$directive) {
+                $params = explode(" ", $directive);
+                $directive = array(array_shift($params), $params);
+            }
+
+            self::trim_whitespace($policy);
+            self::filter_no_empty($policy);
+            return $policy;
         }
 
         public static function Content_Type($string = null): array|null|false {
@@ -1140,7 +1156,32 @@
                 $return[] = $directive;
             }
 
+            self::trim_whitespace($return);
             return $return;
+        }
+
+        public static function Location($string): string|false {
+            $value = self::header_extract("Location", $string);
+
+            if ($value === false)
+                return false;
+
+            return $value;
+        }
+
+        public static function Max_Forwards($string = null): int|null|false {
+            if (!isset($string))
+                $value = self::header_request("HTTP_MAX_FORWARDS");
+            else
+                $value = self::header_extract("Max-Forwards", $string);
+
+            if ($value === false)
+                return false;
+
+            return preg_match(
+                "/^[0-9]+$/",
+                $value
+            ) ? intval($value) : null ;
         }
 
         public static function Origin($string = null): array|null|false {
@@ -1158,6 +1199,38 @@
                 return $origin;
 
             return null;
+        }
+
+        public static function Permissions_Policy($string): array|false {
+            $value = self::header_extract("Permissions-Policy", $string);
+
+            if ($value === false)
+                return false;
+
+            $policy = explode(",", $value);
+            self::trim_whitespace($policy);
+            self::filter_no_empty($policy);
+
+            foreach ($policy as &$directive) {
+                if (
+                    !preg_match(
+                        "/^([a-zA-Z0-9\-]+)=(\*|\(([^)]*)\))$/",
+                        $directive,
+                        $match
+                    )
+                )
+                    return null;
+
+                $params = isset($match[3]) ?
+                    explode(" ", $match[3]) :
+                    array($match[2]) ;
+
+                $directive = array($match[1], $params);
+            }
+
+            self::trim_whitespace($policy);
+            self::filter_no_empty($policy);
+            return $policy;
         }
 
         public static function Pragma($string = null): array|false {
