@@ -68,6 +68,36 @@
             );
         }
 
+        private static function explode_quoted($delimiter, $string): ?array {
+            if (
+                preg_match_all(
+                    "/(?<!\\\\)\"/",
+                    $string,
+                ) % 2 != 0
+            )
+                return null;
+
+            $array = explode($delimiter, $string);
+            $chunk = "";
+            $fixed = array();
+
+            foreach ($array as $value) {
+                $chunk.= $value;
+
+                if (
+                    preg_match_all(
+                        "/(?<!\\\\)\"/",
+                        $chunk
+                    ) % 2 == 0
+                ) {
+                    $fixed[] = $chunk;
+                    $chunk = "";
+                }
+            }
+
+            return $fixed;
+        }
+
         private static function q_sort($a, $b): int {
             $a_q = preg_match(
                 "/;q=([0-9\.]+)$/",
@@ -436,6 +466,10 @@
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
+
+            foreach ($directives as &$directive)
+                $directive = stripslashes(trim($directive, "\""));
+
             return $directives;
         }
 
@@ -460,12 +494,10 @@
             if ($value === false)
                 return false;
 
-            $params = preg_split(
-                "/(?<!\\\\);/",
-                $value,
-                0,
-                PREG_SPLIT_NO_EMPTY
-            );
+            $params = self::explode_quoted(";", $value);
+
+            if ($params === null)
+                return null;
 
             self::trim_whitespace($params);
             self::filter_no_empty($params);
@@ -675,14 +707,15 @@
             foreach ($pairs as $pair) {
                 if (
                     !preg_match(
-                        "/^\"?([^=]+)=(.+?)\"?$/",
+                        "/^([^()<>@,;:\\\\ \"\/\[\]\?={}\t]+)=\"?([^\",;\\\\]+)\"?$/",
                         $pair,
                         $match
                     )
                 )
                     return null;
 
-                $cookies[str_replace(".", "_", $match[1])] = $match[2];
+                $name = str_replace(".", "_", $match[1]);
+                $cookies[$name] = $match[2];
             }
 
             return $cookies;
@@ -744,6 +777,14 @@
 
             if ($value === false)
                 return false;
+
+            if (
+                !preg_match(
+                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
+                    $value
+                )
+            )
+                return null;
 
             $date = date_create_immutable($value);
 
@@ -814,7 +855,7 @@
                     $value
                 )
             )
-                return $value;
+                return stripslashes($value);
 
             return null;
         }
@@ -836,6 +877,14 @@
 
             if ($value === false)
                 return false;
+
+            if (
+                !preg_match(
+                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
+                    $value
+                )
+            )
+                return null;
 
             $date = date_create_immutable($value);
 
@@ -940,24 +989,24 @@
             if ($value === false)
                 return false;
 
-            $etags = preg_split(
-                "/(?<!\\\\),/",
-                $value,
-                0,
-                PREG_SPLIT_NO_EMPTY
-            );
+            $etags = self::explode_quoted(",", $value);
+
+            if ($etags === null)
+                return null;
 
             self::trim_whitespace($etags);
             self::filter_no_empty($etags);
 
-            foreach ($etags as $etag) {
+            foreach ($etags as &$etag) {
                 if (
                     !preg_match(
-                        "/^(W\/)?(\".+\"|\*)$/",
+                        "/^((W\/)?\".+\"|\*)$/",
                         $etag
                     )
                 )
                     return null;
+
+                $etag = stripslashes($etag);
             }
 
             return $etags;
@@ -971,6 +1020,14 @@
 
             if ($value === false)
                 return false;
+
+            if (
+                !preg_match(
+                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
+                    $value
+                )
+            )
+                return null;
 
             $date = date_create_immutable($value);
 
@@ -989,23 +1046,23 @@
             if ($value === false)
                 return false;
 
-            $etags = preg_split(
-                "/(?<!\\\\),/",
-                $value,
-                0,
-                PREG_SPLIT_NO_EMPTY
-            );
+            $etags = self::explode_quoted(",", $value);
+
+            if ($etags === null)
+                return null;
 
             self::trim_whitespace($etags);
 
-            foreach ($etags as $etag) {
+            foreach ($etags as &$etag) {
                 if (
                     !preg_match(
-                        "/^(W\/)?(\".+\"|\*)$/",
+                        "/^((W\/)?\".+\"|\*)$/",
                         $etag
                     )
                 )
                     return null;
+
+                $etag = stripslashes($etag);
             }
 
             return $etags;
@@ -1026,7 +1083,15 @@
                     $value
                 )
             )
-                return $value;
+                return stripslashes($value);
+
+            if (
+                !preg_match(
+                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
+                    $value
+                )
+            )
+                return null;
 
             $date = date_create_immutable($value);
 
@@ -1044,6 +1109,14 @@
 
             if ($value === false)
                 return false;
+
+            if (
+                !preg_match(
+                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
+                    $value
+                )
+            )
+                return null;
 
             $date = date_create_immutable($value);
 
@@ -1088,6 +1161,14 @@
             if ($value === false)
                 return false;
 
+            if (
+                !preg_match(
+                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
+                    $value
+                )
+            )
+                return null;
+
             $date = date_create_immutable($value);
 
             if ($date !== false)
@@ -1102,24 +1183,20 @@
             if ($value === false)
                 return false;
 
-            $fields = preg_split(
-                "/(?<!\\\\),/",
-                $value,
-                0,
-                PREG_SPLIT_NO_EMPTY
-            );
+            $fields = self::explode_quoted(",", $value);
+
+            if ($fields === null)
+                return null;
 
             self::trim_whitespace($fields);
             self::filter_no_empty($fields);
             $return = array();
 
             foreach ($fields as $field) {
-                $params = preg_split(
-                    "/(?<!\\\\);/",
-                    $field,
-                    0,
-                    PREG_SPLIT_NO_EMPTY
-                );
+                $params = self::explode_quoted(";", $field);
+
+                if ($params === null)
+                    return null;
 
                 self::trim_whitespace($params);
                 self::filter_no_empty($params);
@@ -1150,7 +1227,13 @@
                     )
                         return null;
 
-                    $directive[1][str_replace(".", "_", $match[1])] = $match[2];
+                    $pn = str_replace(".", "_", $match[1]);
+                    $pv = trim($match[2], " ");
+
+                    if (strpos($pv, "\"") === 0)
+                        $pv = stripslashes(trim($pv, "\""));
+
+                    $directive[1][$pn] = $pv;
                 }
 
                 $return[] = $directive;
@@ -1255,8 +1338,8 @@
                 return false;
 
             $array = preg_split(
-                "/(^|, *)([a-zA-Z0-9_\-]+)( |$)/",
-                $value,
+                "/(^|, *)([a-zA-Z0-9_\-]+)( +|$)/",
+                rtrim($value, ", "),
                 0,
                 PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
             );
@@ -1362,6 +1445,57 @@
 
             if ($referer !== false)
                 return $referer;
+
+            return null;
+        }
+
+        public static function Referrer_Policy($string): string|null|false {
+            $value = self::header_extract("Referrer-Policy", $string);
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "no-referrer":
+                case "no-referrer-when-downgrade":
+                case "origin":
+                case "origin-when-cross-origin":
+                case "same-origin":
+                case "strict-origin":
+                case "strict-origin-when-cross-origin":
+                case "unsafe-url":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
+        public static function Retry_After($string): \DateTimeImmutable|int|null|false {
+            $value = self::header_extract("Retry-After", $string);
+
+            if ($value === false)
+                return false;
+
+            if (
+                preg_match(
+                    "/^[0-9]+$/",
+                    $value
+                )
+            )
+                return intval($value);
+
+            if (
+                !preg_match(
+                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
+                    $value
+                )
+            )
+                return null;
+
+            $date = date_create_immutable($value);
+
+            if ($date !== false)
+                return $date;
 
             return null;
         }
@@ -1506,6 +1640,85 @@
             return ($value === "1") ? true : null ;
         }
 
+        public static function Sec_Purpose($string = null): string|null|false {
+            if (!isset($string))
+                $value = self::header_request("HTTP_SEC_PURPOSE");
+            else
+                $value = self::header_extract("Sec-Purpose", $string);
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "prefetch":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
+        public static function Server($string): string|false {
+            $value = self::header_extract("Server", $string);
+
+            if ($value === false)
+                return false;
+
+            return $value;
+        }
+
+        public static function Server_Timing($string): array|null|false {
+            $value = self::header_extract("Server-Timing", $string);
+
+            if ($value === false)
+                return false;
+
+            $pieces = self::explode_quoted(",", $value);
+
+            if ($pieces === null)
+                return null;
+
+            self::trim_whitespace($pieces);
+            self::filter_no_empty($pieces);
+
+            $return = array();
+
+            foreach ($pieces as $piece) {
+                $params = self::explode_quoted(";", $piece);
+
+                if ($params === null)
+                    return null;
+
+                self::trim_whitespace($params);
+                self::filter_no_empty($params);
+
+                $metric = array("name" => array_shift($params));
+
+                foreach ($params as $param) {
+                    if (
+                        !preg_match(
+                            "/^(desc|dur)=(\"?.+?\"?)$/",
+                            $param,
+                            $match
+                        )
+                    )
+                        return null;
+
+                    $pn = str_replace(".", "_", $match[1]);
+                    $pv = trim($match[2], " ");
+
+                    if (strpos($pv, "\"") === 0)
+                        $pv = stripslashes(trim($pv, "\""));
+
+                    $metric[$pn] = $pv;
+                }
+
+                $return[] = $metric;
+            }
+
+            self::trim_whitespace($return);
+            return $return;
+        }
+
         public static function TE($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_TE");
@@ -1633,8 +1846,8 @@
                 return false;
 
             $array = preg_split(
-                "/(^|, *)([a-zA-Z0-9_\-]+)( |$)/",
-                $value,
+                "/(^|, *)([a-zA-Z0-9_\-]+)( +|$)/",
+                rtrim($value, ", "),
                 0,
                 PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
             );

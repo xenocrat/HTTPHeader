@@ -654,6 +654,14 @@ Example:
         [path] => /foo/
     )
 
+### `HTTPHeader::Referrer_Policy($string)`
+
+Returns a directive, or `null` if the field value is invalid.
+
+### `HTTPHeader::Retry_After($string = null)`
+
+Returns a DateTimeImmutable object, or a non-negative integer representing the delay in seconds, or `null` if the field value is invalid.
+
 ### `HTTPHeader::RTT($string = null)`
 
 Returns a non-negative integer representing the approximate round trip time in milliseconds, or `null` if the field value is invalid.
@@ -681,6 +689,35 @@ Returns `true` if the value is "?1", or `null` otherwise.
 ### `HTTPHeader::Sec_GPC($string = null)`
 
 Returns `true` if the value is "1", or `null` otherwise.
+
+### `HTTPHeader::Sec_Purpose($string = null)`
+
+Returns a directive, or `null` if the field value is invalid.
+
+### `HTTPHeader::Server($string)`
+
+Returns a string.
+
+### `HTTPHeader::Server_Timing($string)`
+
+Returns an array of associative arrays containing the metric name, description and duration (if supplied), or `null` if the field value is invalid.
+
+Example:
+
+    Array
+    (
+        [0] => Array
+            (
+                [name] => db
+                [dur] => 53
+            )
+        [1] => Array
+            (
+                [name] => cache
+                [desc] => "Cache Read"
+                [dur] => 23.2
+            )
+    )
 
 ### `HTTPHeader::TE($string = null)`
 
