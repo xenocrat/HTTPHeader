@@ -94,13 +94,17 @@
             return ($a_q > $b_q) ? -1 : 1 ;
         }
 
-        private static function is_rfc5322_date($string): bool {
-            return (
-                preg_match(
+        private static function rfc5322_date_immutable($string): \DateTimeImmutable|null {
+            if (
+                !preg_match(
                     "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
                     $string
                 )
-            ) ? true : false ;
+            )
+                return null;
+
+            $date = date_create_immutable($string);
+            return ($date !== false) ? $date : null ;
         }
 
         private static function trim_whitespace(&$mixed): void {
@@ -798,15 +802,7 @@
             if ($value === false)
                 return false;
 
-            if (!self::is_rfc5322_date($value))
-                return null;
-
-            $date = date_create_immutable($value);
-
-            if ($date === false)
-                return null;
-
-            return $date;
+            return self::rfc5322_date_immutable($value);
         }
 
         public static function Device_Memory($string = null): float|null|false {
@@ -893,15 +889,7 @@
             if ($value === false)
                 return false;
 
-            if (!self::is_rfc5322_date($value))
-                return null;
-
-            $date = date_create_immutable($value);
-
-            if ($date === false)
-                return null;
-
-            return $date;
+            return self::rfc5322_date_immutable($value);
         }
 
         public static function Forwarded($string = null): array|null|false {
@@ -976,7 +964,6 @@
             )
                 return $value;
 
-
             return null;
         }
 
@@ -1050,15 +1037,7 @@
             if ($value === false)
                 return false;
 
-            if (!self::is_rfc5322_date($value))
-                return null;
-
-            $date = date_create_immutable($value);
-
-            if ($date === false)
-                return null;
-
-            return $date;
+            return self::rfc5322_date_immutable($value);
         }
 
         public static function If_None_Match($string = null): array|null|false {
@@ -1113,15 +1092,7 @@
             )
                 return stripslashes($value);
 
-            if (!self::is_rfc5322_date($value))
-                return null;
-
-            $date = date_create_immutable($value);
-
-            if ($date === false)
-                return null;
-
-            return $date;
+            return self::rfc5322_date_immutable($value);
         }
 
         public static function If_Unmodified_Since($string = null): \DateTimeImmutable|null|false {
@@ -1133,15 +1104,7 @@
             if ($value === false)
                 return false;
 
-            if (!self::is_rfc5322_date($value))
-                return null;
-
-            $date = date_create_immutable($value);
-
-            if ($date === false)
-                return null;
-
-            return $date;
+            return self::rfc5322_date_immutable($value);
         }
 
         public static function Keep_Alive($string = null): array|null|false {
@@ -1180,15 +1143,7 @@
             if ($value === false)
                 return false;
 
-            if (!self::is_rfc5322_date($value))
-                return null;
-
-            $date = date_create_immutable($value);
-
-            if ($date === false)
-                return null;
-
-            return $date;
+            return self::rfc5322_date_immutable($value);
         }
 
         public static function Link($string): array|null|false {
@@ -1549,15 +1504,7 @@
             )
                 return intval($value);
 
-            if (!self::is_rfc5322_date($value))
-                return null;
-
-            $date = date_create_immutable($value);
-
-            if ($date === false)
-                return null;
-
-            return $date;
+            return self::rfc5322_date_immutable($value);
         }
 
         public static function RTT($string = null): int|null|false {
@@ -1872,10 +1819,9 @@
                                 break;
 
                             case "Expires":
-                                if (!self::is_rfc5322_date($pv))
+                                if (!$pv = self::rfc5322_date_immutable($pv))
                                     return null;
 
-                                $pv = date_create_immutable($pv);
                                 break;
 
                             case "Max-Age":
