@@ -125,8 +125,8 @@
 
             $array = array_filter(
                 $array,
-                function($string) {
-                    return ($string !== "");
+                function($value) {
+                    return !(is_string($value) and $value == "");
                 }
             );
         }
