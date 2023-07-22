@@ -5,6 +5,11 @@
         const HTTPHEADER_VERSION_MAJOR = 4;
         const HTTPHEADER_VERSION_MINOR = 0;
 
+        private static function header_from_server($name): string|false {
+            return isset($_SERVER[$name]) ?
+                $_SERVER[$name] : false ;
+        }
+
         private static function header_from_string($name, $string): string|false {
             if (!is_string($string))
                 throw new \Exception("HTTP header must be a string.");
@@ -38,11 +43,6 @@
             }
 
             return $return;
-        }
-
-        private static function header_from_server($name): string|false {
-            return isset($_SERVER[$name]) ?
-                $_SERVER[$name] : false ;
         }
 
         private static function explode_quoted_strings($delimiter, $string): ?array {
@@ -961,14 +961,23 @@
                 return false;
 
             if (
-                !preg_match(
-                    "/^[^@ ]+@[^@ ]+$/",
+                preg_match(
+                    "/^([a-z0-9!#$%&'*+-\/=?^_`{}|~\.]+|\".+\")@[a-z0-9\-\.]+$/i",
                     $value
                 )
             )
-                return null;
+                return $value;
 
-            return $value;
+            if (
+                preg_match(
+                    "/<([a-z0-9!#$%&'*+-\/=?^_`{}|~\.]+|\".+\")@[a-z0-9\-\.]+>/i",
+                    $value
+                )
+            )
+                return $value;
+
+
+            return null;
         }
 
         public static function Host($string = null): array|null|false {
