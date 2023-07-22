@@ -8,7 +8,7 @@ HTTPHeader is a PHP class for inspecting HTTP headers.
 
 ## Usage
 
-Methods for inspecting response headers must be supplied with a string containing a single header (with or without field name) or a complete HTTP response. Methods for inspecting request headers can optionally be supplied with a string containing a single header (with or without field name) or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value for the current request from the `$_SERVER` superglobal. Methods will return `false` if the header is not present or cannot be parsed.
+Methods for inspecting response headers must be supplied with a string containing a single header (with or without field name) or a complete HTTP response. Methods for inspecting request headers can optionally be supplied with a string containing a single header (with or without field name) or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal. Methods will return `false` if the header is not present or cannot be parsed.
 
 ### `HTTPHeader::Accept($string = null)`
 
