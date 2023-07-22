@@ -8,7 +8,9 @@ HTTPHeader is a PHP class for inspecting HTTP headers.
 
 ## Usage
 
-Methods for inspecting response headers must be supplied with a string containing a single header (with or without field name) or a complete HTTP response. Methods for inspecting request headers can optionally be supplied with a string containing a single header (with or without field name) or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal. Methods will return `false` if the header is not present or cannot be parsed.
+Methods for inspecting response headers must be supplied with a string containing a single header (with or without field name) or a complete HTTP response. Methods for inspecting request headers can optionally be supplied with a string containing a single header (with or without field name) or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal.
+
+Methods will return `false` if the header is not present or cannot be parsed, and `null` if the field value is malformed.
 
 ### `HTTPHeader::Accept($string = null)`
 
@@ -97,7 +99,7 @@ Example:
 
 ### `HTTPHeader::Access_Control_Allow_Methods($string)`
 
-Returns an array of method names, or `null` if the field value is invalid.
+Returns an array of method names, or `null` if the field value is malformed.
 
 Example:
 
@@ -125,7 +127,7 @@ Example:
 
 ### `HTTPHeader::Access_Control_Max_Age($string)`
 
-Returns a non-negative integer representing the number of seconds, or `null` if the field value is invalid.
+Returns a non-negative integer representing the number of seconds, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Access_Control_Request_Headers($string = null)`
 
@@ -140,15 +142,15 @@ Example:
 
 ### `HTTPHeader::Access_Control_Request_Method($string)`
 
-Returns the method name, or `null` if the field value is invalid.
+Returns the method name, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Age($string)`
 
-Returns a non-negative integer representing a time delta in seconds, or `null` if the field value is invalid.
+Returns a non-negative integer representing a time delta in seconds, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Allow($string)`
 
-Returns an array of method names, or `null` if the field value is invalid.
+Returns an array of method names, or `null` if the field value is malformed.
 
 Example:
 
@@ -181,7 +183,7 @@ Example:
 
 ### `HTTPHeader::Authorization($string = null)`
 
-Returns an array containing the authorization type and parameters, or `null` if the field value is invalid.
+Returns an array containing the authorization type and parameters, or `null` if the field value is malformed.
 
 Example:
 
@@ -227,7 +229,7 @@ Example:
 
 ### `HTTPHeader::Content_Disposition($string = null)`
 
-Returns an associative array containing the content disposition, field name and filename (if supplied), or `null` if the field value is invalid.
+Returns an associative array containing the content disposition, field name and filename (if supplied), or `null` if the field value is malformed.
 
 Example:
 
@@ -239,7 +241,7 @@ Example:
 
 ### `HTTPHeader::Content_Encoding($string)`
 
-Returns an array of encoding formats in the order in which they were applied, or `null` if the field value is invalid.
+Returns an array of encoding formats in the order in which they were applied, or `null` if the field value is malformed.
 
 Example:
 
@@ -267,11 +269,11 @@ Returns a string.
 
 ### `HTTPHeader::Content_Length($string = null)`
 
-Returns the content length in decimal number of octets, or `null` if the field value is invalid.
+Returns the content length in decimal number of octets, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Content_Range($string)`
 
-Returns an associative array containing the unit range, and size, or `null` if the field value is invalid.
+Returns an associative array containing the unit range, and size, or `null` if the field value is malformed.
 
 Example:
 
@@ -314,7 +316,7 @@ See above.
 
 ### `HTTPHeader::Content_Type($string = null)`
 
-Returns an associative array containing the content type, charset and boundary (if supplied), or `null` if the field value is invalid.
+Returns an associative array containing the content type, charset and boundary (if supplied), or `null` if the field value is malformed.
 
 Example:
 
@@ -326,7 +328,7 @@ Example:
 
 ### `HTTPHeader::Cookie($string = null)`
 
-Returns an array of arrays containing the cookie names and value, or `null` if the field value is invalid.
+Returns an array of arrays containing the cookie names and value, or `null` if the field value is malformed.
 
 Example:
 
@@ -341,19 +343,19 @@ Example:
 
 ### `HTTPHeader::Cross_Origin_Embedder_Policy($string)`
 
-Returns a policy directive, or `null` if the field value is invalid.
+Returns a policy directive, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Cross_Origin_Opener_Policy($string)`
 
-Returns a policy directive, or `null` if the field value is invalid.
+Returns a policy directive, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Cross_Origin_Resource_Policy($string)`
 
-Returns a policy directive, or `null` if the field value is invalid.
+Returns a policy directive, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Date($string = null)`
 
-Returns a DateTimeImmutable object, or `null` if the field value is invalid.
+Returns a DateTimeImmutable object, or `null` if the field value is malformed.
 
 Example:
 
@@ -366,11 +368,11 @@ Example:
 
 ### `HTTPHeader::Device_Memory($string = null)`
 
-Returns a non-negative float representing the device memory in GiB, or `null` if the field value is invalid.
+Returns a non-negative float representing the device memory in GiB, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Downlink($string = null)`
 
-Returns a non-negative float representing the downlink rate in Mbps, or `null` if the field value is invalid.
+Returns a non-negative float representing the downlink rate in Mbps, or `null` if the field value is malformed.
 
 ### `HTTPHeader::DNT($string = null)`
 
@@ -378,7 +380,7 @@ Returns 0, 1, or `null` if the value is indeterminate.
 
 ### `HTTPHeader::ETag($string)`
 
-Returns an ETag value, or `null` if the field value is invalid.
+Returns an ETag value, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Expect($string = null)`
 
@@ -386,7 +388,7 @@ Returns 100 if the value is "100-continue", or `null` otherwise.
 
 ### `HTTPHeader::Expires($string)`
 
-Returns a DateTimeImmutable object, or `null` if the field value is invalid.
+Returns a DateTimeImmutable object, or `null` if the field value is malformed.
 
 Example:
 
@@ -399,7 +401,7 @@ Example:
 
 ### `HTTPHeader::Forwarded($string = null)`
 
-Returns an array of fields, each containing an associative array of directives, or `null` if the field value is invalid.
+Returns an array of fields, each containing an associative array of directives, or `null` if the field value is malformed.
 
 Example:
 
@@ -419,11 +421,11 @@ Example:
 
 ### `HTTPHeader::From($string = null)`
 
-Returns a string containing the supplied email address, or `null` if the field value is invalid.
+Returns a string containing the supplied email address, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Host($string = null)`
 
-Returns an associative array containing the host, and port if supplied, or `null` if the field value is invalid.
+Returns an associative array containing the host, and port if supplied, or `null` if the field value is malformed.
 
 Example:
 
@@ -435,7 +437,7 @@ Example:
 
 ### `HTTPHeader::If_Match($string = null)`
 
-Returns an array of ETag values, or `null` if the field value is invalid.
+Returns an array of ETag values, or `null` if the field value is malformed.
 
 Example:
 
@@ -448,7 +450,7 @@ Example:
 
 ### `HTTPHeader::If_Modified_Since($string = null)`
 
-Returns a DateTimeImmutable object, or `null` if the field value is invalid.
+Returns a DateTimeImmutable object, or `null` if the field value is malformed.
 
 Example:
 
@@ -461,7 +463,7 @@ Example:
 
 ### `HTTPHeader::If_None_Match($string = null)`
 
-Returns an array of ETag values, or `null` if the field value is invalid.
+Returns an array of ETag values, or `null` if the field value is malformed.
 
 Example:
 
@@ -474,11 +476,11 @@ Example:
 
 ### `HTTPHeader::If_Range($string = null)`
 
-Returns a DateTimeImmutable object, or an array of ETag values, or `null` if the field value is invalid.
+Returns a DateTimeImmutable object, or an array of ETag values, or `null` if the field value is malformed.
 
 ### `HTTPHeader::If_Unmodified_Since($string = null)`
 
-Returns a DateTimeImmutable object, or `null` if the field value is invalid.
+Returns a DateTimeImmutable object, or `null` if the field value is malformed.
 
 Example:
 
@@ -491,7 +493,7 @@ Example:
 
 ### `HTTPHeader::Keep_Alive($string = null)`
 
-Returns an associative array of parameters, or `null` if the field value is invalid.
+Returns an associative array of parameters, or `null` if the field value is malformed.
 
 Example:
 
@@ -503,7 +505,7 @@ Example:
 
 ### `HTTPHeader::Last_Modified($string)`
 
-Returns a DateTimeImmutable object, or `null` if the field value is invalid.
+Returns a DateTimeImmutable object, or `null` if the field value is malformed.
 
 Example:
 
@@ -516,7 +518,7 @@ Example:
 
 ### `HTTPHeader::Link($string)`
 
-Returns an array of arrays containing the link URI and an array of parameters, or `null` if the field value is invalid.
+Returns an array of arrays containing the link URI and an array of parameters, or `null` if the field value is malformed.
 
 Example:
 
@@ -559,11 +561,11 @@ Returns a string.
 
 ### `HTTPHeader::Max_Forwards($string = null)`
 
-Returns a non-negative integer, or `null` if the field value is invalid.
+Returns a non-negative integer, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Origin($string = null)`
 
-Returns the result of `parse_url()` on the supplied value, or `null` if the field value is invalid.
+Returns the result of `parse_url()` on the supplied value, or `null` if the field value is malformed.
 
 Example:
 
@@ -575,7 +577,7 @@ Example:
 
 ### `HTTPHeader::Permissions_Policy($string)`
 
-Returns an array of arrays containing the policy directive and values, or `null` if the field value is invalid.
+Returns an array of arrays containing the policy directive and values, or `null` if the field value is malformed.
 
 Example:
 
@@ -609,7 +611,7 @@ Example:
 
 ### `HTTPHeader::Proxy_Authenticate($string)`
 
-Returns an array of arrays containing the authentication type and parameters, or `null` if the field value is invalid.
+Returns an array of arrays containing the authentication type and parameters, or `null` if the field value is malformed.
 
 Example:
 
@@ -629,7 +631,7 @@ Example:
 
 ### `HTTPHeader::Proxy_Authorization($string = null)`
 
-Returns an array containing the authorization type and parameters, or `null` if the field value is invalid.
+Returns an array containing the authorization type and parameters, or `null` if the field value is malformed.
 
 Example:
 
@@ -641,7 +643,7 @@ Example:
 
 ### `HTTPHeader::Range($string = null)`
 
-Returns an associative array containing the unit and ranges, or `null` if the field value is invalid.
+Returns an associative array containing the unit and ranges, or `null` if the field value is malformed.
 
 Example:
 
@@ -658,7 +660,7 @@ Example:
 
 ### `HTTPHeader::Referer($string = null)`
 
-Returns the result of `parse_url()` on the supplied value, or `null` if the field value is invalid.
+Returns the result of `parse_url()` on the supplied value, or `null` if the field value is malformed.
 
 Example:
 
@@ -671,15 +673,15 @@ Example:
 
 ### `HTTPHeader::Referrer_Policy($string)`
 
-Returns a directive, or `null` if the field value is invalid.
+Returns a directive, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Retry_After($string = null)`
 
-Returns a DateTimeImmutable object, or a non-negative integer representing the delay in seconds, or `null` if the field value is invalid.
+Returns a DateTimeImmutable object, or a non-negative integer representing the delay in seconds, or `null` if the field value is malformed.
 
 ### `HTTPHeader::RTT($string = null)`
 
-Returns a non-negative integer representing the approximate round trip time in milliseconds, or `null` if the field value is invalid.
+Returns a non-negative integer representing the approximate round trip time in milliseconds, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Save_Data($string = null)`
 
@@ -687,15 +689,15 @@ Returns 0 for falsey values, 1 for truthy values, or `null` if the value is inde
 
 ### `HTTPHeader::Sec_Fetch_Dest($string = null)`
 
-Returns a directive, or `null` if the field value is invalid.
+Returns a directive, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Sec_Fetch_Mode($string = null)`
 
-Returns a directive, or `null` if the field value is invalid.
+Returns a directive, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Sec_Fetch_Site($string = null)`
 
-Returns a directive, or `null` if the field value is invalid.
+Returns a directive, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Sec_Fetch_User($string = null)`
 
@@ -707,7 +709,7 @@ Returns `true` if the value is "1", or `null` otherwise.
 
 ### `HTTPHeader::Sec_Purpose($string = null)`
 
-Returns a directive, or `null` if the field value is invalid.
+Returns a directive, or `null` if the field value is malformed.
 
 ### `HTTPHeader::Server($string)`
 
@@ -715,7 +717,7 @@ Returns a string.
 
 ### `HTTPHeader::Server_Timing($string)`
 
-Returns an array of associative arrays containing the metric name, description and duration (if supplied), or `null` if the field value is invalid.
+Returns an array of associative arrays containing the metric name, description and duration (if supplied), or `null` if the field value is malformed.
 
 Example:
 
@@ -740,7 +742,7 @@ Returns a string.
 
 ### `HTTPHeader::Set_Cookie($string)`
 
-Returns an array of arrays containing the cookie name and value, and an associative array of parameter values, or `null` if the field value is invalid.
+Returns an array of arrays containing the cookie name and value, and an associative array of parameter values, or `null` if the field value is malformed.
 
 Example:
 
@@ -775,7 +777,7 @@ Returns a string.
 
 ### `HTTPHeader::Strict_Transport_Security($string)`
 
-Returns an associative array of parameter values, or `null` if the field value is invalid.
+Returns an associative array of parameter values, or `null` if the field value is malformed.
 
 Example:
 
@@ -833,7 +835,7 @@ Example:
 
 ### `HTTPHeader::Transfer_Encoding($string)`
 
-Returns an array of encoding formats in the order in which they were applied, or `null` if the field value is invalid.
+Returns an array of encoding formats in the order in which they were applied, or `null` if the field value is malformed.
 
 Example:
 
@@ -861,7 +863,7 @@ Returns 0, 1, or `null` if the value is indeterminate.
 
 ### `HTTPHeader::User_Agent($string = null)`
 
-Returns an associative array containing the product, version, and comment, or `null` if the field value is invalid.
+Returns an associative array containing the product, version, and comment, or `null` if the field value is malformed.
 
 Example:
 
@@ -911,7 +913,7 @@ Example:
 
 ### `HTTPHeader::WWW_Authenticate($string)`
 
-Returns an array of arrays containing the authentication type and parameters, or `null` if the field value is invalid.
+Returns an array of arrays containing the authentication type and parameters, or `null` if the field value is malformed.
 
 Example:
 
