@@ -5,7 +5,7 @@
         const HTTPHEADER_VERSION_MAJOR = 4;
         const HTTPHEADER_VERSION_MINOR = 0;
 
-        private static function header_extract($name, $string): string|false {
+        private static function header_from_string($name, $string): string|false {
             if (!is_string($string))
                 throw new \Exception("HTTP header must be a string.");
 
@@ -40,35 +40,12 @@
             return $return;
         }
 
-        private static function header_request($name): string|false {
-            return isset($_SERVER[$name]) ? $_SERVER[$name] : false ;
+        private static function header_from_server($name): string|false {
+            return isset($_SERVER[$name]) ?
+                $_SERVER[$name] : false ;
         }
 
-        private static function trim_whitespace(&$mixed): void {
-            if (is_array($mixed)) {
-                foreach ($mixed as &$item)
-                    self::trim_whitespace($item);
-            }
-
-            if (is_string($mixed))
-                $mixed = trim($mixed, " ");
-        }
-
-        private static function filter_no_empty(&$array): void {
-            foreach ($array as &$value) {
-                if (is_array($value))
-                    self::filter_no_empty($value);
-            }
-
-            $array = array_filter(
-                $array,
-                function($string) {
-                    return ($string !== "");
-                }
-            );
-        }
-
-        private static function explode_quoted($delimiter, $string): ?array {
+        private static function explode_quoted_strings($delimiter, $string): ?array {
             if (
                 preg_match_all(
                     "/(?<!\\\\)\"/",
@@ -126,11 +103,35 @@
             ) ? true : false ;
         }
 
+        private static function trim_whitespace(&$mixed): void {
+            if (is_array($mixed)) {
+                foreach ($mixed as &$item)
+                    self::trim_whitespace($item);
+            }
+
+            if (is_string($mixed))
+                $mixed = trim($mixed, " ");
+        }
+
+        private static function filter_no_empty(&$array): void {
+            foreach ($array as &$value) {
+                if (is_array($value))
+                    self::filter_no_empty($value);
+            }
+
+            $array = array_filter(
+                $array,
+                function($string) {
+                    return ($string !== "");
+                }
+            );
+        }
+
         public static function Accept($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_ACCEPT");
+                $value = self::header_from_server("HTTP_ACCEPT");
             else
-                $value = self::header_extract("Accept", $string);
+                $value = self::header_from_string("Accept", $string);
 
             if ($value === false)
                 return false;
@@ -143,7 +144,7 @@
         }
 
         public static function Accept_CH($string): array|false {
-            $value = self::header_extract("Accept-CH", $string);
+            $value = self::header_from_string("Accept-CH", $string);
 
             if ($value === false)
                 return false;
@@ -156,9 +157,9 @@
 
         public static function Accept_Charset($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_ACCEPT_CHARSET");
+                $value = self::header_from_server("HTTP_ACCEPT_CHARSET");
             else
-                $value = self::header_extract("Accept-Charset", $string);
+                $value = self::header_from_string("Accept-Charset", $string);
 
             if ($value === false)
                 return false;
@@ -172,9 +173,9 @@
 
         public static function Accept_Encoding($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_ACCEPT_ENCODING");
+                $value = self::header_from_server("HTTP_ACCEPT_ENCODING");
             else
-                $value = self::header_extract("Accept-Encoding", $string);
+                $value = self::header_from_string("Accept-Encoding", $string);
 
             if ($value === false)
                 return false;
@@ -188,9 +189,9 @@
 
         public static function Accept_Language($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_ACCEPT_LANGUAGE");
+                $value = self::header_from_server("HTTP_ACCEPT_LANGUAGE");
             else
-                $value = self::header_extract("Accept-Language", $string);
+                $value = self::header_from_string("Accept-Language", $string);
 
             if ($value === false)
                 return false;
@@ -203,7 +204,7 @@
         }
 
         public static function Accept_Patch($string): array|false {
-            $value = self::header_extract("Accept-Patch", $string);
+            $value = self::header_from_string("Accept-Patch", $string);
 
             if ($value === false)
                 return false;
@@ -215,7 +216,7 @@
         }
 
         public static function Accept_Post($string): array|false {
-            $value = self::header_extract("Accept-Post", $string);
+            $value = self::header_from_string("Accept-Post", $string);
 
             if ($value === false)
                 return false;
@@ -227,7 +228,7 @@
         }
 
         public static function Accept_Ranges($string): string|false {
-            $value = self::header_extract("Accept-Ranges", $string);
+            $value = self::header_from_string("Accept-Ranges", $string);
 
             if ($value === false)
                 return false;
@@ -236,7 +237,7 @@
         }
 
         public static function Access_Control_Allow_Credentials($string): ?bool {
-            $value = self::header_extract("Access-Control-Allow-Credentials", $string);
+            $value = self::header_from_string("Access-Control-Allow-Credentials", $string);
 
             if ($value === false)
                 return false;
@@ -245,7 +246,7 @@
         }
 
         public static function Access_Control_Allow_Headers($string): array|false {
-            $value = self::header_extract("Access-Control-Allow-Headers", $string);
+            $value = self::header_from_string("Access-Control-Allow-Headers", $string);
 
             if ($value === false)
                 return false;
@@ -257,7 +258,7 @@
         }
 
         public static function Access_Control_Allow_Methods($string): array|null|false {
-            $value = self::header_extract("Access-Control-Allow-Methods", $string);
+            $value = self::header_from_string("Access-Control-Allow-Methods", $string);
 
             if ($value === false)
                 return false;
@@ -287,7 +288,7 @@
         }
 
         public static function Access_Control_Allow_Origin($string): string|array|null|false {
-            $value = self::header_extract("Access-Control-Allow-Origin", $string);
+            $value = self::header_from_string("Access-Control-Allow-Origin", $string);
 
             if ($value === false)
                 return false;
@@ -307,7 +308,7 @@
         }
 
         public static function Access_Control_Expose_Headers($string): array|false {
-            $value = self::header_extract("Access-Control-Expose-Headers", $string);
+            $value = self::header_from_string("Access-Control-Expose-Headers", $string);
 
             if ($value === false)
                 return false;
@@ -319,7 +320,7 @@
         }
 
         public static function Access_Control_Max_Age($string): int|null|false {
-            $value = self::header_extract("Access-Control-Max-Age", $string);
+            $value = self::header_from_string("Access-Control-Max-Age", $string);
 
             if ($value === false)
                 return false;
@@ -332,9 +333,9 @@
 
         public static function Access_Control_Request_Headers($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_ACCESS_CONTROL_REQUEST_HEADERS");
+                $value = self::header_from_server("HTTP_ACCESS_CONTROL_REQUEST_HEADERS");
             else
-                $value = self::header_extract("Access-Control-Request-Headers", $string);
+                $value = self::header_from_string("Access-Control-Request-Headers", $string);
 
             if ($value === false)
                 return false;
@@ -347,9 +348,9 @@
 
         public static function Access_Control_Request_Method($string = null): string|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_ACCESS_CONTROL_REQUEST_METHOD");
+                $value = self::header_from_server("HTTP_ACCESS_CONTROL_REQUEST_METHOD");
             else
-                $value = self::header_extract("Access-Control-Request-Method", $string);
+                $value = self::header_from_string("Access-Control-Request-Method", $string);
 
             if ($value === false)
                 return false;
@@ -371,7 +372,7 @@
         }
 
         public static function Age($string): int|null|false {
-            $value = self::header_extract("Age", $string);
+            $value = self::header_from_string("Age", $string);
 
             if ($value === false)
                 return false;
@@ -383,7 +384,7 @@
         }
 
         public static function Allow($string): array|null|false {
-            $value = self::header_extract("Allow", $string);
+            $value = self::header_from_string("Allow", $string);
 
             if ($value === false)
                 return false;
@@ -413,7 +414,7 @@
         }
 
         public static function Alt_Svc($string): array|false {
-            $value = self::header_extract("Alt-Svc", $string);
+            $value = self::header_from_string("Alt-Svc", $string);
 
             if ($value === false)
                 return false;
@@ -430,9 +431,9 @@
 
         public static function Authorization($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_AUTHORIZATION");
+                $value = self::header_from_server("HTTP_AUTHORIZATION");
             else
-                $value = self::header_extract("Authorization", $string);
+                $value = self::header_from_string("Authorization", $string);
 
             if ($value === false)
                 return false;
@@ -453,9 +454,9 @@
 
         public static function Cache_Control($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_CACHE_CONTROL");
+                $value = self::header_from_server("HTTP_CACHE_CONTROL");
             else
-                $value = self::header_extract("Cache-Control", $string);
+                $value = self::header_from_string("Cache-Control", $string);
 
             if ($value === false)
                 return false;
@@ -467,7 +468,7 @@
         }
 
         public static function Clear_Site_Data($string): array|false {
-            $value = self::header_extract("Clear-Site-Data", $string);
+            $value = self::header_from_string("Clear-Site-Data", $string);
 
             if ($value === false)
                 return false;
@@ -484,9 +485,9 @@
 
         public static function Connection($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_CONNECTION");
+                $value = self::header_from_server("HTTP_CONNECTION");
             else
-                $value = self::header_extract("Connection", $string);
+                $value = self::header_from_string("Connection", $string);
 
             if ($value === false)
                 return false;
@@ -498,12 +499,12 @@
         }
 
         public static function Content_Disposition($string): array|null|false {
-            $value = self::header_extract("Content-Disposition", $string);
+            $value = self::header_from_string("Content-Disposition", $string);
 
             if ($value === false)
                 return false;
 
-            $params = self::explode_quoted(";", $value);
+            $params = self::explode_quoted_strings(";", $value);
 
             if ($params === null)
                 return null;
@@ -527,7 +528,7 @@
         }
 
         public static function Content_Encoding($string): array|null|false {
-            $value = self::header_extract("Content-Encoding", $string);
+            $value = self::header_from_string("Content-Encoding", $string);
 
             if ($value === false)
                 return false;
@@ -553,9 +554,9 @@
 
         public static function Content_Language($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_CONTENT_LANGUAGE");
+                $value = self::header_from_server("HTTP_CONTENT_LANGUAGE");
             else
-                $value = self::header_extract("Content-Language", $string);
+                $value = self::header_from_string("Content-Language", $string);
 
             if ($value === false)
                 return false;
@@ -568,9 +569,9 @@
 
         public static function Content_Length($string = null): int|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_CONTENT_LENGTH");
+                $value = self::header_from_server("HTTP_CONTENT_LENGTH");
             else
-                $value = self::header_extract("Content-Length", $string);
+                $value = self::header_from_string("Content-Length", $string);
 
             if ($value === false)
                 return false;
@@ -582,7 +583,7 @@
         }
 
         public static function Content_Location($string): string|false {
-            $value = self::header_extract("Content-Location", $string);
+            $value = self::header_from_string("Content-Location", $string);
 
             if ($value === false)
                 return false;
@@ -591,7 +592,7 @@
         }
 
         public static function Content_Range($string): array|null|false {
-            $value = self::header_extract("Content-Range", $string);
+            $value = self::header_from_string("Content-Range", $string);
 
             if ($value === false)
                 return false;
@@ -616,7 +617,7 @@
         }
 
         public static function Content_Security_Policy($string): array|false {
-            $value = self::header_extract("Content-Security-Policy", $string);
+            $value = self::header_from_string("Content-Security-Policy", $string);
 
             if ($value === false)
                 return false;
@@ -641,7 +642,7 @@
         }
 
         public static function Content_Security_Policy_Report_Only($string): array|false {
-            $value = self::header_extract("Content-Security-Policy-Report-Only", $string);
+            $value = self::header_from_string("Content-Security-Policy-Report-Only", $string);
 
             if ($value === false)
                 return false;
@@ -667,9 +668,9 @@
 
         public static function Content_Type($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_CONTENT_TYPE");
+                $value = self::header_from_server("HTTP_CONTENT_TYPE");
             else
-                $value = self::header_extract("Content-Type", $string);
+                $value = self::header_from_string("Content-Type", $string);
 
             if ($value === false)
                 return false;
@@ -702,9 +703,9 @@
 
         public static function Cookie($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_COOKIE");
+                $value = self::header_from_server("HTTP_COOKIE");
             else
-                $value = self::header_extract("Cookie", $string);
+                $value = self::header_from_string("Cookie", $string);
 
             if ($value === false)
                 return false;
@@ -741,7 +742,7 @@
         }
 
         public static function Cross_Origin_Embedder_Policy($string): string|null|false {
-            $value = self::header_extract("Cross-Origin-Embedder-Policy", $string);
+            $value = self::header_from_string("Cross-Origin-Embedder-Policy", $string);
 
             if ($value === false)
                 return false;
@@ -757,7 +758,7 @@
         }
 
         public static function Cross_Origin_Opener_Policy($string): string|null|false {
-            $value = self::header_extract("Cross-Origin-Opener-Policy", $string);
+            $value = self::header_from_string("Cross-Origin-Opener-Policy", $string);
 
             if ($value === false)
                 return false;
@@ -773,7 +774,7 @@
         }
 
         public static function Cross_Origin_Resource_Policy($string): string|null|false {
-            $value = self::header_extract("Cross-Origin-Resource-Policy", $string);
+            $value = self::header_from_string("Cross-Origin-Resource-Policy", $string);
 
             if ($value === false)
                 return false;
@@ -790,9 +791,9 @@
 
         public static function Date($string = null): \DateTimeImmutable|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_DATE");
+                $value = self::header_from_server("HTTP_DATE");
             else
-                $value = self::header_extract("Date", $string);
+                $value = self::header_from_string("Date", $string);
 
             if ($value === false)
                 return false;
@@ -810,9 +811,9 @@
 
         public static function Device_Memory($string = null): float|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_DEVICE_MEMORY");
+                $value = self::header_from_server("HTTP_DEVICE_MEMORY");
             else
-                $value = self::header_extract("Device-Memory", $string);
+                $value = self::header_from_string("Device-Memory", $string);
 
             if ($value === false)
                 return false;
@@ -825,9 +826,9 @@
 
         public static function Downlink($string = null): float|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_DOWNLINK");
+                $value = self::header_from_server("HTTP_DOWNLINK");
             else
-                $value = self::header_extract("Downlink", $string);
+                $value = self::header_from_string("Downlink", $string);
 
             if ($value === false)
                 return false;
@@ -840,9 +841,9 @@
 
         public static function DNT($string = null): int|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_DNT");
+                $value = self::header_from_server("HTTP_DNT");
             else
-                $value = self::header_extract("DNT", $string);
+                $value = self::header_from_string("DNT", $string);
 
             if ($value === false)
                 return false;
@@ -858,7 +859,7 @@
         }
 
         public static function ETag($string): string|null|false {
-            $value = self::header_extract("ETag", $string);
+            $value = self::header_from_string("ETag", $string);
 
             if ($value === false)
                 return false;
@@ -876,9 +877,9 @@
 
         public static function Expect($string = null): int|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_EXPECT");
+                $value = self::header_from_server("HTTP_EXPECT");
             else
-                $value = self::header_extract("Expect", $string);
+                $value = self::header_from_string("Expect", $string);
 
             if ($value === false)
                 return false;
@@ -887,7 +888,7 @@
         }
 
         public static function Expires($string): \DateTimeImmutable|null|false {
-            $value = self::header_extract("Expires", $string);
+            $value = self::header_from_string("Expires", $string);
 
             if ($value === false)
                 return false;
@@ -905,9 +906,9 @@
 
         public static function Forwarded($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_FORWARDED");
+                $value = self::header_from_server("HTTP_FORWARDED");
             else
-                $value = self::header_extract("Forwarded", $string);
+                $value = self::header_from_string("Forwarded", $string);
 
             if ($value === false)
                 return false;
@@ -952,9 +953,9 @@
 
         public static function From($string = null): string|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_FROM");
+                $value = self::header_from_server("HTTP_FROM");
             else
-                $value = self::header_extract("From", $string);
+                $value = self::header_from_string("From", $string);
 
             if ($value === false)
                 return false;
@@ -972,9 +973,9 @@
 
         public static function Host($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_HOST");
+                $value = self::header_from_server("HTTP_HOST");
             else
-                $value = self::header_extract("Host", $string);
+                $value = self::header_from_string("Host", $string);
 
             if ($value === false)
                 return false;
@@ -998,14 +999,14 @@
 
         public static function If_Match($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_IF_MATCH");
+                $value = self::header_from_server("HTTP_IF_MATCH");
             else
-                $value = self::header_extract("If-Match", $string);
+                $value = self::header_from_string("If-Match", $string);
 
             if ($value === false)
                 return false;
 
-            $etags = self::explode_quoted(",", $value);
+            $etags = self::explode_quoted_strings(",", $value);
 
             if ($etags === null)
                 return null;
@@ -1033,9 +1034,9 @@
 
         public static function If_Modified_Since($string = null): \DateTimeImmutable|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_IF_MODIFIED_SINCE");
+                $value = self::header_from_server("HTTP_IF_MODIFIED_SINCE");
             else
-                $value = self::header_extract("If-Modified-Since", $string);
+                $value = self::header_from_string("If-Modified-Since", $string);
 
             if ($value === false)
                 return false;
@@ -1053,14 +1054,14 @@
 
         public static function If_None_Match($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_IF_NONE_MATCH");
+                $value = self::header_from_server("HTTP_IF_NONE_MATCH");
             else
-                $value = self::header_extract("If-None-Match", $string);
+                $value = self::header_from_string("If-None-Match", $string);
 
             if ($value === false)
                 return false;
 
-            $etags = self::explode_quoted(",", $value);
+            $etags = self::explode_quoted_strings(",", $value);
 
             if ($etags === null)
                 return null;
@@ -1088,9 +1089,9 @@
 
         public static function If_Range($string = null): \DateTimeImmutable|string|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_IF_RANGE");
+                $value = self::header_from_server("HTTP_IF_RANGE");
             else
-                $value = self::header_extract("If-Range", $string);
+                $value = self::header_from_string("If-Range", $string);
 
             if ($value === false)
                 return false;
@@ -1116,9 +1117,9 @@
 
         public static function If_Unmodified_Since($string = null): \DateTimeImmutable|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_IF_UNMODIFIED_SINCE");
+                $value = self::header_from_server("HTTP_IF_UNMODIFIED_SINCE");
             else
-                $value = self::header_extract("If-Unmodified-Since", $string);
+                $value = self::header_from_string("If-Unmodified-Since", $string);
 
             if ($value === false)
                 return false;
@@ -1136,9 +1137,9 @@
 
         public static function Keep_Alive($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_KEEP_ALIVE");
+                $value = self::header_from_server("HTTP_KEEP_ALIVE");
             else
-                $value = self::header_extract("Keep-Alive", $string);
+                $value = self::header_from_string("Keep-Alive", $string);
 
             if ($value === false)
                 return false;
@@ -1165,7 +1166,7 @@
         }
 
         public static function Last_Modified($string): \DateTimeImmutable|null|false {
-            $value = self::header_extract("Last-Modified", $string);
+            $value = self::header_from_string("Last-Modified", $string);
 
             if ($value === false)
                 return false;
@@ -1182,12 +1183,12 @@
         }
 
         public static function Link($string): array|null|false {
-            $value = self::header_extract("Link", $string);
+            $value = self::header_from_string("Link", $string);
 
             if ($value === false)
                 return false;
 
-            $fields = self::explode_quoted(",", $value);
+            $fields = self::explode_quoted_strings(",", $value);
 
             if ($fields === null)
                 return null;
@@ -1201,7 +1202,7 @@
             $return = array();
 
             foreach ($fields as $field) {
-                $params = self::explode_quoted(";", $field);
+                $params = self::explode_quoted_strings(";", $field);
 
                 if ($params === null)
                     return null;
@@ -1252,7 +1253,7 @@
         }
 
         public static function Location($string): string|false {
-            $value = self::header_extract("Location", $string);
+            $value = self::header_from_string("Location", $string);
 
             if ($value === false)
                 return false;
@@ -1262,9 +1263,9 @@
 
         public static function Max_Forwards($string = null): int|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_MAX_FORWARDS");
+                $value = self::header_from_server("HTTP_MAX_FORWARDS");
             else
-                $value = self::header_extract("Max-Forwards", $string);
+                $value = self::header_from_string("Max-Forwards", $string);
 
             if ($value === false)
                 return false;
@@ -1277,9 +1278,9 @@
 
         public static function Origin($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_ORIGIN");
+                $value = self::header_from_server("HTTP_ORIGIN");
             else
-                $value = self::header_extract("Origin", $string);
+                $value = self::header_from_string("Origin", $string);
 
             if ($value === false)
                 return false;
@@ -1293,7 +1294,7 @@
         }
 
         public static function Permissions_Policy($string): array|false {
-            $value = self::header_extract("Permissions-Policy", $string);
+            $value = self::header_from_string("Permissions-Policy", $string);
 
             if ($value === false)
                 return false;
@@ -1313,7 +1314,7 @@
                     return null;
 
                 $directive = $match[1];
-                $allowlist = self::explode_quoted(
+                $allowlist = self::explode_quoted_strings(
                     " ",
                     isset($match[3]) ? $match[3] : $match[2]
                 );
@@ -1374,9 +1375,9 @@
 
         public static function Pragma($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_PRAGMA");
+                $value = self::header_from_server("HTTP_PRAGMA");
             else
-                $value = self::header_extract("Pragma", $string);
+                $value = self::header_from_string("Pragma", $string);
 
             if ($value === false)
                 return false;
@@ -1388,12 +1389,12 @@
         }
 
         public static function Proxy_Authenticate($string): array|null|false {
-            $value = self::header_extract("Proxy-Authenticate", $string);
+            $value = self::header_from_string("Proxy-Authenticate", $string);
 
             if ($value === false)
                 return false;
 
-            $fields = self::explode_quoted(",", $value);
+            $fields = self::explode_quoted_strings(",", $value);
 
             if ($fields === null)
                 return null;
@@ -1417,7 +1418,7 @@
                     if (isset($challenges[$count]))
                         $count++;
 
-                    $params = self::explode_quoted(" ", $field);
+                    $params = self::explode_quoted_strings(" ", $field);
 
                     if ($params === null)
                         return null;
@@ -1439,9 +1440,9 @@
 
         public static function Proxy_Authorization($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_PROXY_AUTHORIZATION");
+                $value = self::header_from_server("HTTP_PROXY_AUTHORIZATION");
             else
-                $value = self::header_extract("Proxy-Authorization", $string);
+                $value = self::header_from_string("Proxy-Authorization", $string);
 
             if ($value === false)
                 return false;
@@ -1462,9 +1463,9 @@
 
         public static function Range($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_RANGE");
+                $value = self::header_from_server("HTTP_RANGE");
             else
-                $value = self::header_extract("Range", $string);
+                $value = self::header_from_string("Range", $string);
 
             if ($value === false)
                 return false;
@@ -1489,9 +1490,9 @@
 
         public static function Referer($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_REFERER");
+                $value = self::header_from_server("HTTP_REFERER");
             else
-                $value = self::header_extract("Referer", $string);
+                $value = self::header_from_string("Referer", $string);
 
             if ($value === false)
                 return false;
@@ -1505,7 +1506,7 @@
         }
 
         public static function Referrer_Policy($string): string|null|false {
-            $value = self::header_extract("Referrer-Policy", $string);
+            $value = self::header_from_string("Referrer-Policy", $string);
 
             if ($value === false)
                 return false;
@@ -1526,7 +1527,7 @@
         }
 
         public static function Retry_After($string): \DateTimeImmutable|int|null|false {
-            $value = self::header_extract("Retry-After", $string);
+            $value = self::header_from_string("Retry-After", $string);
 
             if ($value === false)
                 return false;
@@ -1552,9 +1553,9 @@
 
         public static function RTT($string = null): int|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_RTT");
+                $value = self::header_from_server("HTTP_RTT");
             else
-                $value = self::header_extract("RTT", $string);
+                $value = self::header_from_string("RTT", $string);
 
             if ($value === false)
                 return false;
@@ -1567,9 +1568,9 @@
 
         public static function Save_Data($string = null): int|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_SAVE_DATA");
+                $value = self::header_from_server("HTTP_SAVE_DATA");
             else
-                $value = self::header_extract("Save-Data", $string);
+                $value = self::header_from_string("Save-Data", $string);
 
             if ($value === false)
                 return false;
@@ -1590,9 +1591,9 @@
 
         public static function Sec_Fetch_Dest($string = null): string|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_SEC_FETCH_DEST");
+                $value = self::header_from_server("HTTP_SEC_FETCH_DEST");
             else
-                $value = self::header_extract("Sec-Fetch-Dest", $string);
+                $value = self::header_from_string("Sec-Fetch-Dest", $string);
 
             if ($value === false)
                 return false;
@@ -1627,9 +1628,9 @@
 
         public static function Sec_Fetch_Mode($string = null): string|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_SEC_FETCH_MODE");
+                $value = self::header_from_server("HTTP_SEC_FETCH_MODE");
             else
-                $value = self::header_extract("Sec-Fetch-Mode", $string);
+                $value = self::header_from_string("Sec-Fetch-Mode", $string);
 
             if ($value === false)
                 return false;
@@ -1648,9 +1649,9 @@
 
         public static function Sec_Fetch_Site($string = null): string|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_SEC_FETCH_SITE");
+                $value = self::header_from_server("HTTP_SEC_FETCH_SITE");
             else
-                $value = self::header_extract("Sec-Fetch-Site", $string);
+                $value = self::header_from_string("Sec-Fetch-Site", $string);
 
             if ($value === false)
                 return false;
@@ -1668,9 +1669,9 @@
 
         public static function Sec_Fetch_User($string = null): ?bool {
             if (!isset($string))
-                $value = self::header_request("HTTP_SEC_FETCH_USER");
+                $value = self::header_from_server("HTTP_SEC_FETCH_USER");
             else
-                $value = self::header_extract("Sec-Fetch-User", $string);
+                $value = self::header_from_string("Sec-Fetch-User", $string);
 
             if ($value === false)
                 return false;
@@ -1680,9 +1681,9 @@
 
         public static function Sec_GPC($string = null): ?bool {
             if (!isset($string))
-                $value = self::header_request("HTTP_SEC_GPC");
+                $value = self::header_from_server("HTTP_SEC_GPC");
             else
-                $value = self::header_extract("Sec-GPC", $string);
+                $value = self::header_from_string("Sec-GPC", $string);
 
             if ($value === false)
                 return false;
@@ -1692,9 +1693,9 @@
 
         public static function Sec_Purpose($string = null): string|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_SEC_PURPOSE");
+                $value = self::header_from_server("HTTP_SEC_PURPOSE");
             else
-                $value = self::header_extract("Sec-Purpose", $string);
+                $value = self::header_from_string("Sec-Purpose", $string);
 
             if ($value === false)
                 return false;
@@ -1708,7 +1709,7 @@
         }
 
         public static function Server($string): string|false {
-            $value = self::header_extract("Server", $string);
+            $value = self::header_from_string("Server", $string);
 
             if ($value === false)
                 return false;
@@ -1717,12 +1718,12 @@
         }
 
         public static function Server_Timing($string): array|null|false {
-            $value = self::header_extract("Server-Timing", $string);
+            $value = self::header_from_string("Server-Timing", $string);
 
             if ($value === false)
                 return false;
 
-            $fields = self::explode_quoted(",", $value);
+            $fields = self::explode_quoted_strings(",", $value);
 
             if ($fields === null)
                 return null;
@@ -1736,7 +1737,7 @@
             $return = array();
 
             foreach ($fields as $field) {
-                $params = self::explode_quoted(";", $field);
+                $params = self::explode_quoted_strings(";", $field);
 
                 if ($params === null)
                     return null;
@@ -1777,9 +1778,9 @@
 
         public static function Service_Worker_Navigation_Preload($string = null): string|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_SERVICE_WORKER_NAVIGATION_PRELOAD");
+                $value = self::header_from_server("HTTP_SERVICE_WORKER_NAVIGATION_PRELOAD");
             else
-                $value = self::header_extract("Service-Worker-Navigation-Preload", $string);
+                $value = self::header_from_string("Service-Worker-Navigation-Preload", $string);
 
             if ($value === false)
                 return false;
@@ -1788,12 +1789,12 @@
         }
 
         public static function Set_Cookie($string): array|null|false {
-            $value = self::header_extract("Set-Cookie", $string);
+            $value = self::header_from_string("Set-Cookie", $string);
 
             if ($value === false)
                 return false;
 
-            $params = self::explode_quoted(";", $value);
+            $params = self::explode_quoted_strings(";", $value);
 
             if ($params === null)
                 return null;
@@ -1905,7 +1906,7 @@
         }
 
         public static function SourceMap($string): string|false {
-            $value = self::header_extract("SourceMap", $string);
+            $value = self::header_from_string("SourceMap", $string);
 
             if ($value === false)
                 return false;
@@ -1914,7 +1915,7 @@
         }
 
         public static function Strict_Transport_Security($string): array|null|false {
-            $value = self::header_extract("Strict-Transport-Security", $string);
+            $value = self::header_from_string("Strict-Transport-Security", $string);
 
             if ($value === false)
                 return false;
@@ -1957,9 +1958,9 @@
 
         public static function TE($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_TE");
+                $value = self::header_from_server("HTTP_TE");
             else
-                $value = self::header_extract("TE", $string);
+                $value = self::header_from_string("TE", $string);
 
             if ($value === false)
                 return false;
@@ -1972,7 +1973,7 @@
         }
 
         public static function Timing_Allow_Origin($string): string|array|false {
-            $value = self::header_extract("Timing-Allow-Origin", $string);
+            $value = self::header_from_string("Timing-Allow-Origin", $string);
 
             if ($value === false)
                 return false;
@@ -1992,7 +1993,7 @@
         }
 
         public static function Trailer($string): array|false {
-            $value = self::header_extract("Trailer", $string);
+            $value = self::header_from_string("Trailer", $string);
 
             if ($value === false)
                 return false;
@@ -2004,7 +2005,7 @@
         }
 
         public static function Transfer_Encoding($string): array|null|false {
-            $value = self::header_extract("Transfer-Encoding", $string);
+            $value = self::header_from_string("Transfer-Encoding", $string);
 
             if ($value === false)
                 return false;
@@ -2030,9 +2031,9 @@
 
         public static function Upgrade($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_UPGRADE");
+                $value = self::header_from_server("HTTP_UPGRADE");
             else
-                $value = self::header_extract("Upgrade", $string);
+                $value = self::header_from_string("Upgrade", $string);
 
             if ($value === false)
                 return false;
@@ -2045,9 +2046,9 @@
 
         public static function Upgrade_Insecure_Requests($string = null): int|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_UPGRADE_INSECURE_REQUESTS");
+                $value = self::header_from_server("HTTP_UPGRADE_INSECURE_REQUESTS");
             else
-                $value = self::header_extract("Upgrade-Insecure-Requests", $string);
+                $value = self::header_from_string("Upgrade-Insecure-Requests", $string);
 
             if ($value === false)
                 return false;
@@ -2064,9 +2065,9 @@
 
         public static function User_Agent($string = null): array|null|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_USER_AGENT");
+                $value = self::header_from_server("HTTP_USER_AGENT");
             else
-                $value = self::header_extract("User-Agent", $string);
+                $value = self::header_from_string("User-Agent", $string);
 
             if ($value === false)
                 return false;
@@ -2090,7 +2091,7 @@
         }
 
         public static function Vary($string): string|array|false {
-            $value = self::header_extract("Vary", $string);
+            $value = self::header_from_string("Vary", $string);
 
             if ($value === false)
                 return false;
@@ -2109,9 +2110,9 @@
 
         public static function Via($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_VIA");
+                $value = self::header_from_server("HTTP_VIA");
             else
-                $value = self::header_extract("Via", $string);
+                $value = self::header_from_string("Via", $string);
 
             if ($value === false)
                 return false;
@@ -2124,9 +2125,9 @@
 
         public static function Want_Digest($string = null): array|false {
             if (!isset($string))
-                $value = self::header_request("HTTP_WANT_DIGEST");
+                $value = self::header_from_server("HTTP_WANT_DIGEST");
             else
-                $value = self::header_extract("Want-Digest", $string);
+                $value = self::header_from_string("Want-Digest", $string);
 
             if ($value === false)
                 return false;
@@ -2139,12 +2140,12 @@
         }
 
         public static function WWW_Authenticate($string): array|null|false {
-            $value = self::header_extract("WWW-Authenticate", $string);
+            $value = self::header_from_string("WWW-Authenticate", $string);
 
             if ($value === false)
                 return false;
 
-            $fields = self::explode_quoted(",", $value);
+            $fields = self::explode_quoted_strings(",", $value);
 
             if ($fields === null)
                 return null;
@@ -2168,7 +2169,7 @@
                     if (isset($challenges[$count]))
                         $count++;
 
-                    $params = self::explode_quoted(" ", $field);
+                    $params = self::explode_quoted_strings(" ", $field);
 
                     if ($params === null)
                         return null;
