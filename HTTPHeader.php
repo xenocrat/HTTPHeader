@@ -117,6 +117,15 @@
             return ($a_q > $b_q) ? -1 : 1 ;
         }
 
+        private static function is_rfc5322_date($string): bool {
+            return (
+                preg_match(
+                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
+                    $string
+                )
+            ) ? true : false ;
+        }
+
         public static function Accept($string = null): array|false {
             if (!isset($string))
                 $value = self::header_request("HTTP_ACCEPT");
@@ -291,10 +300,10 @@
 
             $origin = parse_url($value);
 
-            if ($origin !== false)
-                return $origin;
+            if ($origin === false)
+                return null;
 
-            return null;
+            return $origin;
         }
 
         public static function Access_Control_Expose_Headers($string): array|false {
@@ -619,6 +628,11 @@
             foreach ($policy as &$directive) {
                 $params = explode(" ", $directive);
                 $directive = array(array_shift($params), $params);
+
+                foreach ($directive[1] as &$param) {
+                    if (preg_match("/^'.+'$/", $param))
+                        $param = trim($param, "'");
+                }
             }
 
             self::trim_whitespace($policy);
@@ -639,6 +653,11 @@
             foreach ($policy as &$directive) {
                 $params = explode(" ", $directive);
                 $directive = array(array_shift($params), $params);
+
+                foreach ($directive[1] as &$param) {
+                    if (preg_match("/^'.+'$/", $param))
+                        $param = trim($param, "'");
+                }
             }
 
             self::trim_whitespace($policy);
@@ -677,6 +696,7 @@
                 $return[$match[1]] = $match[2];
             }
 
+            self::trim_whitespace($return);
             return $return;
         }
 
@@ -714,8 +734,7 @@
                 )
                     return null;
 
-                $name = str_replace(".", "_", $match[1]);
-                $cookies[$name] = $match[2];
+                $cookies[] = array($match[1], $match[2]);
             }
 
             return $cookies;
@@ -778,20 +797,15 @@
             if ($value === false)
                 return false;
 
-            if (
-                !preg_match(
-                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
-                    $value
-                )
-            )
+            if (!self::is_rfc5322_date($value))
                 return null;
 
             $date = date_create_immutable($value);
 
-            if ($date !== false)
-                return $date;
+            if ($date === false)
+                return null;
 
-            return null;
+            return $date;
         }
 
         public static function Device_Memory($string = null): float|null|false {
@@ -878,20 +892,15 @@
             if ($value === false)
                 return false;
 
-            if (
-                !preg_match(
-                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
-                    $value
-                )
-            )
+            if (!self::is_rfc5322_date($value))
                 return null;
 
             $date = date_create_immutable($value);
 
-            if ($date !== false)
-                return $date;
+            if ($date === false)
+                return null;
 
-            return null;
+            return $date;
         }
 
         public static function Forwarded($string = null): array|null|false {
@@ -909,22 +918,29 @@
             $return = array();
 
             foreach ($fields as $field) {
-                $parts = explode(";", $field);
-                self::trim_whitespace($parts);
-                self::filter_no_empty($parts);
+                $params = explode(";", $field);
+                self::trim_whitespace($params);
+                self::filter_no_empty($params);
                 $directive = array();
 
-                foreach ($parts as $part) {
+                foreach ($params as $param) {
                     if (
                         !preg_match(
                             "/^(by|for|host|proto)=(.+)$/i",
-                            $part,
+                            $param,
                             $match
                         )
                     )
                         return null;
 
-                    $directive[strtolower($match[1])] = $match[2];
+                    $pn = strtolower($match[1]);
+                    $pv = trim($match[2], " ");
+
+                    if (preg_match("/^\".+\"$/", $pv))
+                        $pv = stripslashes(trim($pv, "\""));
+
+
+                    $directive[$pn] = $pv;
                 }
 
                 $return[] = $directive;
@@ -997,6 +1013,9 @@
             self::trim_whitespace($etags);
             self::filter_no_empty($etags);
 
+            if (empty($etags))
+                return null;
+
             foreach ($etags as &$etag) {
                 if (
                     !preg_match(
@@ -1021,20 +1040,15 @@
             if ($value === false)
                 return false;
 
-            if (
-                !preg_match(
-                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
-                    $value
-                )
-            )
+            if (!self::is_rfc5322_date($value))
                 return null;
 
             $date = date_create_immutable($value);
 
-            if ($date !== false)
-                return $date;
+            if ($date === false)
+                return null;
 
-            return null;
+            return $date;
         }
 
         public static function If_None_Match($string = null): array|null|false {
@@ -1052,6 +1066,10 @@
                 return null;
 
             self::trim_whitespace($etags);
+            self::filter_no_empty($etags);
+
+            if (empty($etags))
+                return null;
 
             foreach ($etags as &$etag) {
                 if (
@@ -1085,20 +1103,15 @@
             )
                 return stripslashes($value);
 
-            if (
-                !preg_match(
-                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
-                    $value
-                )
-            )
+            if (!self::is_rfc5322_date($value))
                 return null;
 
             $date = date_create_immutable($value);
 
-            if ($date !== false)
-                return $date;
+            if ($date === false)
+                return null;
 
-            return null;
+            return $date;
         }
 
         public static function If_Unmodified_Since($string = null): \DateTimeImmutable|null|false {
@@ -1110,20 +1123,15 @@
             if ($value === false)
                 return false;
 
-            if (
-                !preg_match(
-                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
-                    $value
-                )
-            )
+            if (!self::is_rfc5322_date($value))
                 return null;
 
             $date = date_create_immutable($value);
 
-            if ($date !== false)
-                return $date;
+            if ($date === false)
+                return null;
 
-            return null;
+            return $date;
         }
 
         public static function Keep_Alive($string = null): array|null|false {
@@ -1152,6 +1160,7 @@
                 $return[$match[1]] = $match[2];
             }
 
+            self::trim_whitespace($return);
             return $return;
         }
 
@@ -1161,20 +1170,15 @@
             if ($value === false)
                 return false;
 
-            if (
-                !preg_match(
-                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
-                    $value
-                )
-            )
+            if (!self::is_rfc5322_date($value))
                 return null;
 
             $date = date_create_immutable($value);
 
-            if ($date !== false)
-                return $date;
+            if ($date === false)
+                return null;
 
-            return null;
+            return $date;
         }
 
         public static function Link($string): array|null|false {
@@ -1190,6 +1194,10 @@
 
             self::trim_whitespace($fields);
             self::filter_no_empty($fields);
+
+            if (empty($fields))
+                return null;
+
             $return = array();
 
             foreach ($fields as $field) {
@@ -1220,20 +1228,20 @@
                 foreach ($params as $param) {
                     if (
                         !preg_match(
-                            "/^([^=]+)=(\"?.+?\"?)$/",
+                            "/^([^=]+)=(.+?)$/",
                             $param,
                             $match
                         )
                     )
                         return null;
 
-                    $pn = str_replace(".", "_", $match[1]);
+                    $pn = $match[1];
                     $pv = trim($match[2], " ");
 
-                    if (strpos($pv, "\"") === 0)
+                    if (preg_match("/^\".+\"$/", $pv))
                         $pv = stripslashes(trim($pv, "\""));
 
-                    $directive[1][$pn] = $pv;
+                    $directive[1][] = array($pn, $pv);
                 }
 
                 $return[] = $directive;
@@ -1290,30 +1298,78 @@
             if ($value === false)
                 return false;
 
-            $policy = explode(",", $value);
-            self::trim_whitespace($policy);
-            self::filter_no_empty($policy);
+            $policies = explode(",", $value);
+            self::trim_whitespace($policies);
+            self::filter_no_empty($policies);
 
-            foreach ($policy as &$directive) {
+            foreach ($policies as &$policy) {
                 if (
                     !preg_match(
                         "/^([a-zA-Z0-9\-]+)=(\*|\(([^)]*)\))$/",
-                        $directive,
+                        $policy,
                         $match
                     )
                 )
                     return null;
 
-                $params = isset($match[3]) ?
-                    explode(" ", $match[3]) :
-                    array($match[2]) ;
+                $directive = $match[1];
+                $allowlist = self::explode_quoted(
+                    " ",
+                    isset($match[3]) ? $match[3] : $match[2]
+                );
 
-                $directive = array($match[1], $params);
+                if ($allowlist === null)
+                    return null;
+
+                switch ($directive) {
+                    case "accelerometer":
+                    case "ambient-light-sensor":
+                    case "autoplay":
+                    case "battery":
+                    case "camera":
+                    case "display-capture":
+                    case "document-domain":
+                    case "encrypted-media":
+                    case "execution-while-not-rendered":
+                    case "execution-while-out-of-viewport":
+                    case "fullscreen":
+                    case "gamepad":
+                    case "geolocation":
+                    case "gyroscope":
+                    case "hid":
+                    case "identity-credentials-get":
+                    case "idle-detection":
+                    case "local-fonts":
+                    case "magnetometer":
+                    case "microphone":
+                    case "midi":
+                    case "payment":
+                    case "picture-in-picture":
+                    case "publickey-credentials-create":
+                    case "publickey-credentials-get":
+                    case "screen-wake-lock":
+                    case "serial":
+                    case "speaker-selection":
+                    case "storage-access":
+                    case "usb":
+                    case "web-share":
+                    case "xr-spatial-tracking":
+                        break;
+                    default:
+                        return null;
+                }
+
+                foreach ($allowlist as &$origin) {
+                    if (preg_match("/^\".+\"$/", $origin))
+                        $origin = stripslashes(trim($origin, "\""));
+                }
+
+                $policy = array($directive, $allowlist);
             }
 
-            self::trim_whitespace($policy);
-            self::filter_no_empty($policy);
-            return $policy;
+            self::trim_whitespace($policies);
+            self::filter_no_empty($policies);
+            return $policies;
         }
 
         public static function Pragma($string = null): array|false {
@@ -1337,48 +1393,47 @@
             if ($value === false)
                 return false;
 
-            $array = preg_split(
-                "/(^|, *)([a-zA-Z0-9_\-]+)( +|$)/",
-                rtrim($value, ", "),
-                0,
-                PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
-            );
+            $fields = self::explode_quoted(",", $value);
 
-            $array = array_filter(
-                $array,
-                function($string) {
-                    return preg_match(
-                        "/^( +|, *)$/",
-                        $string
-                    ) ? false : true ;
-                }
-            );
+            if ($fields === null)
+                return null;
+
+            self::trim_whitespace($fields);
+            self::filter_no_empty($fields);
+
+            if (empty($fields))
+                return null;
 
             $challenges = array();
             $count = 0;
 
-            foreach ($array as $chunk) {
+            foreach ($fields as $field) {
                 if (
                     preg_match(
-                        "/^[a-zA-Z0-9_\-]+$/",
-                        $chunk,
-                        $match,
+                        "/^[a-zA-Z0-9_\-]+( +[^=]|$)/",
+                        $field
                     )
                 ) {
                     if (isset($challenges[$count]))
                         $count++;
 
-                    $challenges[$count] = array($chunk);
-                    continue;
+                    $params = self::explode_quoted(" ", $field);
+
+                    if ($params === null)
+                        return null;
+
+                    self::trim_whitespace($params);
+                    self::filter_no_empty($params);
+
+                    $challenges[$count] = $params;
+                } else {
+                    if (!isset($challenges[$count]))
+                        return null;
+
+                    $challenges[$count][] = $field;
                 }
-
-                if (!isset($challenges[$count]))
-                    return null;
-
-                $challenges[$count][] = $chunk;
             }
 
-            self::trim_whitespace($challenges);
             return $challenges;
         }
 
@@ -1484,20 +1539,15 @@
             )
                 return intval($value);
 
-            if (
-                !preg_match(
-                    "/^[A-Z][a-z]{2}, [0-9]{2} [A-Z][a-z]{2} [0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT$/",
-                    $value
-                )
-            )
+            if (!self::is_rfc5322_date($value))
                 return null;
 
             $date = date_create_immutable($value);
 
-            if ($date !== false)
-                return $date;
+            if ($date === false)
+                return null;
 
-            return null;
+            return $date;
         }
 
         public static function RTT($string = null): int|null|false {
@@ -1672,18 +1722,21 @@
             if ($value === false)
                 return false;
 
-            $pieces = self::explode_quoted(",", $value);
+            $fields = self::explode_quoted(",", $value);
 
-            if ($pieces === null)
+            if ($fields === null)
                 return null;
 
-            self::trim_whitespace($pieces);
-            self::filter_no_empty($pieces);
+            self::trim_whitespace($fields);
+            self::filter_no_empty($fields);
+
+            if (empty($fields))
+                return null;
 
             $return = array();
 
-            foreach ($pieces as $piece) {
-                $params = self::explode_quoted(";", $piece);
+            foreach ($fields as $field) {
+                $params = self::explode_quoted(";", $field);
 
                 if ($params === null)
                     return null;
@@ -1691,22 +1744,25 @@
                 self::trim_whitespace($params);
                 self::filter_no_empty($params);
 
+                if (empty($params))
+                    return null;
+
                 $metric = array("name" => array_shift($params));
 
                 foreach ($params as $param) {
                     if (
                         !preg_match(
-                            "/^(desc|dur)=(\"?.+?\"?)$/",
+                            "/^(desc|dur)=(.+?)$/",
                             $param,
                             $match
                         )
                     )
                         return null;
 
-                    $pn = str_replace(".", "_", $match[1]);
+                    $pn = $match[1];
                     $pv = trim($match[2], " ");
 
-                    if (strpos($pv, "\"") === 0)
+                    if (preg_match("/^\".+\"$/", $pv))
                         $pv = stripslashes(trim($pv, "\""));
 
                     $metric[$pn] = $pv;
@@ -1716,6 +1772,186 @@
             }
 
             self::trim_whitespace($return);
+            return $return;
+        }
+
+        public static function Service_Worker_Navigation_Preload($string = null): string|false {
+            if (!isset($string))
+                $value = self::header_request("HTTP_SERVICE_WORKER_NAVIGATION_PRELOAD");
+            else
+                $value = self::header_extract("Service-Worker-Navigation-Preload", $string);
+
+            if ($value === false)
+                return false;
+
+            return $value;
+        }
+
+        public static function Set_Cookie($string): array|null|false {
+            $value = self::header_extract("Set-Cookie", $string);
+
+            if ($value === false)
+                return false;
+
+            $params = self::explode_quoted(";", $value);
+
+            if ($params === null)
+                return null;
+
+            self::trim_whitespace($params);
+            self::filter_no_empty($params);
+
+            if (empty($params))
+                return null;
+
+            $return = array(
+                array(),
+                array(
+                    "Path" => false,
+                    "Domain" => false,
+                    "SameSite" => false,
+                    "Expires" => false,
+                    "Max-Age" => false,
+                    "HttpOnly" => false,
+                    "Secure" => false,
+                    "Partitioned" => false,
+                )
+            );
+
+            foreach ($params as $index => $param) {
+                if ($index == 0) {
+                    if (
+                        !preg_match(
+                            "/^([^()<>@,;:\\\\ \"\/\[\]\?={}\t]+)=\"?([^\",;\\\\]+)\"?$/",
+                            $param,
+                            $match
+                        )
+                    )
+                        return null;
+
+                    $return[0] = array($match[1], $match[2]);
+                } else {
+                    if (
+                        preg_match(
+                            "/^([a-zA-Z0-9\-]+)=(.+)$/",
+                            $param,
+                            $match
+                        )
+                    ) {
+                        $pn = $match[1];
+                        $pv = trim($match[2], " ");
+
+                        if (!strlen($pv))
+                            return null;
+
+                        switch ($pn) {
+                            case "Path":
+                            case "Domain":
+                                break;
+
+                            case "SameSite":
+                                switch ($pv) {
+                                    case "Strict":
+                                    case "Lax":
+                                    case "None":
+                                        break;
+                                    default:
+                                        return null;
+                                }
+
+                                break;
+
+                            case "Expires":
+                                if (!self::is_rfc5322_date($pv))
+                                    return null;
+
+                                $pv = date_create_immutable($pv);
+                                break;
+
+                            case "Max-Age":
+                                if (
+                                    !preg_match(
+                                        "/^-?[0-9]+$/",
+                                        $pv
+                                    )
+                                )
+                                    return null;
+
+                                $pv = intval($pv);
+                                break;
+
+                            default:
+                                return null;
+                        }
+
+                        $return[1][$pn] = $pv;
+                    } else {
+                        switch ($param) {
+                            case "HttpOnly":
+                            case "Secure":
+                            case "Partitioned":
+                                break;
+                            default:
+                                return null;
+                        }
+
+                        $return[1][$param] = true;
+                    }
+                }
+            }
+
+            self::trim_whitespace($return);
+            return $return;
+        }
+
+        public static function SourceMap($string): string|false {
+            $value = self::header_extract("SourceMap", $string);
+
+            if ($value === false)
+                return false;
+
+            return $value;
+        }
+
+        public static function Strict_Transport_Security($string): array|null|false {
+            $value = self::header_extract("Strict-Transport-Security", $string);
+
+            if ($value === false)
+                return false;
+
+            $params = explode(";", $value);
+            self::trim_whitespace($params);
+            self::filter_no_empty($params);
+            $return = array(
+                "max-age" => null,
+                "includeSubDomains" => false,
+                "preload" => false
+            );
+
+            foreach ($params as $param) {
+                if (
+                    preg_match(
+                        "/^(max-age)=([0-9]+)$/",
+                        $param,
+                        $match
+                    )
+                ) {
+                    $return["max-age"] = intval($match[2]);
+                } else {
+                    switch ($param) {
+                        case "includeSubDomains":
+                        case "preload":
+                            $return[$param] = true;
+                            break;
+                        default:
+                            return null;
+                    }
+                }
+            }
+
+            if (!isset($return["max-age"]))
+                return null;
+
             return $return;
         }
 
@@ -1733,6 +1969,63 @@
             self::filter_no_empty($encodings);
             usort($encodings, "self::q_sort");
             return $encodings;
+        }
+
+        public static function Timing_Allow_Origin($string): string|array|false {
+            $value = self::header_extract("Timing-Allow-Origin", $string);
+
+            if ($value === false)
+                return false;
+
+            $origins = explode(",", $value);
+            self::trim_whitespace($origins);
+            self::filter_no_empty($origins);
+
+            foreach ($origins as &$origin) {
+                if ($origin == "*")
+                    return $origin;
+
+                $origin = parse_url($origin);
+            }
+
+            return $origins;
+        }
+
+        public static function Trailer($string): array|false {
+            $value = self::header_extract("Trailer", $string);
+
+            if ($value === false)
+                return false;
+
+            $protocols = explode(",", $value);
+            self::trim_whitespace($protocols);
+            self::filter_no_empty($protocols);
+            return $protocols;
+        }
+
+        public static function Transfer_Encoding($string): array|null|false {
+            $value = self::header_extract("Transfer-Encoding", $string);
+
+            if ($value === false)
+                return false;
+
+            $directives = explode(",", $value);
+            self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
+
+            foreach ($directives as $directive) {
+                switch ($directive) {
+                    case "gzip":
+                    case "compress":
+                    case "deflate":
+                    case "chunked":
+                        break;
+                    default:
+                        return null;
+                }
+            }
+
+            return $directives;
         }
 
         public static function Upgrade($string = null): array|false {
@@ -1796,7 +2089,7 @@
             return $return;
         }
 
-        public static function Vary($string): array|false {
+        public static function Vary($string): string|array|false {
             $value = self::header_extract("Vary", $string);
 
             if ($value === false)
@@ -1805,6 +2098,12 @@
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
+
+            foreach ($directives as $directive) {
+                if ($directive == "*")
+                    return $directive;
+            }
+
             return $directives;
         }
 
@@ -1845,48 +2144,47 @@
             if ($value === false)
                 return false;
 
-            $array = preg_split(
-                "/(^|, *)([a-zA-Z0-9_\-]+)( +|$)/",
-                rtrim($value, ", "),
-                0,
-                PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
-            );
+            $fields = self::explode_quoted(",", $value);
 
-            $array = array_filter(
-                $array,
-                function($string) {
-                    return preg_match(
-                        "/^( +|, *)$/",
-                        $string
-                    ) ? false : true ;
-                }
-            );
+            if ($fields === null)
+                return null;
+
+            self::trim_whitespace($fields);
+            self::filter_no_empty($fields);
+
+            if (empty($fields))
+                return null;
 
             $challenges = array();
             $count = 0;
 
-            foreach ($array as $chunk) {
+            foreach ($fields as $field) {
                 if (
                     preg_match(
-                        "/^[a-zA-Z0-9_\-]+$/",
-                        $chunk,
-                        $match,
+                        "/^[a-zA-Z0-9_\-]+( +[^=]|$)/",
+                        $field
                     )
                 ) {
                     if (isset($challenges[$count]))
                         $count++;
 
-                    $challenges[$count] = array($chunk);
-                    continue;
+                    $params = self::explode_quoted(" ", $field);
+
+                    if ($params === null)
+                        return null;
+
+                    self::trim_whitespace($params);
+                    self::filter_no_empty($params);
+
+                    $challenges[$count] = $params;
+                } else {
+                    if (!isset($challenges[$count]))
+                        return null;
+
+                    $challenges[$count][] = $field;
                 }
-
-                if (!isset($challenges[$count]))
-                    return null;
-
-                $challenges[$count][] = $chunk;
             }
 
-            self::trim_whitespace($challenges);
             return $challenges;
         }
     }

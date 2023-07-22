@@ -123,7 +123,6 @@ Example:
         [0] => Content-Encoding
     )
 
-
 ### `HTTPHeader::Access_Control_Max_Age($string)`
 
 Returns a non-negative integer representing the number of seconds, or `null` if the field value is invalid.
@@ -182,7 +181,7 @@ Example:
 
 ### `HTTPHeader::Authorization($string = null)`
 
-Returns an array containing the authorization type and comma-separated parameters, or `null` if the field value is invalid.
+Returns an array containing the authorization type and parameters, or `null` if the field value is invalid.
 
 Example:
 
@@ -211,8 +210,8 @@ Example:
 
     Array
     (
-        [0] => "storage"
-        [1] => "cookies"
+        [0] => storage
+        [1] => cookies
     )
 
 ### `HTTPHeader::Connection($string = null)`
@@ -296,8 +295,8 @@ Example:
                 [0] => default-src
                 [1] => Array
                     (
-                        [0] => 'self'
-                        [1] => 'nonce-DhcnhD3khTMePgXwdayK9BsMqXjhguVV'
+                        [0] => self
+                        [1] => nonce-DhcnhD3khTMePgXwdayK9BsMqXjhguVV
                     )
             )
         [1] => Array
@@ -305,7 +304,7 @@ Example:
                 [0] => form-action
                 [1] => Array
                     (
-                        [0] => 'self'
+                        [0] => self
                     )
             )
 
@@ -327,13 +326,17 @@ Example:
 
 ### `HTTPHeader::Cookie($string = null)`
 
-Returns an associative array of cookie names and values, or `null` if the field value is invalid.
+Returns an array of arrays containing the cookie names and value, or `null` if the field value is invalid.
 
 Example:
 
     Array
     (
-        [Session] => 0ae5ab57925bcbee58917d552acb4cd4
+        [0] => Array
+            (
+                [0] => Session
+                [1] => 0ae5ab57925bcbee58917d552acb4cd4
+            )
     )
 
 ### `HTTPHeader::Cross_Origin_Embedder_Policy($string)`
@@ -513,7 +516,7 @@ Example:
 
 ### `HTTPHeader::Link($string)`
 
-Returns an array of arrays containing the link URI and an associative array of parameters, or `null` if the field value is invalid.
+Returns an array of arrays containing the link URI and an array of parameters, or `null` if the field value is invalid.
 
 Example:
 
@@ -524,7 +527,11 @@ Example:
                 [0] => https://one.example.com
                 [1] => Array
                     (
-                        [rel] => "preconnect"
+                        [0] => Array
+                            (
+                                [0] => rel
+                                [1] => preconnect
+                            )
                     )
             )
         [1] => Array
@@ -532,8 +539,16 @@ Example:
                 [0] => https://two.example.com
                 [1] => Array
                     (
-                        [rel] => "preconnect"
-                        [foo] => bar
+                        [0] => Array
+                            (
+                                [0] => rel
+                                [1] => preconnect
+                            )
+                        [1] => Array
+                            (
+                                [0] => foo
+                                [1] => bar
+                            )
                     )
             )
     )
@@ -594,7 +609,7 @@ Example:
 
 ### `HTTPHeader::Proxy_Authenticate($string)`
 
-Returns an array of arrays containing the authentication type and comma-separated parameters, or `null` if the field value is invalid.
+Returns an array of arrays containing the authentication type and parameters, or `null` if the field value is invalid.
 
 Example:
 
@@ -614,7 +629,7 @@ Example:
 
 ### `HTTPHeader::Proxy_Authorization($string = null)`
 
-Returns an array containing the authorization type and comma-separated parameters, or `null` if the field value is invalid.
+Returns an array containing the authorization type and parameters, or `null` if the field value is invalid.
 
 Example:
 
@@ -714,9 +729,61 @@ Example:
         [1] => Array
             (
                 [name] => cache
-                [desc] => "Cache Read"
+                [desc] => Cache Read
                 [dur] => 23.2
             )
+    )
+
+### `HTTPHeader::Service_Worker_Navigation_Preload($string)`
+
+Returns a string.
+
+### `HTTPHeader::Set_Cookie($string)`
+
+Returns an array of arrays containing the cookie name and value, and an associative array of parameter values, or `null` if the field value is invalid.
+
+Example:
+
+    Array
+    (
+        [0] => Array
+            (
+                [0] => Session
+                [1] => 0ae5ab57925bcbee58917d552acb4cd4
+            )
+        [1] => Array
+            (
+                [Path] => /
+                [Domain] => example.com
+                [SameSite] => 
+                [Expires] => DateTimeImmutable Object
+                    (
+                        [date] => 2015-10-21 07:28:00.000000
+                        [timezone_type] => 2
+                        [timezone] => GMT
+                    )
+                [Max-Age] => 20
+                [HttpOnly] => 1
+                [Secure] => 1
+                [Partitioned] => 
+            )
+    )
+
+### `HTTPHeader::SourceMap($string)`
+
+Returns a string.
+
+### `HTTPHeader::Strict_Transport_Security($string)`
+
+Returns an associative array of parameter values, or `null` if the field value is invalid.
+
+Example:
+
+    Array
+    (
+        [max-age] => 63072000
+        [includeSubDomains] => 1
+        [preload] => 1
     )
 
 ### `HTTPHeader::TE($string = null)`
@@ -731,6 +798,50 @@ Example:
         [1] => gzip
         [2] => deflate;q=0.5
     ) 
+
+### `HTTPHeader::Timing_Allow_Origin($string)`
+
+Returns the string "\*", or an array containing the results of `parse_url()` on each of the supplied values.
+
+Example:
+
+    Array
+    (
+        [0] => Array
+            (
+                [scheme] => https
+                [host] => mozilla.org
+            )
+        [1] => Array
+            (
+                [scheme] => http
+                [host] => example.com
+            )
+    )
+
+### `HTTPHeader::Trailer($string)`
+
+Returns an array of field names.
+
+Example:
+
+    Array
+    (
+        [0] => Expires
+        [1] => Date
+    )
+
+### `HTTPHeader::Transfer_Encoding($string)`
+
+Returns an array of encoding formats in the order in which they were applied, or `null` if the field value is invalid.
+
+Example:
+
+    Array
+    (
+        [0] => gzip
+        [1] => chunked
+    )
 
 ### `HTTPHeader::Upgrade($string = null)`
 
@@ -761,6 +872,18 @@ Example:
         [comment] => (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0
     )
 
+### `HTTPHeader::Vary($string)`
+
+Returns the string "\*", or an array of field names.
+
+Example:
+
+    Array
+    (
+        [0] => Cookie
+        [1] => Save-Data
+    )
+
 ### `HTTPHeader::Via($string = null)`
 
 Returns an array of proxy identifiers.
@@ -788,7 +911,7 @@ Example:
 
 ### `HTTPHeader::WWW_Authenticate($string)`
 
-Returns an array of arrays containing the authentication type and comma-separated parameters, or `null` if the field value is invalid.
+Returns an array of arrays containing the authentication type and parameters, or `null` if the field value is invalid.
 
 Example:
 
@@ -796,16 +919,19 @@ Example:
     (
         [0] => Array
             (
-                [0] => Basic
-                [1] => realm="foo", auth-param1=auth-param1-token, auth-param2=auth-param2-token
+                [0] => scheme1
+                [3] => realm="foo"
+                [4] => param1=token1
+                [5] => param2=token2
             )
         [1] => Array
             (
-                [0] => Foobar
-                [1] => realm="bar"
+                [0] => scheme2
+                [1] => token68
+                [2] => realm="bar"
             )
         [2] => Array
             (
-                [0] => Barbaz
+                [0] => scheme3
             )
     )
