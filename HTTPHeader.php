@@ -107,6 +107,19 @@
             return ($date !== false) ? $date : null ;
         }
 
+        private static function parse_origin($string): ?array {
+            if (
+                !preg_match(
+                    "/^[a-z]+:\/\/[a-z0-9\-\.:]+(:[0-9]+)?(\/|$)/",
+                    $string
+                )
+            )
+                return null;
+
+            $origin = parse_url($string);
+            return ($origin !== false) ? $origin : null ;
+        }
+
         private static function trim_whitespace(&$mixed): void {
             if (is_array($mixed)) {
                 foreach ($mixed as &$item)
@@ -303,12 +316,7 @@
             if ($value === "null")
                 return null;
 
-            $origin = parse_url($value);
-
-            if ($origin === false)
-                return null;
-
-            return $origin;
+            return self::parse_origin($value);
         }
 
         public static function Access_Control_Expose_Headers($string): array|false {
@@ -950,7 +958,7 @@
 
             if (
                 preg_match(
-                    "/^([a-z0-9!#$%&'*+-\/=?^_`{}|~\.]+|\".+\")@[a-z0-9\-\.]+$/i",
+                    "/^([a-z0-9!#$%&'*+-\/=?^_`{}|~\.]+|\".+\")@[a-z0-9\-\.:]+$/i",
                     $value
                 )
             )
@@ -958,7 +966,7 @@
 
             if (
                 preg_match(
-                    "/<([a-z0-9!#$%&'*+-\/=?^_`{}|~\.]+|\".+\")@[a-z0-9\-\.]+>/i",
+                    "/<([a-z0-9!#$%&'*+-\/=?^_`{}|~\.]+|\".+\")@[a-z0-9\-\.:]+>/i",
                     $value
                 )
             )
@@ -978,7 +986,7 @@
 
             if (
                 !preg_match(
-                    "/^(.+?)(:([0-9]+))?$/",
+                    "/^([a-z0-9\-\.:]+?)(:([0-9]+))?$/",
                     $value,
                     $match
                 )
@@ -1249,12 +1257,7 @@
             if ($value === false)
                 return false;
 
-            $origin = parse_url($value);
-
-            if ($origin !== false)
-                return $origin;
-
-            return null;
+            return self::parse_origin($value);
         }
 
         public static function Permissions_Policy($string): array|false {
@@ -1461,12 +1464,7 @@
             if ($value === false)
                 return false;
 
-            $referer = parse_url($value);
-
-            if ($referer !== false)
-                return $referer;
-
-            return null;
+            return self::parse_origin($value);
         }
 
         public static function Referrer_Policy($string): string|null|false {
@@ -1941,7 +1939,7 @@
                 if ($origin == "*")
                     return $origin;
 
-                $origin = parse_url($origin);
+                $origin = self::parse_origin($origin);
             }
 
             return $origins;
