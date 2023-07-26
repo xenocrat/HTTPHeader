@@ -8,9 +8,11 @@ HTTPHeader is a PHP class for inspecting HTTP headers.
 
 ## Usage
 
-Methods for inspecting response headers must be supplied with a string containing a single header (with or without field name) or a complete HTTP response. Methods for inspecting request headers can optionally be supplied with a string containing a single header (with or without field name) or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal.
+Methods for inspecting response headers must be supplied with a string containing a single header (with or without field name) or a complete HTTP response.
 
-Methods will return `false` if the header is not present or cannot be parsed, and `null` if the field value is malformed.
+Methods for inspecting request headers can optionally be supplied with a string containing a single header (with or without field name) or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal.
+
+Methods will return `false` if the header is not present or cannot be parsed, and `null` if the field value is noticeably malformed.
 
 ### `HTTPHeader::Accept($string = null)`
 
@@ -112,7 +114,7 @@ Example:
 
 ### `HTTPHeader::Access_Control_Allow_Origin($string)`
 
-Returns the string "\*", or the result of `parse_url()` on the supplied value, or `null` if the value is either "null" or invalid.
+Returns the string "\*", or the result of `parse_url()` on the supplied value, or `null` if the value is "null".
 
 ### `HTTPHeader::Access_Control_Expose_Headers($string)`
 
@@ -384,7 +386,7 @@ Returns an ETag value.
 
 ### `HTTPHeader::Expect($string = null)`
 
-Returns 100 if the value is "100-continue", or `null` otherwise.
+Returns the integer 100 if the value is "100-continue", or `null` otherwise.
 
 ### `HTTPHeader::Expires($string)`
 
