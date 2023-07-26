@@ -14,6 +14,7 @@
             if (!is_string($string))
                 throw new \Exception("HTTP header must be a string.");
 
+            $name = preg_quote($name, "/");
             $return = false;
 
             if (strpos($string, "\r\n\r\n") !== false) {
@@ -43,6 +44,38 @@
             }
 
             return $return;
+        }
+
+        private static function q_sort($a, $b): int {
+            $a_q = preg_match(
+                "/;q=([0-9\.]+)$/",
+                $a,
+                $a_match
+            ) ? floatval($a_match[1]) : 1.0 ;
+
+            $b_q = preg_match(
+                "/;q=([0-9\.]+)$/",
+                $b,
+                $b_match
+            ) ? floatval($b_match[1]) : 1.0 ;
+
+            if ($a_q == $b_q)
+                return 0;
+
+            return ($a_q > $b_q) ? -1 : 1 ;
+        }
+
+        private static function parse_origin($string): ?array {
+            if (
+                !preg_match(
+                    "/^[a-z]+:\/\/[a-z0-9\-\.:]+(:[0-9]+)?(\/|$)/",
+                    $string
+                )
+            )
+                return null;
+
+            $origin = parse_url($string);
+            return ($origin !== false) ? $origin : null ;
         }
 
         private static function explode_quoted_strings($delimiter, $string): ?array {
@@ -75,25 +108,6 @@
             return $fixed;
         }
 
-        private static function q_sort($a, $b): int {
-            $a_q = preg_match(
-                "/;q=([0-9\.]+)$/",
-                $a,
-                $a_match
-            ) ? floatval($a_match[1]) : 1.0 ;
-
-            $b_q = preg_match(
-                "/;q=([0-9\.]+)$/",
-                $b,
-                $b_match
-            ) ? floatval($b_match[1]) : 1.0 ;
-
-            if ($a_q == $b_q)
-                return 0;
-
-            return ($a_q > $b_q) ? -1 : 1 ;
-        }
-
         private static function rfc5322_date_immutable($string): \DateTimeImmutable|null {
             if (
                 !preg_match(
@@ -105,19 +119,6 @@
 
             $date = date_create_immutable($string);
             return ($date !== false) ? $date : null ;
-        }
-
-        private static function parse_origin($string): ?array {
-            if (
-                !preg_match(
-                    "/^[a-z]+:\/\/[a-z0-9\-\.:]+(:[0-9]+)?(\/|$)/",
-                    $string
-                )
-            )
-                return null;
-
-            $origin = parse_url($string);
-            return ($origin !== false) ? $origin : null ;
         }
 
         private static function trim_whitespace(&$mixed): void {
@@ -1260,13 +1261,17 @@
             return self::parse_origin($value);
         }
 
-        public static function Permissions_Policy($string): array|false {
+        public static function Permissions_Policy($string): array|null|false {
             $value = self::header_from_string("Permissions-Policy", $string);
 
             if ($value === false)
                 return false;
 
-            $policies = explode(",", $value);
+            $policies = self::explode_quoted_strings(",", $value);
+
+            if ($policies === null)
+                return null;
+
             self::trim_whitespace($policies);
             self::filter_no_empty($policies);
 
