@@ -715,7 +715,19 @@ Returns a directive.
 
 ### `HTTPHeader::Server($string)`
 
-Returns a string.
+Returns an array of associative arrays containing the product, version and comment (if supplied).
+
+Example:
+
+    Array
+    (
+        [0] => Array
+            (
+                [product] => Apache
+                [version] => 2.4.1
+                [comment] => Unix
+            )
+    )
 
 ### `HTTPHeader::Server_Timing($string)`
 
@@ -865,15 +877,28 @@ Returns 0, 1, or `null` if the value is indeterminate.
 
 ### `HTTPHeader::User_Agent($string = null)`
 
-Returns an associative array containing the product, version, and comment.
+Returns an array of associative arrays containing the product, version and comment (if supplied).
 
 Example:
 
     Array
     (
-        [product] => Mozilla
-        [version] => 5.0
-        [comment] => (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0
+        [0] => Array
+            (
+                [product] => Mozilla
+                [version] => 5.0
+                [comment] => Windows NT 10.0; Win64; x64; rv:109.0
+            )
+        [1] => Array
+            (
+                [product] => Gecko
+                [version] => 20100101
+            )
+        [2] => Array
+            (
+                [product] => Firefox
+                [version] => 115.0
+            )
     )
 
 ### `HTTPHeader::Vary($string)`
@@ -890,14 +915,30 @@ Example:
 
 ### `HTTPHeader::Via($string = null)`
 
-Returns an array of proxy identifiers.
+Returns an array of associative arrays containing the details supplied by each proxy.
 
 Example:
 
     Array
     (
-        [0] => 1.0 foo
-        [1] => 1.1 bar.example.com
+        [0] => Array
+            (
+                [protocol] => HTTP
+                [version] => 1.0
+                [pseudonym] => foo
+            )
+        [1] => Array
+            (
+                [version] => 1.1
+                [pseudonym] => bar
+            )
+        [2] => Array
+            (
+                [version] => 1.1
+                [pseudonym] => example.com
+                [port] => 80
+                [comment] => this is a comment
+            )
     )
 
 ### `HTTPHeader::Want_Digest($string = null)`
