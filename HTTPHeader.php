@@ -82,7 +82,7 @@
             if (
                 preg_match_all(
                     "/(?<!\\\\)\"/",
-                    $string,
+                    $string
                 ) % 2 != 0
             )
                 return null;
@@ -102,6 +102,48 @@
                 ) {
                     $fixed[] = $chunk;
                     $chunk = "";
+                } else {
+                    $chunk.= $delimiter;
+                }
+            }
+
+            return $fixed;
+        }
+
+        private static function explode_commented_strings($delimiter, $string): ?array {
+            if (
+                preg_match_all(
+                    "/(?<!\\\\)\(/",
+                    $string,
+                ) !==
+                preg_match_all(
+                    "/(?<!\\\\)\)/",
+                    $string,
+                )
+            )
+                return null;
+
+            $array = explode($delimiter, $string);
+            $chunk = "";
+            $fixed = array();
+
+            foreach ($array as $value) {
+                $chunk.= $value;
+
+                if (
+                    preg_match_all(
+                        "/(?<!\\\\)\(/",
+                        $chunk
+                    ) ===
+                    preg_match_all(
+                        "/(?<!\\\\)\)/",
+                        $chunk
+                    )
+                ) {
+                    $fixed[] = $chunk;
+                    $chunk = "";
+                } else {
+                    $chunk.= $delimiter;
                 }
             }
 
@@ -440,6 +482,32 @@
             self::trim_whitespace($services);
             self::filter_no_empty($services);
             return $services;
+        }
+
+        public static function Alt_Used($string = null): array|null|false {
+            if (!isset($string))
+                $value = self::header_from_server("HTTP_ALT_USED");
+            else
+                $value = self::header_from_string("Alt-Used", $string);
+
+            if ($value === false)
+                return false;
+
+            if (
+                !preg_match(
+                    "/^([a-z0-9\-\.]+)(:([0-9]+))?$/",
+                    $value,
+                    $match
+                )
+            )
+                return null;
+
+            $return = array("host" => $match[1]);
+
+            if (isset($match[3]))
+                $return["port"] = $match[3];
+
+            return $return;
         }
 
         public static function Authorization($string = null): array|null|false {
@@ -987,7 +1055,7 @@
 
             if (
                 !preg_match(
-                    "/^([a-z0-9\-\.:]+?)(:([0-9]+))?$/",
+                    "/^([a-z0-9\-\.]+)(:([0-9]+))?$/",
                     $value,
                     $match
                 )
@@ -1667,13 +1735,57 @@
             }
         }
 
-        public static function Server($string): string|false {
+        public static function Server($string): array|null|false {
             $value = self::header_from_string("Server", $string);
 
             if ($value === false)
                 return false;
 
-            return $value;
+            $directives = self::explode_commented_strings(" ", $value);
+
+            if ($directives === null)
+                return null;
+
+            self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
+
+            $identifiers = array();
+            $count = 0;
+
+            foreach ($directives as $directive) {
+                if (
+                    preg_match(
+                        "/^([^\/()]+)(\/([0-9\.]+))?$/",
+                        $directive,
+                        $match
+                    )
+                ) {
+                    if (isset($identifiers[$count]))
+                        $count++;
+
+                    $identifiers[$count] = array("product" => $match[1]);
+
+                    if (isset($match[3]))
+                        $identifiers[$count]["version"] = $match[3];
+                } else {
+                    if (!isset($identifiers[$count]))
+                        return null;
+
+                    if (
+                        !preg_match(
+                            "/^\((.+)\)$/",
+                            $directive,
+                            $match
+                        )
+                    )
+                        return null;
+
+                    $identifiers[$count]["comment"] = stripslashes($match[1]);
+                    $count++;
+                }
+            }
+
+            return $identifiers;
         }
 
         public static function Server_Timing($string): array|null|false {
@@ -2030,22 +2142,51 @@
             if ($value === false)
                 return false;
 
-            if (
-                !preg_match(
-                    "/^([^\/]+)\/([0-9\.]+) (.+)$/",
-                    $value,
-                    $match
-                )
-            )
+            $directives = self::explode_commented_strings(" ", $value);
+
+            if ($directives === null)
                 return null;
 
-            $return = array(
-                "product" => $match[1],
-                "version" => $match[2],
-                "comment" => $match[3]
-            );
+            self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
 
-            return $return;
+            $identifiers = array();
+            $count = 0;
+
+            foreach ($directives as $directive) {
+                if (
+                    preg_match(
+                        "/^([^\/()]+)(\/([0-9\.]+))?$/",
+                        $directive,
+                        $match
+                    )
+                ) {
+                    if (isset($identifiers[$count]))
+                        $count++;
+
+                    $identifiers[$count] = array("product" => $match[1]);
+
+                    if (isset($match[3]))
+                        $identifiers[$count]["version"] = $match[3];
+                } else {
+                    if (!isset($identifiers[$count]))
+                        return null;
+
+                    if (
+                        !preg_match(
+                            "/^\((.+)\)$/",
+                            $directive,
+                            $match
+                        )
+                    )
+                        return null;
+
+                    $identifiers[$count]["comment"] = stripslashes($match[1]);
+                    $count++;
+                }
+            }
+
+            return $identifiers;
         }
 
         public static function Vary($string): string|array|false {
@@ -2066,7 +2207,7 @@
             return $directives;
         }
 
-        public static function Via($string = null): array|false {
+        public static function Via($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_VIA");
             else
@@ -2075,9 +2216,44 @@
             if ($value === false)
                 return false;
 
-            $proxies = explode(",", $value);
-            self::trim_whitespace($proxies);
-            self::filter_no_empty($proxies);
+            $directives = self::explode_commented_strings(",", $value);
+
+            if ($directives === null)
+                return null;
+
+            self::trim_whitespace($directives);
+            self::filter_no_empty($directives);
+
+            $proxies = array();
+
+            foreach ($directives as $directive) {
+                if (
+                    !preg_match(
+                        "/^(([^ \/:()]+)\/)?([0-9\.]+) +([^ \/:()]+)(:([0-9]+))?( +\((.+)\))?$/",
+                        $directive,
+                        $match,
+                        PREG_UNMATCHED_AS_NULL
+                    )
+                )
+                    return null;
+
+                $proxy = array();
+
+                if (isset($match[2]))
+                    $proxy["protocol"] = $match[2];
+
+                $proxy["version"] = $match[3];
+                $proxy["pseudonym"] = $match[4];
+
+                if (isset($match[6]))
+                    $proxy["port"] = $match[6];
+
+                if (isset($match[8]))
+                    $proxy["comment"] = stripslashes($match[8]);
+
+                $proxies[] = $proxy;
+            }
+
             return $proxies;
         }
 
