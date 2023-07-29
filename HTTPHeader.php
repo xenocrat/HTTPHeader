@@ -78,7 +78,7 @@
             return ($origin !== false) ? $origin : null ;
         }
 
-        private static function explode_quoted_strings($delimiter, $string): ?array {
+        private static function explode_preserve_quoted($delimiter, $string): ?array {
             if (
                 preg_match_all(
                     "/(?<!\\\\)\"/",
@@ -110,7 +110,7 @@
             return $fixed;
         }
 
-        private static function explode_commented_strings($delimiter, $string): ?array {
+        private static function explode_preserve_comments($delimiter, $string): ?array {
             if (
                 preg_match_all(
                     "/(?<!\\\\)\(/",
@@ -585,7 +585,7 @@
             if ($value === false)
                 return false;
 
-            $params = self::explode_quoted_strings(";", $value);
+            $params = self::explode_preserve_quoted(";", $value);
 
             if ($params === null)
                 return null;
@@ -1079,7 +1079,7 @@
             if ($value === false)
                 return false;
 
-            $etags = self::explode_quoted_strings(",", $value);
+            $etags = self::explode_preserve_quoted(",", $value);
 
             if ($etags === null)
                 return null;
@@ -1126,7 +1126,7 @@
             if ($value === false)
                 return false;
 
-            $etags = self::explode_quoted_strings(",", $value);
+            $etags = self::explode_preserve_quoted(",", $value);
 
             if ($etags === null)
                 return null;
@@ -1229,7 +1229,7 @@
             if ($value === false)
                 return false;
 
-            $fields = self::explode_quoted_strings(",", $value);
+            $fields = self::explode_preserve_quoted(",", $value);
 
             if ($fields === null)
                 return null;
@@ -1243,7 +1243,7 @@
             $return = array();
 
             foreach ($fields as $field) {
-                $params = self::explode_quoted_strings(";", $field);
+                $params = self::explode_preserve_quoted(";", $field);
 
                 if ($params === null)
                     return null;
@@ -1335,7 +1335,7 @@
             if ($value === false)
                 return false;
 
-            $policies = self::explode_quoted_strings(",", $value);
+            $policies = self::explode_preserve_quoted(",", $value);
 
             if ($policies === null)
                 return null;
@@ -1354,7 +1354,7 @@
                     return null;
 
                 $directive = $match[1];
-                $allowlist = self::explode_quoted_strings(
+                $allowlist = self::explode_preserve_quoted(
                     " ",
                     isset($match[3]) ? $match[3] : $match[2]
                 );
@@ -1434,7 +1434,7 @@
             if ($value === false)
                 return false;
 
-            $fields = self::explode_quoted_strings(",", $value);
+            $fields = self::explode_preserve_quoted(",", $value);
 
             if ($fields === null)
                 return null;
@@ -1458,7 +1458,7 @@
                     if (isset($challenges[$count]))
                         $count++;
 
-                    $params = self::explode_quoted_strings(" ", $field);
+                    $params = self::explode_preserve_quoted(" ", $field);
 
                     if ($params === null)
                         return null;
@@ -1741,7 +1741,7 @@
             if ($value === false)
                 return false;
 
-            $directives = self::explode_commented_strings(" ", $value);
+            $directives = self::explode_preserve_comments(" ", $value);
 
             if ($directives === null)
                 return null;
@@ -1794,7 +1794,7 @@
             if ($value === false)
                 return false;
 
-            $fields = self::explode_quoted_strings(",", $value);
+            $fields = self::explode_preserve_quoted(",", $value);
 
             if ($fields === null)
                 return null;
@@ -1808,7 +1808,7 @@
             $return = array();
 
             foreach ($fields as $field) {
-                $params = self::explode_quoted_strings(";", $field);
+                $params = self::explode_preserve_quoted(";", $field);
 
                 if ($params === null)
                     return null;
@@ -1865,7 +1865,7 @@
             if ($value === false)
                 return false;
 
-            $params = self::explode_quoted_strings(";", $value);
+            $params = self::explode_preserve_quoted(";", $value);
 
             if ($params === null)
                 return null;
@@ -2142,7 +2142,7 @@
             if ($value === false)
                 return false;
 
-            $directives = self::explode_commented_strings(" ", $value);
+            $directives = self::explode_preserve_comments(" ", $value);
 
             if ($directives === null)
                 return null;
@@ -2216,7 +2216,7 @@
             if ($value === false)
                 return false;
 
-            $directives = self::explode_commented_strings(",", $value);
+            $directives = self::explode_preserve_comments(",", $value);
 
             if ($directives === null)
                 return null;
@@ -2279,7 +2279,7 @@
             if ($value === false)
                 return false;
 
-            $fields = self::explode_quoted_strings(",", $value);
+            $fields = self::explode_preserve_quoted(",", $value);
 
             if ($fields === null)
                 return null;
@@ -2303,7 +2303,7 @@
                     if (isset($challenges[$count]))
                         $count++;
 
-                    $params = self::explode_quoted_strings(" ", $field);
+                    $params = self::explode_preserve_quoted(" ", $field);
 
                     if ($params === null)
                         return null;
