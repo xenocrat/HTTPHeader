@@ -12,37 +12,28 @@
 
         private static function header_from_string($name, $string): string|false {
             if (!is_string($string))
-                throw new \Exception("HTTP header must be a string.");
+                throw new \Exception("HTTP message must be supplied as a string.");
 
             $name = preg_quote($name, "/");
             $return = false;
 
-            if (strpos($string, "\r\n\r\n") !== false) {
-                $fields = explode("\r\n", strstr($string, "\r\n\r\n", true));
+            if (strpos($string, "\r\n\r\n") !== false)
+                $string = strstr($string, "\r\n\r\n", true);
 
-                foreach ($fields as $field) {
-                    if (
-                        preg_match(
-                            "/^($name:)(.+)$/i",
-                            $field,
-                            $match
-                        )
-                    ) {
-                        $return = $match[2];
-                        self::trim_whitespace($return);
-                    }
-                }
-            } elseif (
-                preg_match(
-                    "/^($name:)?(.+?)(\r\n)?$/i",
-                    $string,
-                    $match
+            $fields = explode("\r\n", $string);
+
+            foreach ($fields as $field) {
+                if (
+                    preg_match(
+                        "/^($name):(.+)$/i",
+                        $field,
+                        $match
+                    )
                 )
-            ) {
-                $return = $match[2];
-                self::trim_whitespace($return);
+                    $return = $match[2];
             }
 
+            self::trim_whitespace($return);
             return $return;
         }
 
@@ -63,19 +54,6 @@
                 return 0;
 
             return ($a_q > $b_q) ? -1 : 1 ;
-        }
-
-        private static function parse_origin($string): ?array {
-            if (
-                !preg_match(
-                    "/^[a-z]+:\/\/[a-z0-9\-\.:]+(:[0-9]+)?(\/|$)/",
-                    $string
-                )
-            )
-                return null;
-
-            $origin = parse_url($string);
-            return ($origin !== false) ? $origin : null ;
         }
 
         private static function explode_preserve_quoted($delimiter, $string): ?array {
@@ -148,6 +126,19 @@
             }
 
             return $fixed;
+        }
+
+        private static function parse_origin($string): ?array {
+            if (
+                !preg_match(
+                    "/^[a-z]+:\/\/[a-z0-9\-\.:]+(:[0-9]+)?(\/|$)/",
+                    $string
+                )
+            )
+                return null;
+
+            $origin = parse_url($string);
+            return ($origin !== false) ? $origin : null ;
         }
 
         private static function rfc5322_date_immutable($string): \DateTimeImmutable|null {
