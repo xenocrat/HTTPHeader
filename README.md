@@ -8,9 +8,9 @@ HTTPHeader is a PHP class for inspecting HTTP headers.
 
 ## Usage
 
-Methods for inspecting response headers must be supplied with a string containing a single header (with or without field name) or a complete HTTP response.
+Methods for inspecting response headers must be supplied with a string containing a single header with field name or a complete HTTP response.
 
-Methods for inspecting request headers can optionally be supplied with a string containing a single header (with or without field name) or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal.
+Methods for inspecting request headers can optionally be supplied with a string containing a single header with field name or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal.
 
 Methods will return `false` if the header is not present or cannot be parsed, and `null` if the field value is noticeably malformed.
 
@@ -165,7 +165,7 @@ Example:
 
 ### `HTTPHeader::Alt_Svc($string)`
 
-Returns an array of arrays containing the comma-separated parameters for each alternative service.
+Returns the string "clear", or an array of associative arrays containing the parameters for each alternative service.
 
 Example:
 
@@ -173,14 +173,32 @@ Example:
     (
         [0] => Array
             (
-                [0] => h3-25=":443"
-                [1] => ma=3600
+                [protocol] => h3-25
+                [host] => 
+                [port] => 443
+                [ma] => 3600
+                [persist] => 1
             )
         [1] => Array
             (
-                [0] => h2=":443"
-                [1] => ma=3600
+                [protocol] => h2
+                [host] => example.com
+                [port] => 443
+                [ma] => 3600
+                [persist] => 
             )
+    )
+
+### `HTTPHeader::Alt_Used($string = null)`
+
+Returns an associative array containing the host, and port if supplied.
+
+Example:
+
+    Array
+    (
+        [host] => example.com
+        [port] => 80
     )
 
 ### `HTTPHeader::Authorization($string = null)`
@@ -275,7 +293,7 @@ Returns the content length in decimal number of octets.
 
 ### `HTTPHeader::Content_Range($string)`
 
-Returns an associative array containing the unit range, and size.
+Returns an associative array containing the unit, range, and size.
 
 Example:
 
