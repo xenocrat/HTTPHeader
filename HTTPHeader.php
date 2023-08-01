@@ -459,20 +459,104 @@
             return $methods;
         }
 
-        public static function Alt_Svc($string): array|false {
+        public static function Alt_Svc($string): string|array|null|false {
             $value = self::header_from_string("Alt-Svc", $string);
 
             if ($value === false)
                 return false;
 
-            $services = explode(",", $value);
+            if ($value == "clear")
+                return $value;
 
-            foreach ($services as &$service)
-                $service = explode(";", $service);
+            $fields = self::explode_preserve_quoted(",", $value);
 
-            self::trim_whitespace($services);
-            self::filter_no_empty($services);
-            return $services;
+            if ($fields === null)
+                return null;
+
+            self::trim_whitespace($fields);
+            self::filter_no_empty($fields);
+
+            if (empty($fields))
+                return null;
+
+            $return = array();
+
+            foreach ($fields as $field) {
+                $params = self::explode_preserve_quoted(";", $field);
+
+                if ($params === null)
+                    return null;
+
+                self::trim_whitespace($params);
+                self::filter_no_empty($params);
+
+                if (empty($params))
+                    return null;
+
+                $service = array(
+                    "protocol" => null,
+                    "host" => null,
+                    "port" => null,
+                    "ma" => null,
+                    "persist" => false
+                );
+
+                foreach ($params as $index => $param) {
+                    if (
+                        !preg_match(
+                            "/^([^=]+)=(.+)$/",
+                            $param,
+                            $match
+                        )
+                    )
+                        return null;
+
+                    $pn = $match[1];
+                    $pv = $match[2];
+
+                    if ($index == 0) {
+                        if (preg_match("/^\".+\"$/", $pv))
+                            $pv = stripslashes(trim($pv, "\""));
+
+                        if (
+                            !preg_match(
+                                "/^([a-z0-9\-\.\[\]:]+)?(:([0-9]+))$/",
+                                $pv,
+                                $authority,
+                                PREG_UNMATCHED_AS_NULL
+                            )
+                        )
+                            return null;
+
+                        $service["protocol"] = rawurldecode($pn);
+                        $service["host"] = $authority[1];
+                        $service["port"] = $authority[3];
+                    } else {
+                        switch ($pn) {
+                            case "ma":
+                                if (
+                                    !preg_match(
+                                        "/^[0-9]+$/",
+                                        $pv
+                                    )
+                                )
+                                    return null;
+
+                                $service["ma"] = intval($pv);
+                                break;
+
+                            case "persist":
+                                $service["persist"] = ($pv == "1");
+                                break;
+                        }
+                    }
+                }
+
+                $return[] = $service;
+            }
+
+            self::trim_whitespace($return);
+            return $return;
         }
 
         public static function Alt_Used($string = null): array|null|false {
@@ -486,7 +570,7 @@
 
             if (
                 !preg_match(
-                    "/^([a-z0-9\-\.]+)(:([0-9]+))?$/",
+                    "/^([a-z0-9\-\.\[\]:]+?)(:([0-9]+))?$/i",
                     $value,
                     $match
                 )
@@ -969,15 +1053,31 @@
             if ($value === false)
                 return false;
 
-            $fields = explode(",", $value);
+            $fields = self::explode_preserve_quoted(",", $value);
+
+            if ($fields === null)
+                return null;
+
             self::trim_whitespace($fields);
             self::filter_no_empty($fields);
+
+            if (empty($fields))
+                return null;
+
             $return = array();
 
             foreach ($fields as $field) {
-                $params = explode(";", $field);
+                $params = self::explode_preserve_quoted(";", $field);
+
+                if ($params === null)
+                    return null;
+
                 self::trim_whitespace($params);
                 self::filter_no_empty($params);
+
+                if (empty($params))
+                    return null;
+
                 $directive = array();
 
                 foreach ($params as $param) {
@@ -995,7 +1095,6 @@
 
                     if (preg_match("/^\".+\"$/", $pv))
                         $pv = stripslashes(trim($pv, "\""));
-
 
                     $directive[$pn] = $pv;
                 }
@@ -1046,7 +1145,7 @@
 
             if (
                 !preg_match(
-                    "/^([a-z0-9\-\.]+)(:([0-9]+))?$/",
+                    "/^([a-z0-9\-\.\[\]:]+?)(:([0-9]+))?$/i",
                     $value,
                     $match
                 )
@@ -1261,7 +1360,7 @@
                 foreach ($params as $param) {
                     if (
                         !preg_match(
-                            "/^([^=]+)=(.+?)$/",
+                            "/^([^=]+)=(.+)$/",
                             $param,
                             $match
                         )
@@ -1333,6 +1432,9 @@
 
             self::trim_whitespace($policies);
             self::filter_no_empty($policies);
+
+            if (empty($policies))
+                return null;
 
             foreach ($policies as &$policy) {
                 if (
@@ -1740,6 +1842,9 @@
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
 
+            if (empty($directives))
+                return null;
+
             $identifiers = array();
             $count = 0;
 
@@ -1815,7 +1920,7 @@
                 foreach ($params as $param) {
                     if (
                         !preg_match(
-                            "/^(desc|dur)=(.+?)$/",
+                            "/^(desc|dur)=(.+)$/",
                             $param,
                             $match
                         )
@@ -1870,11 +1975,11 @@
             $return = array(
                 array(),
                 array(
-                    "Path" => false,
-                    "Domain" => false,
-                    "SameSite" => false,
-                    "Expires" => false,
-                    "Max-Age" => false,
+                    "Path" => null,
+                    "Domain" => null,
+                    "SameSite" => null,
+                    "Expires" => null,
+                    "Max-Age" => null,
                     "HttpOnly" => false,
                     "Secure" => false,
                     "Partitioned" => false,
@@ -2141,6 +2246,9 @@
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
 
+            if (empty($directives))
+                return null;
+
             $identifiers = array();
             $count = 0;
 
@@ -2214,6 +2322,9 @@
 
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
+
+            if (empty($directives))
+                return null;
 
             $proxies = array();
 
