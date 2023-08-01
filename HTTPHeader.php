@@ -972,6 +972,33 @@
             ) ? floatval($value) : null ;
         }
 
+        public static function Digest($string): array|null|false {
+            $value = self::header_from_string("Digest", $string);
+
+            if ($value === false)
+                return false;
+
+            $params = explode(",", $value);
+            self::trim_whitespace($params);
+            $return = array();
+
+            foreach ($params as $param) {
+                if (
+                    !preg_match(
+                        "/^([^=]+)=(.+)$/",
+                        $param,
+                        $match
+                    )
+                )
+                    return null;
+
+                $return[] = array($match[1], $match[2]);
+            }
+
+            self::trim_whitespace($return);
+            return $return;
+        }
+
         public static function Downlink($string = null): float|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_DOWNLINK");
