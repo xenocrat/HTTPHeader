@@ -6,8 +6,12 @@
         const HTTPHEADER_VERSION_MINOR = 0;
 
         private static function header_from_server($name): string|false {
-            return isset($_SERVER[$name]) ?
-                $_SERVER[$name] : false ;
+            if (!isset($_SERVER[$name]))
+                return false;
+
+            $value = $_SERVER[$name];
+            self::trim_whitespace($value);
+            return ($value != "") ? $value : false ;
         }
 
         private static function header_from_string($name, $string): string|false {
@@ -30,10 +34,13 @@
                         $match
                     )
                 )
-                    $return = $match[2];
+                    $value = $match[2];
+                    self::trim_whitespace($value);
+
+                    if ($value != "")
+                        $return = $value;
             }
 
-            self::trim_whitespace($return);
             return $return;
         }
 
@@ -293,7 +300,7 @@
             if ($value === false)
                 return false;
 
-            return ($value === "true") ? true : null ;
+            return ($value == "true") ? true : null ;
         }
 
         public static function Access_Control_Allow_Headers($string): array|false {
@@ -344,10 +351,10 @@
             if ($value === false)
                 return false;
 
-            if ($value === "*")
+            if ($value == "*")
                 return $value;
 
-            if ($value === "null")
+            if ($value == "null")
                 return null;
 
             return self::parse_origin($value);
@@ -1059,7 +1066,7 @@
             if ($value === false)
                 return false;
 
-            return ($value === "100-continue") ? 100 : null ;
+            return ($value == "100-continue") ? 100 : null ;
         }
 
         public static function Expires($string): \DateTimeImmutable|null|false {
@@ -1835,7 +1842,7 @@
             if ($value === false)
                 return false;
 
-            return ($value === "1") ? true : null ;
+            return ($value == "1") ? true : null ;
         }
 
         public static function Sec_Purpose($string = null): string|null|false {
