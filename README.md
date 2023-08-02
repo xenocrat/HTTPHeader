@@ -12,6 +12,7 @@ Methods for inspecting response headers must be supplied with a string containin
 
 Examples:
 
+    use xenocrat\HTTPHeader;
     $result = HTTPHeader::Server("Server: Apache");
     $result = HTTPHeader::Server("Content-Type: text/plain\r\nServer: Apache");
     $result = HTTPHeader::Server("HTTP/1.1 200 OK\r\nServer: Apache\r\n\r\nHello, world!");
@@ -20,13 +21,14 @@ Methods for inspecting request headers can optionally be supplied with a string 
 
 Examples:
 
+    use xenocrat\HTTPHeader;
     $result = HTTPHeader::Accept();
     $result = HTTPHeader::Accept("Accept: text/html, application/xhtml+xml");
     $result = HTTPHeader::Accept("Accept: text/html\r\nAccept-Encoding: gzip");
 
 Methods will return `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
-### `HTTPHeader::Accept($string = null)`
+### `Accept($string = null)`
 
 Returns an array sorted by "q" value.
 
@@ -41,15 +43,15 @@ Example:
         [4] => */*;q=0.8
     )
 
-### `HTTPHeader::Accept_CH($string)`
+### `Accept_CH($string)`
 
 Returns an array of client hint headers.
 
-### `HTTPHeader::Accept_Charset($string = null)`
+### `Accept_Charset($string = null)`
 
 Returns an array sorted by "q" value.
 
-### `HTTPHeader::Accept_Encoding($string = null)`
+### `Accept_Encoding($string = null)`
 
 Returns an array sorted by "q" value.
 
@@ -62,7 +64,7 @@ Example:
     )
 
 
-### `HTTPHeader::Accept_Language($string = null)`
+### `Accept_Language($string = null)`
 
 Returns an array sorted by "q" value.
 
@@ -75,7 +77,7 @@ Example:
         [2] => en-US;q=0.3
     )
 
-### `HTTPHeader::Accept_Patch($string)`
+### `Accept_Patch($string)`
 
 Returns an array of media types.
 
@@ -87,7 +89,7 @@ Example:
         [1] => text/example;charset=utf-8
     )
 
-### `HTTPHeader::Accept_Post($string)`
+### `Accept_Post($string)`
 
 Returns an array of media types.
 
@@ -99,15 +101,15 @@ Example:
         [1] => text/example;charset=utf-8
     )
 
-### `HTTPHeader::Accept_Ranges($string)`
+### `Accept_Ranges($string)`
 
 Returns a range unit.
 
-### `HTTPHeader::Access_Control_Allow_Credentials($string)`
+### `Access_Control_Allow_Credentials($string)`
 
 Returns `true` if the value is "true", or `null` otherwise.
 
-### `HTTPHeader::Access_Control_Allow_Headers($string)`
+### `Access_Control_Allow_Headers($string)`
 
 Returns an array of headers.
 
@@ -119,7 +121,7 @@ Example:
         [1] => Upgrade-Insecure-Requests
     )
 
-### `HTTPHeader::Access_Control_Allow_Methods($string)`
+### `Access_Control_Allow_Methods($string)`
 
 Returns an array of method names.
 
@@ -132,11 +134,11 @@ Example:
         [2] => OPTIONS
     )
 
-### `HTTPHeader::Access_Control_Allow_Origin($string)`
+### `Access_Control_Allow_Origin($string)`
 
 Returns the string "\*", the string "null" if the value is "null", or the result of `parse_url()` on the supplied value.
 
-### `HTTPHeader::Access_Control_Expose_Headers($string)`
+### `Access_Control_Expose_Headers($string)`
 
 Returns an array of headers.
 
@@ -147,11 +149,11 @@ Example:
         [0] => Content-Encoding
     )
 
-### `HTTPHeader::Access_Control_Max_Age($string)`
+### `Access_Control_Max_Age($string)`
 
 Returns a non-negative integer representing the number of seconds.
 
-### `HTTPHeader::Access_Control_Request_Headers($string = null)`
+### `Access_Control_Request_Headers($string = null)`
 
 Returns an array of headers.
 
@@ -162,15 +164,15 @@ Example:
         [0] => Content-Type
     )
 
-### `HTTPHeader::Access_Control_Request_Method($string = null)`
+### `Access_Control_Request_Method($string = null)`
 
 Returns the method name.
 
-### `HTTPHeader::Age($string)`
+### `Age($string)`
 
 Returns a non-negative integer representing a time delta in seconds.
 
-### `HTTPHeader::Allow($string)`
+### `Allow($string)`
 
 Returns an array of method names.
 
@@ -183,7 +185,7 @@ Example:
         [2] => HEAD
     )
 
-### `HTTPHeader::Alt_Svc($string)`
+### `Alt_Svc($string)`
 
 Returns the string "clear", or an array of associative arrays containing the parameters for each alternative service.
 
@@ -209,7 +211,7 @@ Example:
             )
     )
 
-### `HTTPHeader::Alt_Used($string = null)`
+### `Alt_Used($string = null)`
 
 Returns an associative array containing the host, and port if supplied.
 
@@ -221,7 +223,7 @@ Example:
         [port] => 80
     )
 
-### `HTTPHeader::Authorization($string = null)`
+### `Authorization($string = null)`
 
 Returns an array containing the authorization type and parameters.
 
@@ -233,7 +235,7 @@ Example:
         [1] => YWxhZGRpbjpvcGVuc2VzYW1l
     )
 
-### `HTTPHeader::Cache_Control($string = null)`
+### `Cache_Control($string = null)`
 
 Returns an array of directives.
 
@@ -244,7 +246,7 @@ Example:
         [0] => only-if-cached
     )
 
-### `HTTPHeader::Clear_Site_Data($string)`
+### `Clear_Site_Data($string)`
 
 Returns an array of directives.
 
@@ -256,7 +258,7 @@ Example:
         [1] => cookies
     )
 
-### `HTTPHeader::Connection($string = null)`
+### `Connection($string = null)`
 
 Returns an array of directives.
 
@@ -267,7 +269,7 @@ Example:
         [0] => keep-alive
     )
 
-### `HTTPHeader::Content_Disposition($string)`
+### `Content_Disposition($string)`
 
 Returns an associative array containing the content disposition, field name and filename (if supplied).
 
@@ -279,7 +281,7 @@ Example:
         [filename] => filename.jpg
     )
 
-### `HTTPHeader::Content_Encoding($string)`
+### `Content_Encoding($string)`
 
 Returns an array of encoding formats in the order in which they were applied.
 
@@ -291,7 +293,7 @@ Example:
         [1] => gzip
     )
 
-### `HTTPHeader::Content_Language($string = null)`
+### `Content_Language($string = null)`
 
 Returns an array of language tags.
 
@@ -303,15 +305,15 @@ Example:
         [1] => en
     )
 
-### `HTTPHeader::Content_Length($string = null)`
+### `Content_Length($string = null)`
 
 Returns the content length in decimal number of octets.
 
-### `HTTPHeader::Content_Location($string)`
+### `Content_Location($string)`
 
 Returns a string.
 
-### `HTTPHeader::Content_Range($string)`
+### `Content_Range($string)`
 
 Returns an associative array containing the unit, range, and size.
 
@@ -324,7 +326,7 @@ Example:
         [size] => 67589
     )
 
-### `HTTPHeader::Content_Security_Policy($string)`
+### `Content_Security_Policy($string)`
 
 Returns an array of arrays containing the policy directive and values.
 
@@ -350,11 +352,11 @@ Example:
                     )
             )
 
-### `HTTPHeader::Content_Security_Policy_Report_Only($string)`
+### `Content_Security_Policy_Report_Only($string)`
 
 See above.
 
-### `HTTPHeader::Content_Type($string = null)`
+### `Content_Type($string = null)`
 
 Returns an associative array containing the content type, charset and boundary (if supplied).
 
@@ -366,7 +368,7 @@ Example:
         [boundary] => something
     )
 
-### `HTTPHeader::Cookie($string = null)`
+### `Cookie($string = null)`
 
 Returns an array of arrays containing the cookie names and value.
 
@@ -381,19 +383,19 @@ Example:
             )
     )
 
-### `HTTPHeader::Cross_Origin_Embedder_Policy($string)`
+### `Cross_Origin_Embedder_Policy($string)`
 
 Returns a policy directive.
 
-### `HTTPHeader::Cross_Origin_Opener_Policy($string)`
+### `Cross_Origin_Opener_Policy($string)`
 
 Returns a policy directive.
 
-### `HTTPHeader::Cross_Origin_Resource_Policy($string)`
+### `Cross_Origin_Resource_Policy($string)`
 
 Returns a policy directive.
 
-### `HTTPHeader::Date($string = null)`
+### `Date($string = null)`
 
 Returns a DateTimeImmutable object.
 
@@ -406,11 +408,11 @@ Example:
         [timezone] => GMT
     )
 
-### `HTTPHeader::Device_Memory($string = null)`
+### `Device_Memory($string = null)`
 
 Returns a non-negative float representing the device memory in GiB.
 
-### `HTTPHeader::Digest($string)`
+### `Digest($string)`
 
 Returns an array of arrays containing the digest algorithms and values.
 
@@ -430,23 +432,23 @@ Example:
             )
     )
 
-### `HTTPHeader::Downlink($string = null)`
+### `Downlink($string = null)`
 
 Returns a non-negative float representing the downlink rate in Mbps.
 
-### `HTTPHeader::DNT($string = null)`
+### `DNT($string = null)`
 
 Returns 0, 1, or `null` if the value is indeterminate.
 
-### `HTTPHeader::ETag($string)`
+### `ETag($string)`
 
 Returns an ETag value.
 
-### `HTTPHeader::Expect($string = null)`
+### `Expect($string = null)`
 
 Returns the integer 100 if the value is "100-continue", or `null` otherwise.
 
-### `HTTPHeader::Expires($string)`
+### `Expires($string)`
 
 Returns a DateTimeImmutable object.
 
@@ -459,7 +461,7 @@ Example:
         [timezone] => GMT
     )
 
-### `HTTPHeader::Forwarded($string = null)`
+### `Forwarded($string = null)`
 
 Returns an array of fields, each containing an associative array of directives.
 
@@ -479,11 +481,11 @@ Example:
             )
     )
 
-### `HTTPHeader::From($string = null)`
+### `From($string = null)`
 
 Returns a string containing the supplied email address.
 
-### `HTTPHeader::Host($string = null)`
+### `Host($string = null)`
 
 Returns an associative array containing the host, and port if supplied.
 
@@ -495,7 +497,7 @@ Example:
         [port] => 80
     )
 
-### `HTTPHeader::If_Match($string = null)`
+### `If_Match($string = null)`
 
 Returns an array of ETag values.
 
@@ -508,7 +510,7 @@ Example:
         [2] => "7892dd"
     )
 
-### `HTTPHeader::If_Modified_Since($string = null)`
+### `If_Modified_Since($string = null)`
 
 Returns a DateTimeImmutable object.
 
@@ -521,7 +523,7 @@ Example:
         [timezone] => GMT
     )
 
-### `HTTPHeader::If_None_Match($string = null)`
+### `If_None_Match($string = null)`
 
 Returns an array of ETag values.
 
@@ -534,11 +536,11 @@ Example:
         [2] => "7892dd"
     )
 
-### `HTTPHeader::If_Range($string = null)`
+### `If_Range($string = null)`
 
 Returns a DateTimeImmutable object, or an array of ETag values.
 
-### `HTTPHeader::If_Unmodified_Since($string = null)`
+### `If_Unmodified_Since($string = null)`
 
 Returns a DateTimeImmutable object.
 
@@ -551,7 +553,7 @@ Example:
         [timezone] => GMT
     )
 
-### `HTTPHeader::Keep_Alive($string = null)`
+### `Keep_Alive($string = null)`
 
 Returns an associative array of parameters.
 
@@ -563,7 +565,7 @@ Example:
         [max] => 1000
     )
 
-### `HTTPHeader::Last_Modified($string)`
+### `Last_Modified($string)`
 
 Returns a DateTimeImmutable object.
 
@@ -576,7 +578,7 @@ Example:
         [timezone] => GMT
     )
 
-### `HTTPHeader::Link($string)`
+### `Link($string)`
 
 Returns an array of arrays containing the link URI and an array of parameters.
 
@@ -615,15 +617,15 @@ Example:
             )
     )
 
-### `HTTPHeader::Location($string)`
+### `Location($string)`
 
 Returns a string.
 
-### `HTTPHeader::Max_Forwards($string = null)`
+### `Max_Forwards($string = null)`
 
 Returns a non-negative integer.
 
-### `HTTPHeader::Origin($string = null)`
+### `Origin($string = null)`
 
 Returns the result of `parse_url()` on the supplied value.
 
@@ -635,7 +637,7 @@ Example:
         [host] => example.com
     )
 
-### `HTTPHeader::Permissions_Policy($string)`
+### `Permissions_Policy($string)`
 
 Returns an array of arrays containing the policy directive and values.
 
@@ -669,11 +671,11 @@ Example:
             )
     )
 
-### `HTTPHeader::Pragma($string = null)`
+### `Pragma($string = null)`
 
 Returns an array of directives.
 
-### `HTTPHeader::Proxy_Authenticate($string)`
+### `Proxy_Authenticate($string)`
 
 Returns an array of arrays containing the authentication type and parameters.
 
@@ -693,7 +695,7 @@ Example:
             )
     )
 
-### `HTTPHeader::Proxy_Authorization($string = null)`
+### `Proxy_Authorization($string = null)`
 
 Returns an array containing the authorization type and parameters.
 
@@ -705,7 +707,7 @@ Example:
         [1] => YWxhZGRpbjpvcGVuc2VzYW1l
     )
 
-### `HTTPHeader::Range($string = null)`
+### `Range($string = null)`
 
 Returns an associative array containing the unit and ranges.
 
@@ -722,7 +724,7 @@ Example:
             )
     )
 
-### `HTTPHeader::Referer($string = null)`
+### `Referer($string = null)`
 
 Returns the result of `parse_url()` on the supplied value.
 
@@ -735,47 +737,47 @@ Example:
         [path] => /foo/
     )
 
-### `HTTPHeader::Referrer_Policy($string)`
+### `Referrer_Policy($string)`
 
 Returns a directive.
 
-### `HTTPHeader::Retry_After($string)`
+### `Retry_After($string)`
 
 Returns a DateTimeImmutable object, or a non-negative integer representing the delay in seconds.
 
-### `HTTPHeader::RTT($string = null)`
+### `RTT($string = null)`
 
 Returns a non-negative integer representing the approximate round trip time in milliseconds.
 
-### `HTTPHeader::Save_Data($string = null)`
+### `Save_Data($string = null)`
 
 Returns 0 for falsey values, 1 for truthy values, or `null` if the value is indeterminate.
 
-### `HTTPHeader::Sec_Fetch_Dest($string = null)`
+### `Sec_Fetch_Dest($string = null)`
 
 Returns a directive.
 
-### `HTTPHeader::Sec_Fetch_Mode($string = null)`
+### `Sec_Fetch_Mode($string = null)`
 
 Returns a directive.
 
-### `HTTPHeader::Sec_Fetch_Site($string = null)`
+### `Sec_Fetch_Site($string = null)`
 
 Returns a directive.
 
-### `HTTPHeader::Sec_Fetch_User($string = null)`
+### `Sec_Fetch_User($string = null)`
 
 Returns `true` if the value is "?1", or `null` otherwise.
 
-### `HTTPHeader::Sec_GPC($string = null)`
+### `Sec_GPC($string = null)`
 
 Returns `true` if the value is "1", or `null` otherwise.
 
-### `HTTPHeader::Sec_Purpose($string = null)`
+### `Sec_Purpose($string = null)`
 
 Returns a directive.
 
-### `HTTPHeader::Server($string)`
+### `Server($string)`
 
 Returns an array of associative arrays containing the product, version and comment (if supplied).
 
@@ -791,7 +793,7 @@ Example:
             )
     )
 
-### `HTTPHeader::Server_Timing($string)`
+### `Server_Timing($string)`
 
 Returns an array of associative arrays containing the metric name, description and duration (if supplied).
 
@@ -812,11 +814,11 @@ Example:
             )
     )
 
-### `HTTPHeader::Service_Worker_Navigation_Preload($string = null)`
+### `Service_Worker_Navigation_Preload($string = null)`
 
 Returns a string.
 
-### `HTTPHeader::Set_Cookie($string)`
+### `Set_Cookie($string)`
 
 Returns an array of arrays containing the cookie name and value, and an associative array of parameter values.
 
@@ -847,11 +849,11 @@ Example:
             )
     )
 
-### `HTTPHeader::SourceMap($string)`
+### `SourceMap($string)`
 
 Returns a string.
 
-### `HTTPHeader::Strict_Transport_Security($string)`
+### `Strict_Transport_Security($string)`
 
 Returns an associative array of parameter values.
 
@@ -864,7 +866,7 @@ Example:
         [preload] => <true|false>
     )
 
-### `HTTPHeader::TE($string = null)`
+### `TE($string = null)`
 
 Returns an array sorted by "q" value.
 
@@ -877,7 +879,7 @@ Example:
         [2] => deflate;q=0.5
     ) 
 
-### `HTTPHeader::Timing_Allow_Origin($string)`
+### `Timing_Allow_Origin($string)`
 
 Returns the string "\*", or an array containing the results of `parse_url()` on each of the supplied values.
 
@@ -897,7 +899,7 @@ Example:
             )
     )
 
-### `HTTPHeader::Trailer($string)`
+### `Trailer($string)`
 
 Returns an array of field names.
 
@@ -909,7 +911,7 @@ Example:
         [1] => Date
     )
 
-### `HTTPHeader::Transfer_Encoding($string)`
+### `Transfer_Encoding($string)`
 
 Returns an array of encoding formats in the order in which they were applied.
 
@@ -921,7 +923,7 @@ Example:
         [1] => chunked
     )
 
-### `HTTPHeader::Upgrade($string = null)`
+### `Upgrade($string = null)`
 
 Returns an array of protocols in order of preference.
 
@@ -933,11 +935,11 @@ Example:
         [1] => HTTP/1.1
     ) 
 
-### `HTTPHeader::Upgrade_Insecure_Requests($string = null)`
+### `Upgrade_Insecure_Requests($string = null)`
 
 Returns 0, 1, or `null` if the value is indeterminate.
 
-### `HTTPHeader::User_Agent($string = null)`
+### `User_Agent($string = null)`
 
 Returns an array of associative arrays containing the product, version and comment (if supplied).
 
@@ -963,7 +965,7 @@ Example:
             )
     )
 
-### `HTTPHeader::Vary($string)`
+### `Vary($string)`
 
 Returns the string "\*", or an array of field names.
 
@@ -975,7 +977,7 @@ Example:
         [1] => Save-Data
     )
 
-### `HTTPHeader::Via($string = null)`
+### `Via($string = null)`
 
 Returns an array of associative arrays containing the details supplied by each proxy.
 
@@ -1003,7 +1005,7 @@ Example:
             )
     )
 
-### `HTTPHeader::Want_Digest($string = null)`
+### `Want_Digest($string = null)`
 
 Returns an array sorted by "q" value.
 
@@ -1016,7 +1018,7 @@ Example:
         [2] => md5;q=0
     )
 
-### `HTTPHeader::WWW_Authenticate($string)`
+### `WWW_Authenticate($string)`
 
 Returns an array of arrays containing the authentication type and parameters.
 
