@@ -185,7 +185,7 @@
             );
         }
 
-        public static function Accept($string = null): array|false {
+        public static function Accept($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_ACCEPT");
             else
@@ -197,11 +197,15 @@
             $types = explode(",", $value);
             self::trim_whitespace($types);
             self::filter_no_empty($types);
+
+            if (empty($types))
+                return null;
+
             usort($types, "self::q_sort");
             return $types;
         }
 
-        public static function Accept_CH($string): array|false {
+        public static function Accept_CH($string): array|null|false {
             $value = self::header_from_string("Accept-CH", $string);
 
             if ($value === false)
@@ -210,10 +214,14 @@
             $hints = explode(",", $value);
             self::trim_whitespace($hints);
             self::filter_no_empty($hints);
+
+            if (empty($hints))
+                return null;
+
             return $hints;
         }
 
-        public static function Accept_Charset($string = null): array|false {
+        public static function Accept_Charset($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_ACCEPT_CHARSET");
             else
@@ -225,11 +233,15 @@
             $charsets = explode(",", $value);
             self::trim_whitespace($charsets);
             self::filter_no_empty($charsets);
+
+            if (empty($charsets))
+                return null;
+
             usort($charsets, "self::q_sort");
             return $charsets;
         }
 
-        public static function Accept_Encoding($string = null): array|false {
+        public static function Accept_Encoding($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_ACCEPT_ENCODING");
             else
@@ -241,11 +253,15 @@
             $encodings = explode(",", $value);
             self::trim_whitespace($encodings);
             self::filter_no_empty($encodings);
+
+            if (empty($encodings))
+                return null;
+
             usort($encodings, "self::q_sort");
             return $encodings;
         }
 
-        public static function Accept_Language($string = null): array|false {
+        public static function Accept_Language($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_ACCEPT_LANGUAGE");
             else
@@ -257,11 +273,15 @@
             $languages = explode(",", $value);
             self::trim_whitespace($languages);
             self::filter_no_empty($languages);
+
+            if (empty($languages))
+                return null;
+
             usort($languages, "self::q_sort");
             return $languages;
         }
 
-        public static function Accept_Patch($string): array|false {
+        public static function Accept_Patch($string): array|null|false {
             $value = self::header_from_string("Accept-Patch", $string);
 
             if ($value === false)
@@ -270,10 +290,14 @@
             $types = explode(",", $value);
             self::trim_whitespace($types);
             self::filter_no_empty($types);
+
+            if (empty($types))
+                return null;
+
             return $types;
         }
 
-        public static function Accept_Post($string): array|false {
+        public static function Accept_Post($string): array|null|false {
             $value = self::header_from_string("Accept-Post", $string);
 
             if ($value === false)
@@ -282,6 +306,10 @@
             $types = explode(",", $value);
             self::trim_whitespace($types);
             self::filter_no_empty($types);
+
+            if (empty($types))
+                return null;
+
             return $types;
         }
 
@@ -303,7 +331,7 @@
             return ($value == "true") ? true : null ;
         }
 
-        public static function Access_Control_Allow_Headers($string): array|false {
+        public static function Access_Control_Allow_Headers($string): array|null|false {
             $value = self::header_from_string("Access-Control-Allow-Headers", $string);
 
             if ($value === false)
@@ -312,6 +340,10 @@
             $headers = explode(",", $value);
             self::trim_whitespace($headers);
             self::filter_no_empty($headers);
+
+            if (empty($headers))
+                return null;
+
             return $headers;
         }
 
@@ -360,7 +392,7 @@
             return self::parse_origin($value);
         }
 
-        public static function Access_Control_Expose_Headers($string): array|false {
+        public static function Access_Control_Expose_Headers($string): array|null|false {
             $value = self::header_from_string("Access-Control-Expose-Headers", $string);
 
             if ($value === false)
@@ -369,6 +401,10 @@
             $headers = explode(",", $value);
             self::trim_whitespace($headers);
             self::filter_no_empty($headers);
+
+            if (empty($headers))
+                return null;
+
             return $headers;
         }
 
@@ -384,7 +420,7 @@
             ) ? intval($value) : null ;
         }
 
-        public static function Access_Control_Request_Headers($string = null): array|false {
+        public static function Access_Control_Request_Headers($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_ACCESS_CONTROL_REQUEST_HEADERS");
             else
@@ -396,6 +432,10 @@
             $headers = explode(",", $value);
             self::trim_whitespace($headers);
             self::filter_no_empty($headers);
+
+            if (empty($headers))
+                return null;
+
             return $headers;
         }
 
@@ -615,7 +655,7 @@
             return $array;
         }
 
-        public static function Cache_Control($string = null): array|false {
+        public static function Cache_Control($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_CACHE_CONTROL");
             else
@@ -627,10 +667,14 @@
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
+
+            if (empty($directives))
+                return null;
+
             return $directives;
         }
 
-        public static function Clear_Site_Data($string): array|false {
+        public static function Clear_Site_Data($string): array|null|false {
             $value = self::header_from_string("Clear-Site-Data", $string);
 
             if ($value === false)
@@ -640,13 +684,16 @@
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
 
+            if (empty($directives))
+                return null;
+
             foreach ($directives as &$directive)
                 $directive = stripslashes(trim($directive, "\""));
 
             return $directives;
         }
 
-        public static function Connection($string = null): array|false {
+        public static function Connection($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_CONNECTION");
             else
@@ -658,6 +705,10 @@
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
+
+            if (empty($directives))
+                return null;
+
             return $directives;
         }
 
@@ -715,7 +766,7 @@
             return $directives;
         }
 
-        public static function Content_Language($string = null): array|false {
+        public static function Content_Language($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_CONTENT_LANGUAGE");
             else
@@ -727,6 +778,10 @@
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
+
+            if (empty($directives))
+                return null;
+
             return $directives;
         }
 
@@ -779,7 +834,7 @@
             return $return;
         }
 
-        public static function Content_Security_Policy($string): array|false {
+        public static function Content_Security_Policy($string): array|null|false {
             $value = self::header_from_string("Content-Security-Policy", $string);
 
             if ($value === false)
@@ -788,6 +843,9 @@
             $policy = explode(";", $value);
             self::trim_whitespace($policy);
             self::filter_no_empty($policy);
+
+            if (empty($policy))
+                return null;
 
             foreach ($policy as &$directive) {
                 $params = explode(" ", $directive);
@@ -804,7 +862,7 @@
             return $policy;
         }
 
-        public static function Content_Security_Policy_Report_Only($string): array|false {
+        public static function Content_Security_Policy_Report_Only($string): array|null|false {
             $value = self::header_from_string("Content-Security-Policy-Report-Only", $string);
 
             if ($value === false)
@@ -813,6 +871,9 @@
             $policy = explode(";", $value);
             self::trim_whitespace($policy);
             self::filter_no_empty($policy);
+
+            if (empty($policy))
+                return null;
 
             foreach ($policy as &$directive) {
                 $params = explode(" ", $directive);
@@ -1540,7 +1601,7 @@
             return $policies;
         }
 
-        public static function Pragma($string = null): array|false {
+        public static function Pragma($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_PRAGMA");
             else
@@ -1552,6 +1613,10 @@
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
+
+            if (empty($directives))
+                return null;
+
             return $directives;
         }
 
@@ -2123,6 +2188,10 @@
             $params = explode(";", $value);
             self::trim_whitespace($params);
             self::filter_no_empty($params);
+
+            if (empty($params))
+                return null;
+
             $return = array(
                 "max-age" => null,
                 "includeSubDomains" => false,
@@ -2156,7 +2225,7 @@
             return $return;
         }
 
-        public static function TE($string = null): array|false {
+        public static function TE($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_TE");
             else
@@ -2168,11 +2237,15 @@
             $encodings = explode(",", $value);
             self::trim_whitespace($encodings);
             self::filter_no_empty($encodings);
+
+            if (empty($encodings))
+                return null;
+
             usort($encodings, "self::q_sort");
             return $encodings;
         }
 
-        public static function Timing_Allow_Origin($string): string|array|false {
+        public static function Timing_Allow_Origin($string): string|array|null|false {
             $value = self::header_from_string("Timing-Allow-Origin", $string);
 
             if ($value === false)
@@ -2181,6 +2254,9 @@
             $origins = explode(",", $value);
             self::trim_whitespace($origins);
             self::filter_no_empty($origins);
+
+            if (empty($origins))
+                return null;
 
             foreach ($origins as &$origin) {
                 if ($origin == "*")
@@ -2192,7 +2268,7 @@
             return $origins;
         }
 
-        public static function Trailer($string): array|false {
+        public static function Trailer($string): array|null|false {
             $value = self::header_from_string("Trailer", $string);
 
             if ($value === false)
@@ -2201,6 +2277,10 @@
             $protocols = explode(",", $value);
             self::trim_whitespace($protocols);
             self::filter_no_empty($protocols);
+
+            if (empty($protocols))
+                return null;
+
             return $protocols;
         }
 
@@ -2229,7 +2309,7 @@
             return $directives;
         }
 
-        public static function Upgrade($string = null): array|false {
+        public static function Upgrade($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_UPGRADE");
             else
@@ -2241,6 +2321,10 @@
             $protocols = explode(",", $value);
             self::trim_whitespace($protocols);
             self::filter_no_empty($protocols);
+
+            if (empty($protocols))
+                return null;
+
             return $protocols;
         }
 
@@ -2322,7 +2406,7 @@
             return $identifiers;
         }
 
-        public static function Vary($string): string|array|false {
+        public static function Vary($string): string|array|null|false {
             $value = self::header_from_string("Vary", $string);
 
             if ($value === false)
@@ -2331,6 +2415,9 @@
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
+
+            if (empty($directives))
+                return null;
 
             foreach ($directives as $directive) {
                 if ($directive == "*")
@@ -2393,7 +2480,7 @@
             return $proxies;
         }
 
-        public static function Want_Digest($string = null): array|false {
+        public static function Want_Digest($string = null): array|null|false {
             if (!isset($string))
                 $value = self::header_from_server("HTTP_WANT_DIGEST");
             else
@@ -2405,6 +2492,10 @@
             $algorithms = explode(",", $value);
             self::trim_whitespace($algorithms);
             self::filter_no_empty($algorithms);
+
+            if (empty($algorithms))
+                return null;
+
             usort($algorithms, "self::q_sort");
             return $algorithms;
         }
