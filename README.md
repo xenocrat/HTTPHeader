@@ -8,11 +8,23 @@ HTTPHeader is a PHP class for inspecting HTTP headers.
 
 ## Usage
 
-Methods for inspecting response headers must be supplied with a string containing a single header with field name or a complete HTTP response.
+Methods for inspecting response headers must be supplied with a string containing one or more header lines, or a complete HTTP response.
 
-Methods for inspecting request headers can optionally be supplied with a string containing a single header with field name or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal.
+Examples:
 
-Methods will return `false` if the header is not present or cannot be parsed, and `null` if the field value is noticeably malformed.
+    $result = HTTPHeader::Server("Server: Apache");
+    $result = HTTPHeader::Server("Content-Type: text/plain\\r\\nServer: Apache");
+    $result = HTTPHeader::Server("HTTP/1.1 200 OK\\r\\nContent-Type: text/plain\\r\\nServer: Apache\\r\\n\\r\\nHello, world!")
+
+Methods for inspecting request headers can optionally be supplied with a string containing one or more header lines, or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal.
+
+Examples:
+
+    $result = HTTPHeader::Accept();
+    $result = HTTPHeader::Accept("Accept: text/html, application/xhtml+xml");
+    $result = HTTPHeader::Accept("Accept: text/html\\r\\nAccept-Encoding: gzip");
+
+Methods will return `false` if the header is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `HTTPHeader::Accept($string = null)`
 
@@ -28,6 +40,14 @@ Example:
         [3] => application/xml;q=0.9
         [4] => */*;q=0.8
     )
+
+### `HTTPHeader::Accept_CH($string)`
+
+Returns an array of client hint headers.
+
+### `HTTPHeader::Accept_Charset($string = null)`
+
+Returns an array sorted by "q" value.
 
 ### `HTTPHeader::Accept_Encoding($string = null)`
 
@@ -79,7 +99,7 @@ Example:
         [1] => text/example;charset=utf-8
     )
 
-### `HTTPHeader::Accept_Ranges($string = null)`
+### `HTTPHeader::Accept_Ranges($string)`
 
 Returns a range unit.
 
@@ -114,7 +134,7 @@ Example:
 
 ### `HTTPHeader::Access_Control_Allow_Origin($string)`
 
-Returns the string "\*", or the result of `parse_url()` on the supplied value, or `null` if the value is "null".
+Returns the string "\*", the string "null" if the value is "null", or the result of `parse_url()` on the supplied value.
 
 ### `HTTPHeader::Access_Control_Expose_Headers($string)`
 
@@ -142,7 +162,7 @@ Example:
         [0] => Content-Type
     )
 
-### `HTTPHeader::Access_Control_Request_Method($string)`
+### `HTTPHeader::Access_Control_Request_Method($string = null)`
 
 Returns the method name.
 
@@ -247,7 +267,7 @@ Example:
         [0] => keep-alive
     )
 
-### `HTTPHeader::Content_Disposition($string = null)`
+### `HTTPHeader::Content_Disposition($string)`
 
 Returns an associative array containing the content disposition, field name and filename (if supplied).
 
@@ -283,13 +303,13 @@ Example:
         [1] => en
     )
 
-### `HTTPHeader::Content_Location($string)`
-
-Returns a string.
-
 ### `HTTPHeader::Content_Length($string = null)`
 
 Returns the content length in decimal number of octets.
+
+### `HTTPHeader::Content_Location($string)`
+
+Returns a string.
 
 ### `HTTPHeader::Content_Range($string)`
 
@@ -389,6 +409,26 @@ Example:
 ### `HTTPHeader::Device_Memory($string = null)`
 
 Returns a non-negative float representing the device memory in GiB.
+
+### `HTTPHeader::Digest($string)`
+
+Returns an array of arrays containing the digest algorithms and values.
+
+Example:
+
+    Array
+    (
+        [0] => Array
+            (
+                [0] => sha-256
+                [1] => X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE=
+            )
+        [1] => Array
+            (
+                [0] => unixsum
+                [1] => 30637
+            )
+    )
 
 ### `HTTPHeader::Downlink($string = null)`
 
@@ -629,6 +669,10 @@ Example:
             )
     )
 
+### `HTTPHeader::Pragma($string = null)`
+
+Returns an array of directives.
+
 ### `HTTPHeader::Proxy_Authenticate($string)`
 
 Returns an array of arrays containing the authentication type and parameters.
@@ -695,7 +739,7 @@ Example:
 
 Returns a directive.
 
-### `HTTPHeader::Retry_After($string = null)`
+### `HTTPHeader::Retry_After($string)`
 
 Returns a DateTimeImmutable object, or a non-negative integer representing the delay in seconds.
 
@@ -768,7 +812,7 @@ Example:
             )
     )
 
-### `HTTPHeader::Service_Worker_Navigation_Preload($string)`
+### `HTTPHeader::Service_Worker_Navigation_Preload($string = null)`
 
 Returns a string.
 
