@@ -13,8 +13,8 @@ Methods for inspecting response headers must be supplied with a string containin
 Examples:
 
     $result = HTTPHeader::Server("Server: Apache");
-    $result = HTTPHeader::Server("Content-Type: text/plain\\r\\nServer: Apache");
-    $result = HTTPHeader::Server("HTTP/1.1 200 OK\\r\\nContent-Type: text/plain\\r\\nServer: Apache\\r\\n\\r\\nHello, world!")
+    $result = HTTPHeader::Server("Content-Type: text/plain\r\nServer: Apache");
+    $result = HTTPHeader::Server("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nServer: Apache\r\n\r\nHello, world!")
 
 Methods for inspecting request headers can optionally be supplied with a string containing one or more header lines, or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal.
 
@@ -22,7 +22,7 @@ Examples:
 
     $result = HTTPHeader::Accept();
     $result = HTTPHeader::Accept("Accept: text/html, application/xhtml+xml");
-    $result = HTTPHeader::Accept("Accept: text/html\\r\\nAccept-Encoding: gzip");
+    $result = HTTPHeader::Accept("Accept: text/html\r\nAccept-Encoding: gzip");
 
 Methods will return `false` if the header is not present or empty, and `null` if the field value is noticeably malformed.
 
