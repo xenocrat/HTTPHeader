@@ -197,7 +197,7 @@ Example:
                 [host] => 
                 [port] => 443
                 [ma] => 3600
-                [persist] => 1
+                [persist] => <true|false>
             )
         [1] => Array
             (
@@ -205,7 +205,7 @@ Example:
                 [host] => example.com
                 [port] => 443
                 [ma] => 3600
-                [persist] => 
+                [persist] => <true|false>
             )
     )
 
@@ -841,9 +841,9 @@ Example:
                         [timezone] => GMT
                     )
                 [Max-Age] => 20
-                [HttpOnly] => 1
-                [Secure] => 1
-                [Partitioned] => 
+                [HttpOnly] => <true|false>
+                [Secure] => <true|false>
+                [Partitioned] => <true|false>
             )
     )
 
@@ -860,8 +860,8 @@ Example:
     Array
     (
         [max-age] => 63072000
-        [includeSubDomains] => 1
-        [preload] => 1
+        [includeSubDomains] => <true|false>
+        [preload] => <true|false>
     )
 
 ### `HTTPHeader::TE($string = null)`
