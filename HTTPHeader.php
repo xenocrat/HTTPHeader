@@ -486,6 +486,9 @@
             self::trim_whitespace($methods);
             self::filter_no_empty($methods);
 
+            if (empty($methods))
+                return null;
+
             foreach ($methods as $method) {
                 switch ($method) {
                     case "GET":
@@ -750,6 +753,9 @@
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
+
+            if (empty($directives))
+                return null;
 
             foreach ($directives as $directive) {
                 switch ($directive) {
@@ -1048,6 +1054,11 @@
 
             $params = explode(",", $value);
             self::trim_whitespace($params);
+            self::filter_no_empty($params);
+
+            if (empty($params))
+                return null;
+
             $return = array();
 
             foreach ($params as $param) {
@@ -1380,6 +1391,11 @@
 
             $params = explode(",", $value);
             self::trim_whitespace($params);
+            self::filter_no_empty($params);
+
+            if (empty($params))
+                return null;
+
             $return = array();
 
             foreach ($params as $param) {
@@ -2293,6 +2309,9 @@
             $directives = explode(",", $value);
             self::trim_whitespace($directives);
             self::filter_no_empty($directives);
+
+            if (empty($directives))
+                return null;
 
             foreach ($directives as $directive) {
                 switch ($directive) {
