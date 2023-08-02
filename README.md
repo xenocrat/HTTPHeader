@@ -689,7 +689,7 @@ Example:
         [1] => Array
             (
                 [0] => Other
-                [1] => realm="bar",
+                [1] => realm="bar"
             )
     )
 
