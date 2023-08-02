@@ -8,15 +8,15 @@ HTTPHeader is a PHP class for inspecting HTTP headers.
 
 ## Usage
 
-Methods for inspecting response headers must be supplied with a string containing one or more header lines, or a complete HTTP response.
+Methods for inspecting response headers must be supplied with a string containing one or more headers, or a complete HTTP response.
 
 Examples:
 
     $result = HTTPHeader::Server("Server: Apache");
     $result = HTTPHeader::Server("Content-Type: text/plain\r\nServer: Apache");
-    $result = HTTPHeader::Server("HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nServer: Apache\r\n\r\nHello, world!")
+    $result = HTTPHeader::Server("HTTP/1.1 200 OK\r\nServer: Apache\r\n\r\nHello, world!");
 
-Methods for inspecting request headers can optionally be supplied with a string containing one or more header lines, or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal.
+Methods for inspecting request headers can optionally be supplied with a string containing one or more headers, or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal.
 
 Examples:
 
@@ -24,7 +24,7 @@ Examples:
     $result = HTTPHeader::Accept("Accept: text/html, application/xhtml+xml");
     $result = HTTPHeader::Accept("Accept: text/html\r\nAccept-Encoding: gzip");
 
-Methods will return `false` if the header is not present or empty, and `null` if the field value is noticeably malformed.
+Methods will return `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `HTTPHeader::Accept($string = null)`
 
