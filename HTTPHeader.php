@@ -33,12 +33,13 @@
                         $field,
                         $match
                     )
-                )
+                ) {
                     $value = $match[2];
                     self::trim_whitespace($value);
 
                     if ($value != "")
                         $return = $value;
+                }
             }
 
             return $return;
