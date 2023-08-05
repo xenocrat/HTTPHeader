@@ -3,7 +3,7 @@
 
     class HTTPHeader {
         const HTTPHEADER_VERSION_MAJOR = 4;
-        const HTTPHEADER_VERSION_MINOR = 0;
+        const HTTPHEADER_VERSION_MINOR = 1;
 
         private static function header_from_server($name)
         : string|false {
