@@ -1165,6 +1165,27 @@
             }
         }
 
+        public static function ECT($string = null)
+        : string|null|false {
+            if (!isset($string))
+                $value = self::header_from_server("HTTP_ECT");
+            else
+                $value = self::header_from_string("ECT", $string);
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "slow-2g":
+                case "2g":
+                case "3g":
+                case "4g":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
         public static function ETag($string)
         : string|null|false {
             $value = self::header_from_string("ETag", $string);
