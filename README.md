@@ -28,9 +28,9 @@ Examples:
 
 Methods will return `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
----------------------------------------------------------------------------------------------------
+## Methods
 
-### `Accept($string = null)`
+#### `Accept($string = null)`
 
 Returns an array sorted by "q" value.
 
@@ -45,21 +45,15 @@ Example:
         [4] => */*;q=0.8
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Accept_CH($string)`
+#### `Accept_CH($string)`
 
 Returns an array of client hint headers.
 
----------------------------------------------------------------------------------------------------
-
-### `Accept_Charset($string = null)`
+#### `Accept_Charset($string = null)`
 
 Returns an array sorted by "q" value.
 
----------------------------------------------------------------------------------------------------
-
-### `Accept_Encoding($string = null)`
+#### `Accept_Encoding($string = null)`
 
 Returns an array sorted by "q" value.
 
@@ -71,9 +65,7 @@ Example:
         [1] => deflate
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Accept_Language($string = null)`
+#### `Accept_Language($string = null)`
 
 Returns an array sorted by "q" value.
 
@@ -86,9 +78,7 @@ Example:
         [2] => en-US;q=0.3
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Accept_Patch($string)`
+#### `Accept_Patch($string)`
 
 Returns an array of media types.
 
@@ -100,9 +90,7 @@ Example:
         [1] => text/example;charset=utf-8
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Accept_Post($string)`
+#### `Accept_Post($string)`
 
 Returns an array of media types.
 
@@ -114,21 +102,15 @@ Example:
         [1] => text/example;charset=utf-8
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Accept_Ranges($string)`
+#### `Accept_Ranges($string)`
 
 Returns a range unit.
 
----------------------------------------------------------------------------------------------------
-
-### `Access_Control_Allow_Credentials($string)`
+#### `Access_Control_Allow_Credentials($string)`
 
 Returns `true` if the value is "true", or `null` otherwise.
 
----------------------------------------------------------------------------------------------------
-
-### `Access_Control_Allow_Headers($string)`
+#### `Access_Control_Allow_Headers($string)`
 
 Returns an array of headers.
 
@@ -140,9 +122,7 @@ Example:
         [1] => Upgrade-Insecure-Requests
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Access_Control_Allow_Methods($string)`
+#### `Access_Control_Allow_Methods($string)`
 
 Returns an array of method names.
 
@@ -155,15 +135,11 @@ Example:
         [2] => OPTIONS
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Access_Control_Allow_Origin($string)`
+#### `Access_Control_Allow_Origin($string)`
 
 Returns the string "\*", the string "null" if the value is "null", or the result of `parse_url()` on the supplied value.
 
----------------------------------------------------------------------------------------------------
-
-### `Access_Control_Expose_Headers($string)`
+#### `Access_Control_Expose_Headers($string)`
 
 Returns an array of headers.
 
@@ -174,15 +150,11 @@ Example:
         [0] => Content-Encoding
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Access_Control_Max_Age($string)`
+#### `Access_Control_Max_Age($string)`
 
 Returns a non-negative integer representing the number of seconds.
 
----------------------------------------------------------------------------------------------------
-
-### `Access_Control_Request_Headers($string = null)`
+#### `Access_Control_Request_Headers($string = null)`
 
 Returns an array of headers.
 
@@ -193,21 +165,15 @@ Example:
         [0] => Content-Type
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Access_Control_Request_Method($string = null)`
+#### `Access_Control_Request_Method($string = null)`
 
 Returns the method name.
 
----------------------------------------------------------------------------------------------------
-
-### `Age($string)`
+#### `Age($string)`
 
 Returns a non-negative integer representing a time delta in seconds.
 
----------------------------------------------------------------------------------------------------
-
-### `Allow($string)`
+#### `Allow($string)`
 
 Returns an array of method names.
 
@@ -220,9 +186,7 @@ Example:
         [2] => HEAD
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Alt_Svc($string)`
+#### `Alt_Svc($string)`
 
 Returns the string "clear", or an array of associative arrays containing the parameters for each alternative service.
 
@@ -248,9 +212,7 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Alt_Used($string = null)`
+#### `Alt_Used($string = null)`
 
 Returns an associative array containing the host, and port if supplied.
 
@@ -262,9 +224,7 @@ Example:
         [port] => 80
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Authorization($string = null)`
+#### `Authorization($string = null)`
 
 Returns an array containing the authorization type and parameters.
 
@@ -276,9 +236,7 @@ Example:
         [1] => YWxhZGRpbjpvcGVuc2VzYW1l
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Cache_Control($string = null)`
+#### `Cache_Control($string = null)`
 
 Returns an array of directives.
 
@@ -289,9 +247,7 @@ Example:
         [0] => only-if-cached
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Clear_Site_Data($string)`
+#### `Clear_Site_Data($string)`
 
 Returns an array of directives.
 
@@ -303,9 +259,7 @@ Example:
         [1] => cookies
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Connection($string = null)`
+#### `Connection($string = null)`
 
 Returns an array of directives.
 
@@ -316,9 +270,7 @@ Example:
         [0] => keep-alive
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Content_Disposition($string)`
+#### `Content_Disposition($string)`
 
 Returns an associative array containing the content disposition, field name and filename (if supplied).
 
@@ -330,9 +282,7 @@ Example:
         [filename] => filename.jpg
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Content_Encoding($string)`
+#### `Content_Encoding($string)`
 
 Returns an array of encoding formats in the order in which they were applied.
 
@@ -344,9 +294,7 @@ Example:
         [1] => gzip
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Content_Language($string = null)`
+#### `Content_Language($string = null)`
 
 Returns an array of language tags.
 
@@ -358,21 +306,15 @@ Example:
         [1] => en
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Content_Length($string = null)`
+#### `Content_Length($string = null)`
 
 Returns the content length in decimal number of octets.
 
----------------------------------------------------------------------------------------------------
-
-### `Content_Location($string)`
+#### `Content_Location($string)`
 
 Returns a string.
 
----------------------------------------------------------------------------------------------------
-
-### `Content_Range($string)`
+#### `Content_Range($string)`
 
 Returns an associative array containing the unit, range, and size.
 
@@ -385,9 +327,7 @@ Example:
         [size] => 67589
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Content_Security_Policy($string)`
+#### `Content_Security_Policy($string)`
 
 Returns an array of arrays containing the policy directive and values.
 
@@ -413,15 +353,11 @@ Example:
                     )
             )
 
----------------------------------------------------------------------------------------------------
-
-### `Content_Security_Policy_Report_Only($string)`
+#### `Content_Security_Policy_Report_Only($string)`
 
 See above.
 
----------------------------------------------------------------------------------------------------
-
-### `Content_Type($string = null)`
+#### `Content_Type($string = null)`
 
 Returns an associative array containing the content type, charset and boundary (if supplied).
 
@@ -433,9 +369,7 @@ Example:
         [boundary] => something
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Cookie($string = null)`
+#### `Cookie($string = null)`
 
 Returns an array of arrays containing the cookie names and value.
 
@@ -450,27 +384,19 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Cross_Origin_Embedder_Policy($string)`
+#### `Cross_Origin_Embedder_Policy($string)`
 
 Returns a policy directive.
 
----------------------------------------------------------------------------------------------------
-
-### `Cross_Origin_Opener_Policy($string)`
+#### `Cross_Origin_Opener_Policy($string)`
 
 Returns a policy directive.
 
----------------------------------------------------------------------------------------------------
-
-### `Cross_Origin_Resource_Policy($string)`
+#### `Cross_Origin_Resource_Policy($string)`
 
 Returns a policy directive.
 
----------------------------------------------------------------------------------------------------
-
-### `Date($string = null)`
+#### `Date($string = null)`
 
 Returns a DateTimeImmutable object.
 
@@ -483,15 +409,11 @@ Example:
         [timezone] => GMT
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Device_Memory($string = null)`
+#### `Device_Memory($string = null)`
 
 Returns a non-negative float representing the device memory in GiB.
 
----------------------------------------------------------------------------------------------------
-
-### `Digest($string)`
+#### `Digest($string)`
 
 Returns an array of arrays containing the digest algorithms and values.
 
@@ -511,33 +433,27 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Downlink($string = null)`
+#### `Downlink($string = null)`
 
 Returns a non-negative float representing the downlink rate in Mbps.
 
----------------------------------------------------------------------------------------------------
-
-### `DNT($string = null)`
+#### `DNT($string = null)`
 
 Returns 0, 1, or `null` if the value is indeterminate.
 
----------------------------------------------------------------------------------------------------
+#### `ECT($string = null)`
 
-### `ETag($string)`
+Returns a string identifying the effective connection type, or `null` if the value is indeterminate.
+
+#### `ETag($string)`
 
 Returns an ETag value.
 
----------------------------------------------------------------------------------------------------
-
-### `Expect($string = null)`
+#### `Expect($string = null)`
 
 Returns the integer 100 if the value is "100-continue", or `null` otherwise.
 
----------------------------------------------------------------------------------------------------
-
-### `Expires($string)`
+#### `Expires($string)`
 
 Returns a DateTimeImmutable object.
 
@@ -550,9 +466,7 @@ Example:
         [timezone] => GMT
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Forwarded($string = null)`
+#### `Forwarded($string = null)`
 
 Returns an array of fields, each containing an associative array of directives.
 
@@ -572,15 +486,11 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `From($string = null)`
+#### `From($string = null)`
 
 Returns a string containing the supplied email address.
 
----------------------------------------------------------------------------------------------------
-
-### `Host($string = null)`
+#### `Host($string = null)`
 
 Returns an associative array containing the host, and port if supplied.
 
@@ -592,9 +502,7 @@ Example:
         [port] => 80
     )
 
----------------------------------------------------------------------------------------------------
-
-### `If_Match($string = null)`
+#### `If_Match($string = null)`
 
 Returns an array of ETag values.
 
@@ -607,9 +515,7 @@ Example:
         [2] => "7892dd"
     )
 
----------------------------------------------------------------------------------------------------
-
-### `If_Modified_Since($string = null)`
+#### `If_Modified_Since($string = null)`
 
 Returns a DateTimeImmutable object.
 
@@ -622,9 +528,7 @@ Example:
         [timezone] => GMT
     )
 
----------------------------------------------------------------------------------------------------
-
-### `If_None_Match($string = null)`
+#### `If_None_Match($string = null)`
 
 Returns an array of ETag values.
 
@@ -637,15 +541,11 @@ Example:
         [2] => "7892dd"
     )
 
----------------------------------------------------------------------------------------------------
-
-### `If_Range($string = null)`
+#### `If_Range($string = null)`
 
 Returns a DateTimeImmutable object, or an array of ETag values.
 
----------------------------------------------------------------------------------------------------
-
-### `If_Unmodified_Since($string = null)`
+#### `If_Unmodified_Since($string = null)`
 
 Returns a DateTimeImmutable object.
 
@@ -658,9 +558,7 @@ Example:
         [timezone] => GMT
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Keep_Alive($string = null)`
+#### `Keep_Alive($string = null)`
 
 Returns an associative array of parameters.
 
@@ -672,9 +570,7 @@ Example:
         [max] => 1000
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Last_Modified($string)`
+#### `Last_Modified($string)`
 
 Returns a DateTimeImmutable object.
 
@@ -687,9 +583,7 @@ Example:
         [timezone] => GMT
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Link($string)`
+#### `Link($string)`
 
 Returns an array of arrays containing the link URI and an array of parameters.
 
@@ -728,21 +622,15 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Location($string)`
+#### `Location($string)`
 
 Returns a string.
 
----------------------------------------------------------------------------------------------------
-
-### `Max_Forwards($string = null)`
+#### `Max_Forwards($string = null)`
 
 Returns a non-negative integer.
 
----------------------------------------------------------------------------------------------------
-
-### `Origin($string = null)`
+#### `Origin($string = null)`
 
 Returns the result of `parse_url()` on the supplied value.
 
@@ -754,9 +642,7 @@ Example:
         [host] => example.com
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Permissions_Policy($string)`
+#### `Permissions_Policy($string)`
 
 Returns an array of arrays containing the policy directive and values.
 
@@ -790,15 +676,11 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Pragma($string = null)`
+#### `Pragma($string = null)`
 
 Returns an array of directives.
 
----------------------------------------------------------------------------------------------------
-
-### `Proxy_Authenticate($string)`
+#### `Proxy_Authenticate($string)`
 
 Returns an array of arrays containing the authentication type and parameters.
 
@@ -818,9 +700,7 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Proxy_Authorization($string = null)`
+#### `Proxy_Authorization($string = null)`
 
 Returns an array containing the authorization type and parameters.
 
@@ -832,9 +712,7 @@ Example:
         [1] => YWxhZGRpbjpvcGVuc2VzYW1l
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Range($string = null)`
+#### `Range($string = null)`
 
 Returns an associative array containing the unit and ranges.
 
@@ -851,9 +729,7 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Referer($string = null)`
+#### `Referer($string = null)`
 
 Returns the result of `parse_url()` on the supplied value.
 
@@ -866,69 +742,47 @@ Example:
         [path] => /foo/
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Referrer_Policy($string)`
+#### `Referrer_Policy($string)`
 
 Returns a directive.
 
----------------------------------------------------------------------------------------------------
-
-### `Retry_After($string)`
+#### `Retry_After($string)`
 
 Returns a DateTimeImmutable object, or a non-negative integer representing the delay in seconds.
 
----------------------------------------------------------------------------------------------------
-
-### `RTT($string = null)`
+#### `RTT($string = null)`
 
 Returns a non-negative integer representing the approximate round trip time in milliseconds.
 
----------------------------------------------------------------------------------------------------
-
-### `Save_Data($string = null)`
+#### `Save_Data($string = null)`
 
 Returns 0 for falsey values, 1 for truthy values, or `null` if the value is indeterminate.
 
----------------------------------------------------------------------------------------------------
-
-### `Sec_Fetch_Dest($string = null)`
+#### `Sec_Fetch_Dest($string = null)`
 
 Returns a directive.
 
----------------------------------------------------------------------------------------------------
-
-### `Sec_Fetch_Mode($string = null)`
+#### `Sec_Fetch_Mode($string = null)`
 
 Returns a directive.
 
----------------------------------------------------------------------------------------------------
-
-### `Sec_Fetch_Site($string = null)`
+#### `Sec_Fetch_Site($string = null)`
 
 Returns a directive.
 
----------------------------------------------------------------------------------------------------
-
-### `Sec_Fetch_User($string = null)`
+#### `Sec_Fetch_User($string = null)`
 
 Returns `true` if the value is "?1", or `null` otherwise.
 
----------------------------------------------------------------------------------------------------
-
-### `Sec_GPC($string = null)`
+#### `Sec_GPC($string = null)`
 
 Returns `true` if the value is "1", or `null` otherwise.
 
----------------------------------------------------------------------------------------------------
-
-### `Sec_Purpose($string = null)`
+#### `Sec_Purpose($string = null)`
 
 Returns a directive.
 
----------------------------------------------------------------------------------------------------
-
-### `Server($string)`
+#### `Server($string)`
 
 Returns an array of associative arrays containing the product, version and comment (if supplied).
 
@@ -944,9 +798,7 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Server_Timing($string)`
+#### `Server_Timing($string)`
 
 Returns an array of associative arrays containing the metric name, description and duration (if supplied).
 
@@ -967,15 +819,11 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Service_Worker_Navigation_Preload($string = null)`
+#### `Service_Worker_Navigation_Preload($string = null)`
 
 Returns a string.
 
----------------------------------------------------------------------------------------------------
-
-### `Set_Cookie($string)`
+#### `Set_Cookie($string)`
 
 Returns an array of arrays containing the cookie name and value, and an associative array of parameter values.
 
@@ -1006,15 +854,11 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `SourceMap($string)`
+#### `SourceMap($string)`
 
 Returns a string.
 
----------------------------------------------------------------------------------------------------
-
-### `Strict_Transport_Security($string)`
+#### `Strict_Transport_Security($string)`
 
 Returns an associative array of parameter values.
 
@@ -1027,9 +871,7 @@ Example:
         [preload] => <true|false>
     )
 
----------------------------------------------------------------------------------------------------
-
-### `TE($string = null)`
+#### `TE($string = null)`
 
 Returns an array sorted by "q" value.
 
@@ -1042,9 +884,7 @@ Example:
         [2] => deflate;q=0.5
     ) 
 
----------------------------------------------------------------------------------------------------
-
-### `Timing_Allow_Origin($string)`
+#### `Timing_Allow_Origin($string)`
 
 Returns the string "\*", or an array containing the results of `parse_url()` on each of the supplied values.
 
@@ -1064,9 +904,7 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Trailer($string)`
+#### `Trailer($string)`
 
 Returns an array of field names.
 
@@ -1078,9 +916,7 @@ Example:
         [1] => Date
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Transfer_Encoding($string)`
+#### `Transfer_Encoding($string)`
 
 Returns an array of encoding formats in the order in which they were applied.
 
@@ -1092,9 +928,7 @@ Example:
         [1] => chunked
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Upgrade($string = null)`
+#### `Upgrade($string = null)`
 
 Returns an array of protocols in order of preference.
 
@@ -1106,15 +940,11 @@ Example:
         [1] => HTTP/1.1
     ) 
 
----------------------------------------------------------------------------------------------------
-
-### `Upgrade_Insecure_Requests($string = null)`
+#### `Upgrade_Insecure_Requests($string = null)`
 
 Returns 0, 1, or `null` if the value is indeterminate.
 
----------------------------------------------------------------------------------------------------
-
-### `User_Agent($string = null)`
+#### `User_Agent($string = null)`
 
 Returns an array of associative arrays containing the product, version and comment (if supplied).
 
@@ -1140,9 +970,7 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Vary($string)`
+#### `Vary($string)`
 
 Returns the string "\*", or an array of field names.
 
@@ -1154,9 +982,7 @@ Example:
         [1] => Save-Data
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Via($string = null)`
+#### `Via($string = null)`
 
 Returns an array of associative arrays containing the details supplied by each proxy.
 
@@ -1184,9 +1010,7 @@ Example:
             )
     )
 
----------------------------------------------------------------------------------------------------
-
-### `Want_Digest($string = null)`
+#### `Want_Digest($string = null)`
 
 Returns an array sorted by "q" value.
 
@@ -1199,9 +1023,7 @@ Example:
         [2] => md5;q=0
     )
 
----------------------------------------------------------------------------------------------------
-
-### `WWW_Authenticate($string)`
+#### `WWW_Authenticate($string)`
 
 Returns an array of arrays containing the authentication type and parameters.
 
