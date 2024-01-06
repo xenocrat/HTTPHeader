@@ -137,7 +137,7 @@ Example:
 
 #### `Access_Control_Allow_Origin($string)`
 
-Returns the string "\*", the string "null" if the value is "null", or the result of `parse_url()` on the supplied value.
+Returns the string `"*"`, the string `"null"` if the value is "null", or the result of `parse_url()` on the supplied value.
 
 #### `Access_Control_Expose_Headers($string)`
 
@@ -188,7 +188,7 @@ Example:
 
 #### `Alt_Svc($string)`
 
-Returns the string "clear", or an array of associative arrays containing the parameters for each alternative service.
+Returns the string `"clear"`, or an array of associative arrays containing the parameters for each alternative service.
 
 Example:
 
@@ -439,7 +439,7 @@ Returns a non-negative float representing the downlink rate in Mbps.
 
 #### `DNT($string = null)`
 
-Returns 0, 1, or `null` if the value is indeterminate.
+Returns the integer `0`, `1`, or `null` if the value is indeterminate.
 
 #### `ECT($string = null)`
 
@@ -451,7 +451,7 @@ Returns an ETag value.
 
 #### `Expect($string = null)`
 
-Returns the integer 100 if the value is "100-continue", or `null` otherwise.
+Returns the integer `100` if the value is "100-continue", or `null` otherwise.
 
 #### `Expires($string)`
 
@@ -756,7 +756,7 @@ Returns a non-negative integer representing the approximate round trip time in m
 
 #### `Save_Data($string = null)`
 
-Returns 0 for falsey values, 1 for truthy values, or `null` if the value is indeterminate.
+Returns the integer `0` for falsey values, `1` for truthy values, or `null` if the value is indeterminate.
 
 #### `Sec_Fetch_Dest($string = null)`
 
@@ -886,7 +886,7 @@ Example:
 
 #### `Timing_Allow_Origin($string)`
 
-Returns the string "\*", or an array containing the results of `parse_url()` on each of the supplied values.
+Returns the string `"*"`, or an array containing the results of `parse_url()` on each of the supplied values.
 
 Example:
 
@@ -942,7 +942,7 @@ Example:
 
 #### `Upgrade_Insecure_Requests($string = null)`
 
-Returns 0, 1, or `null` if the value is indeterminate.
+Returns the integer `0`, `1`, or `null` if the value is indeterminate.
 
 #### `User_Agent($string = null)`
 
@@ -972,7 +972,7 @@ Example:
 
 #### `Vary($string)`
 
-Returns the string "\*", or an array of field names.
+Returns the string `"*"`, or an array of field names.
 
 Example:
 
