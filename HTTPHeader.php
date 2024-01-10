@@ -5,8 +5,9 @@
         const HTTPHEADER_VERSION_MAJOR = 4;
         const HTTPHEADER_VERSION_MINOR = 3;
 
-        private static function header_from_server($name)
-        : string|false {
+        private static function header_from_server(
+            $name
+        ): string|false {
             if (!isset($_SERVER[$name]))
                 return false;
 
