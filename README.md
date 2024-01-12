@@ -1049,3 +1049,7 @@ Example:
                 [0] => scheme3
             )
     )
+
+#### `X_Frame_Options($string)`
+
+Returns a directive.
