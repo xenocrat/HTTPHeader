@@ -212,7 +212,7 @@
             );
         }
 
-        public static function all(
+        public static function extract(
             $string
         ): array {
             if (!is_string($string))
@@ -237,12 +237,15 @@
                 if ($array[0] == "")
                     continue;
 
+                if ($array[0] == "extract")
+                    continue;
+
                 $header = $array[0];
                 $call = str_replace("-", "_", $header);
                 $key = strtoupper($call);
 
                 foreach ($methods as $method) {
-                    if ($method->name !== $call)
+                    if ($method->name != $call)
                         continue;
 
                     if (!$method->isPublic())
