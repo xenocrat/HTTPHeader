@@ -26,9 +26,37 @@ Examples:
     $result = HTTPHeader::Accept("Accept: text/html, application/xhtml+xml");
     $result = HTTPHeader::Accept("Accept: text/html\r\nAccept-Encoding: gzip");
 
-Methods will return `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+All fields can be extracted from a string containing multiple headers, or from a complete HTTP request or response, using the `all()` method. The return value is an associative array of arrays containing one entry for each occurence of a field:
+
+Example:
+
+    $result = HTTPHeader::all($request_or_response);
+    print_r($result);
+
+    Array
+    (
+        [CONTENT_TYPE] => Array
+            (
+                [0] => Array
+                    (
+                        [type] => text/plain
+                    )
+            )
+        [SERVER] => Array
+            (
+                [0] => Array
+                    (
+                        [0] => Array
+                            (
+                                [product] => Apache
+                            )
+                    )
+            )
+    )
 
 ## Methods
+
+Methods will return `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 #### `Accept($string = null)`
 
