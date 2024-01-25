@@ -5,7 +5,7 @@
         const HTTPHEADER_VERSION_MAJOR = 4;
         const HTTPHEADER_VERSION_MINOR = 4;
 
-        private static function header_from_server(
+        protected static function header_from_server(
             $name
         ): string|false {
             if (!isset($_SERVER[$name]))
@@ -16,7 +16,7 @@
             return ($value != "") ? $value : false ;
         }
 
-        private static function header_from_string(
+        protected static function header_from_string(
             $name,
             $string
         ): string|false {
@@ -26,12 +26,12 @@
                 );
 
             $name = preg_quote($name, "/");
-            $return = false;
 
             if (strpos($string, "\r\n\r\n") !== false)
                 $string = strstr($string, "\r\n\r\n", true);
 
             $fields = explode("\r\n", $string);
+            $return = false;
 
             foreach ($fields as $field) {
                 if (
@@ -52,7 +52,7 @@
             return $return;
         }
 
-        private static function q_sort(
+        protected static function q_sort(
             $a,
             $b
         ): int {
@@ -74,7 +74,7 @@
             return ($a_q > $b_q) ? -1 : 1 ;
         }
 
-        private static function explode_preserve_quoted(
+        protected static function explode_preserve_quoted(
             $delimiter,
             $string
         ): ?array {
@@ -109,7 +109,7 @@
             return $fixed;
         }
 
-        private static function explode_preserve_comments(
+        protected static function explode_preserve_comments(
             $delimiter,
             $string
         ): ?array {
@@ -117,7 +117,8 @@
                 preg_match_all(
                     "/(?<!\\\\)\(/",
                     $string,
-                ) !==
+                )
+                !==
                 preg_match_all(
                     "/(?<!\\\\)\)/",
                     $string,
@@ -136,7 +137,8 @@
                     preg_match_all(
                         "/(?<!\\\\)\(/",
                         $chunk
-                    ) ===
+                    )
+                    ===
                     preg_match_all(
                         "/(?<!\\\\)\)/",
                         $chunk
@@ -152,7 +154,7 @@
             return $fixed;
         }
 
-        private static function parse_origin(
+        protected static function parse_origin(
             $string
         ): ?array {
             if (
@@ -167,7 +169,7 @@
             return ($origin !== false) ? $origin : null ;
         }
 
-        private static function rfc5322_date_immutable(
+        protected static function rfc5322_date_immutable(
             $string
         ): \DateTimeImmutable|null {
             if (
@@ -182,7 +184,7 @@
             return ($date !== false) ? $date : null ;
         }
 
-        private static function trim_whitespace(
+        protected static function trim_whitespace(
             &$mixed
         ): void {
             if (is_array($mixed)) {
@@ -194,7 +196,7 @@
                 $mixed = trim($mixed, " ");
         }
 
-        private static function filter_no_empty(
+        protected static function filter_no_empty(
             &$array
         ): void {
             foreach ($array as &$value) {
@@ -208,6 +210,56 @@
                     return !(is_string($value) and $value == "");
                 }
             );
+        }
+
+        public static function all(
+            $string
+        ): array {
+            if (!is_string($string))
+                throw new \InvalidArgumentException(
+                    "HTTP message must be supplied as a string."
+                );
+
+            if (strpos($string, "\r\n\r\n") !== false)
+                $string = strstr($string, "\r\n\r\n", true);
+
+            $fields = explode("\r\n", $string);
+            $return = array();
+            $reflect = new \ReflectionClass(self::class);
+            $methods = $reflect->getMethods();
+
+            foreach ($fields as $field) {
+                $array = explode(":", $field, 2);
+
+                if (count($array) < 2)
+                    continue;
+
+                if ($array[0] == "")
+                    continue;
+
+                $header = $array[0];
+                $call = str_replace("-", "_", $header);
+                $key = strtoupper($call);
+
+                foreach ($methods as $method) {
+                    if ($method->name !== $call)
+                        continue;
+
+                    if (!$method->isPublic())
+                        continue;
+
+                    if (!$method->isStatic())
+                        continue;
+
+                    if (!isset($return[$key]))
+                        $return[$key] = array();
+
+                    $return[$key][] = self::$call($field);
+                    break;
+                }
+            }
+
+            return $return;
         }
 
         public static function Accept(
