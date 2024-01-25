@@ -26,11 +26,11 @@ Examples:
     $result = HTTPHeader::Accept("Accept: text/html, application/xhtml+xml");
     $result = HTTPHeader::Accept("Accept: text/html\r\nAccept-Encoding: gzip");
 
-All fields can be extracted from a string containing multiple headers, or from a complete HTTP request or response, using the `all()` method. The return value is an associative array of arrays containing one entry for each occurence of a field:
+All fields can be extracted from a string containing multiple headers, or from a complete HTTP request or response, using the `extract()` method. The return value is an associative array of arrays containing one entry for each occurence of a field:
 
 Example:
 
-    $result = HTTPHeader::all($request_or_response);
+    $result = HTTPHeader::extract($request_or_response);
     print_r($result);
     
     Array
