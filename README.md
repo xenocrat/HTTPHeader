@@ -32,7 +32,7 @@ Example:
 
     $result = HTTPHeader::all($request_or_response);
     print_r($result);
-
+    
     Array
     (
         [CONTENT_TYPE] => Array
