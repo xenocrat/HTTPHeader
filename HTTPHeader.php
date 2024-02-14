@@ -2855,6 +2855,22 @@
             return $challenges;
         }
 
+        public static function X_Content_Type_Options(
+            $string
+        ): string|null|false {
+            $value = self::header_from_string("X-Content-Type-Options", $string);
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "nosniff":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
         public static function X_Frame_Options(
             $string
         ): string|null|false {
