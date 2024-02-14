@@ -1078,6 +1078,10 @@ Example:
             )
     )
 
+#### `X_Content_Type_Options($string)`
+
+Returns the string `"nosniff"`, or `null` if the value is indeterminate.
+
 #### `X_Frame_Options($string)`
 
 Returns a directive.
