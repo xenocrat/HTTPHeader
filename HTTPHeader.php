@@ -2,8 +2,9 @@
     namespace xenocrat;
 
     class HTTPHeader {
-        const HTTPHEADER_VERSION_MAJOR = 4;
-        const HTTPHEADER_VERSION_MINOR = 6;
+        const VERSION_MAJOR = 4;
+        const VERSION_MINOR = 7;
+        const VERSION_PATCH = 0;
 
         protected static function header_from_server(
             $name
