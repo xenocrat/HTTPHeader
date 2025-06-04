@@ -79,6 +79,12 @@
             $delimiter,
             $string
         ): ?array {
+            $string = str_replace(
+                "\\\\",
+                "\\\\".chr(31),
+                $string
+            );
+
             if (
                 preg_match_all(
                     "/(?<!\\\\)\"/",
@@ -92,7 +98,11 @@
             $fixed = array();
 
             foreach ($array as $value) {
-                $chunk.= $value;
+                $chunk.= str_replace(
+                    "\\\\".chr(31),
+                    "\\\\",
+                    $value
+                );
 
                 if (
                     preg_match_all(
@@ -114,6 +124,12 @@
             $delimiter,
             $string
         ): ?array {
+            $string = str_replace(
+                "\\\\",
+                "\\\\".chr(31),
+                $string
+            );
+
             if (
                 preg_match_all(
                     "/(?<!\\\\)\(/",
@@ -132,7 +148,11 @@
             $fixed = array();
 
             foreach ($array as $value) {
-                $chunk.= $value;
+                $chunk.= str_replace(
+                    "\\\\".chr(31),
+                    "\\\\",
+                    $value
+                );
 
                 if (
                     preg_match_all(
