@@ -98,11 +98,7 @@
             $fixed = array();
 
             foreach ($array as $value) {
-                $chunk.= str_replace(
-                    "\\\\".chr(31),
-                    "\\\\",
-                    $value
-                );
+                $chunk.= $value;
 
                 if (
                     preg_match_all(
@@ -110,7 +106,11 @@
                         $chunk
                     ) % 2 == 0
                 ) {
-                    $fixed[] = $chunk;
+                    $fixed[] = str_replace(
+                        "\\\\".chr(31),
+                        "\\\\",
+                        $chunk
+                    );
                     $chunk = "";
                 } else {
                     $chunk.= $delimiter;
@@ -148,11 +148,7 @@
             $fixed = array();
 
             foreach ($array as $value) {
-                $chunk.= str_replace(
-                    "\\\\".chr(31),
-                    "\\\\",
-                    $value
-                );
+                $chunk.= $value;
 
                 if (
                     preg_match_all(
@@ -165,7 +161,11 @@
                         $chunk
                     )
                 ) {
-                    $fixed[] = $chunk;
+                    $fixed[] = str_replace(
+                        "\\\\".chr(31),
+                        "\\\\",
+                        $chunk
+                    );
                     $chunk = "";
                 } else {
                     $chunk.= $delimiter;
