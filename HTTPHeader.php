@@ -79,6 +79,9 @@
             $delimiter,
             $string
         ): ?array {
+            if (str_contains($delimiter, "\""))
+                return null;
+
             $string = str_replace(
                 "\\\\",
                 "\\\\".chr(31),
@@ -124,6 +127,12 @@
             $delimiter,
             $string
         ): ?array {
+            if (str_contains($delimiter, "("))
+                return null;
+
+            if (str_contains($delimiter, ")"))
+                return null;
+
             $string = str_replace(
                 "\\\\",
                 "\\\\".chr(31),
