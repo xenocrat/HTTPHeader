@@ -882,6 +882,10 @@ Example:
             )
     )
 
+#### `Set_Login($string)`
+
+Returns the string `"logged-in"`, the string `"logged-out"`, or `null` if the value is indeterminate.
+
 #### `SourceMap($string)`
 
 Returns a string.
