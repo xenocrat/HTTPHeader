@@ -2476,6 +2476,23 @@
             return $return;
         }
 
+        public static function Set_Login(
+            $string
+        ): string|null|false {
+            $value = self::header_from_string("Set-Login", $string);
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "logged-in":
+                case "logged-out":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
         public static function SourceMap(
             $string
         ): string|false {
