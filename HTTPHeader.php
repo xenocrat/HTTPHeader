@@ -895,10 +895,19 @@
             $return = array("disposition" => array_shift($params));
 
             foreach ($params as $param) {
-                if (!preg_match("/^(name|filename\*?)=\"(.+)\"$/", $param, $match))
+                if (
+                    !preg_match(
+                        "/^(name|filename\*?)=(\"(.+)\"|([^ ]+))$/",
+                        $param,
+                        $match,
+                        PREG_UNMATCHED_AS_NULL
+                    )
+                )
                     return null;
 
-                $return[$match[1]] = stripslashes($match[2]);
+                $return[$match[1]] = isset($match[3]) ?
+                    stripslashes($match[3]) :
+                    rawurldecode($match[4]) ;
             }
 
             return $return;
