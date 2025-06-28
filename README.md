@@ -936,6 +936,10 @@ Example:
             )
     )
 
+#### `Tk($string)`
+
+Returns one of the strings `!`, `?`, `G`, `N`, `T`, `C`, `P`, `D`, `U`, or `null` if the value is indeterminate.
+
 #### `Trailer($string)`
 
 Returns an array of field names.
