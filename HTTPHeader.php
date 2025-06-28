@@ -3,7 +3,7 @@
 
     class HTTPHeader {
         const VERSION_MAJOR = 4;
-        const VERSION_MINOR = 8;
+        const VERSION_MINOR = 9;
         const VERSION_PATCH = 0;
 
         protected static function header_from_server(
