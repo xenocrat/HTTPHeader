@@ -2608,6 +2608,30 @@
             return $origins;
         }
 
+        public static function Tk(
+            $string
+        ): string|null|false {
+            $value = self::header_from_string("Tk", $string);
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "!":
+                case "?":
+                case "G":
+                case "N":
+                case "T":
+                case "C":
+                case "P":
+                case "D":
+                case "U":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
         public static function Trailer(
             $string
         ): array|null|false {
