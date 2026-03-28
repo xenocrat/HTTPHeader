@@ -2556,6 +2556,33 @@
             }
         }
 
+        public static function Sec_Fetch_Storage_Access(
+            $string = null
+        ): string|null|false {
+            if (!isset($string)) {
+                $value = self::header_from_server(
+                    "HTTP_SEC_FETCH_STORAGE_ACCESS"
+                );
+            } else {
+                $value = self::header_from_string(
+                    "Sec-Fetch-Storage-Access",
+                    $string
+                );
+            }
+
+            if ($value === false)
+                return false;
+
+            switch ($value) {
+                case "none":
+                case "inactive":
+                case "active":
+                    return $value;
+                default:
+                    return null;
+            }
+        }
+
         public static function Sec_Fetch_User(
             $string = null
         ): ?bool {
