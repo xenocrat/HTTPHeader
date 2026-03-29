@@ -683,6 +683,51 @@
             }
         }
 
+        public static function Activate_Storage_Access(
+            $string
+        ): array|null|false {
+            $value = self::header_from_string(
+                "Activate-Storage-Access",
+                $string
+            );
+
+            if ($value === false)
+                return false;
+
+            if ($value == "load")
+                return array($value);
+
+            $params = explode(";", $value);
+            self::trim_whitespace($params);
+
+            if (count($params) != 2)
+                return null;
+
+            if ($params[0] != "retry")
+                return null;
+
+            $origin = explode("=", $params[1]);
+            self::trim_whitespace($origin);
+
+            if (count($origin) != 2)
+                return null;
+
+            if ($origin[0] != "allowed-origin")
+                return null;
+
+            if ($origin[1] != "*") {
+                if (preg_match("/^\".+\"$/", $origin[1])) {
+                    $origin[1] = stripslashes(
+                        substr($origin[1], 1, -1)
+                    );
+                }
+
+                $origin[1] = self::parse_origin($origin[1]);
+            }
+
+            return array($params[0], $origin[1]);
+        }
+
         public static function Age(
             $string
         ): int|null|false {
