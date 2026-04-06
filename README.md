@@ -36,13 +36,19 @@ $result = HTTPHeader::Accept("Accept: text/html\r\nAccept-Encoding: gzip");
 
 #### Description
 
-Extract all header fields from a string containing multiple headers, or from a complete HTTP request or response.
+``` php
+public HTTPHeader::extract(
+    string $string
+): array
+```
+
+Extract all header fields from a string containing multiple headers, or from a complete HTTP message.
 
 #### Parameters
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -87,7 +93,7 @@ public HTTPHeader::Accept(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -120,7 +126,7 @@ public HTTPHeader::Accept_CH(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -141,7 +147,7 @@ public HTTPHeader::Accept_Charset(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -161,7 +167,7 @@ public HTTPHeader::Accept_Encoding(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -191,7 +197,7 @@ public HTTPHeader::Accept_Language(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -222,7 +228,7 @@ public HTTPHeader::Accept_Patch(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -252,7 +258,7 @@ public HTTPHeader::Accept_Post(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -282,7 +288,7 @@ public HTTPHeader::Accept_Ranges(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -302,7 +308,7 @@ public HTTPHeader::Access_Control_Allow_Credentials(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -322,7 +328,7 @@ public HTTPHeader::Access_Control_Allow_Headers(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -352,7 +358,7 @@ public HTTPHeader::Access_Control_Allow_Methods(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -383,7 +389,7 @@ public HTTPHeader::Access_Control_Allow_Origin(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -403,7 +409,7 @@ public HTTPHeader::Access_Control_Expose_Headers(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -432,7 +438,7 @@ public HTTPHeader::Access_Control_Max_Age(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -452,7 +458,7 @@ public HTTPHeader::Access_Control_Request_Headers(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -481,7 +487,7 @@ public HTTPHeader::Access_Control_Request_Method(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -501,7 +507,7 @@ public HTTPHeader::Activate_Storage_Access(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -519,7 +525,7 @@ public HTTPHeader::Age(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -537,7 +543,7 @@ public HTTPHeader::Allow(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -566,7 +572,7 @@ public HTTPHeader::Alt_Svc(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -608,7 +614,7 @@ public HTTPHeader::Alt_Used(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -636,7 +642,7 @@ public HTTPHeader::Authorization(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -664,7 +670,7 @@ public HTTPHeader::Cache_Control(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -691,7 +697,7 @@ public HTTPHeader::Clear_Site_Data(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -719,7 +725,7 @@ public HTTPHeader::Connection(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -746,7 +752,7 @@ public HTTPHeader::Content_Disposition(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -774,7 +780,7 @@ public HTTPHeader::Content_Encoding(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -802,7 +808,7 @@ public HTTPHeader::Content_Language(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -830,7 +836,7 @@ public HTTPHeader::Content_Length(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -848,7 +854,7 @@ public HTTPHeader::Content_Location(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -866,7 +872,7 @@ public HTTPHeader::Content_Range(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -895,7 +901,7 @@ public HTTPHeader::Content_Security_Policy(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -937,7 +943,7 @@ public HTTPHeader::Content_Security_Policy_Report_Only(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -955,7 +961,7 @@ public HTTPHeader::Content_Type(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -983,7 +989,7 @@ public HTTPHeader::Cookie(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1014,7 +1020,7 @@ public HTTPHeader::Cross_Origin_Embedder_Policy(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1032,7 +1038,7 @@ public HTTPHeader::Cross_Origin_Opener_Policy(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1050,7 +1056,7 @@ public HTTPHeader::Cross_Origin_Resource_Policy(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1068,7 +1074,7 @@ public HTTPHeader::Date(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1097,7 +1103,7 @@ public HTTPHeader::Device_Memory(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1115,7 +1121,7 @@ public HTTPHeader::Digest(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1151,7 +1157,7 @@ public HTTPHeader::Downlink(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1169,7 +1175,7 @@ public HTTPHeader::DNT(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1187,7 +1193,7 @@ public HTTPHeader::ECT(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1205,7 +1211,7 @@ public HTTPHeader::ETag(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1223,7 +1229,7 @@ public HTTPHeader::Expect(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1241,7 +1247,7 @@ public HTTPHeader::Expires(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1270,7 +1276,7 @@ public HTTPHeader::Forwarded(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1306,7 +1312,7 @@ public HTTPHeader::From(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1324,7 +1330,7 @@ public HTTPHeader::Host(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1352,7 +1358,7 @@ public HTTPHeader::If_Match(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1381,7 +1387,7 @@ public HTTPHeader::If_Modified_Since(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1410,7 +1416,7 @@ public HTTPHeader::If_None_Match(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1439,7 +1445,7 @@ public HTTPHeader::If_Range(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1457,7 +1463,7 @@ public HTTPHeader::If_Unmodified_Since(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1486,7 +1492,7 @@ public HTTPHeader::Keep_Alive(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1514,7 +1520,7 @@ public HTTPHeader::Last_Modified(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1543,7 +1549,7 @@ public HTTPHeader::Link(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1598,7 +1604,7 @@ public HTTPHeader::Location(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1616,7 +1622,7 @@ public HTTPHeader::Max_Forwards(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1634,7 +1640,7 @@ public HTTPHeader::Origin(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1662,7 +1668,7 @@ public HTTPHeader::Permissions_Policy(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1712,7 +1718,7 @@ public HTTPHeader::Pragme(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1730,7 +1736,7 @@ public HTTPHeader::Proxy_Authenticate(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1766,7 +1772,7 @@ public HTTPHeader::Proxy_Authorization(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1794,7 +1800,7 @@ public HTTPHeader::Range(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1827,7 +1833,7 @@ public HTTPHeader::Referer(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1856,7 +1862,7 @@ public HTTPHeader::Referrer_Policy(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1874,7 +1880,7 @@ public HTTPHeader::Retry_After(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1892,7 +1898,7 @@ public HTTPHeader::RTT(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1910,7 +1916,7 @@ public HTTPHeader::Save_Data(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1928,7 +1934,7 @@ public HTTPHeader::Sec_Fetch_Dest(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1946,7 +1952,7 @@ public HTTPHeader::Sec_Fetch_Mode(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1964,7 +1970,7 @@ public HTTPHeader::Sec_Fetch_Site(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -1982,7 +1988,7 @@ public HTTPHeader::Sec_Fetch_Storage_Access(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2000,7 +2006,7 @@ public HTTPHeader::Sec_Fetch_User(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2018,7 +2024,7 @@ public HTTPHeader::Sec_GPC(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2036,7 +2042,7 @@ public HTTPHeader::Sec_Purpose(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2054,7 +2060,7 @@ public HTTPHeader::Server(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2086,7 +2092,7 @@ public HTTPHeader::Server_Timing(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2123,7 +2129,7 @@ public HTTPHeader::Service_Worker_Navigation_Preload(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2141,7 +2147,7 @@ public HTTPHeader::Set_Cookie(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2188,7 +2194,7 @@ public HTTPHeader::Set_Login(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2206,7 +2212,7 @@ public HTTPHeader::SourceMap(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2224,7 +2230,7 @@ public HTTPHeader::Strict_Transport_Security(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2253,7 +2259,7 @@ public HTTPHeader::TE(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2282,7 +2288,7 @@ public HTTPHeader::Timing_Allow_Origin(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2318,7 +2324,7 @@ public HTTPHeader::Tk(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2336,7 +2342,7 @@ public HTTPHeader::Trailer(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2364,7 +2370,7 @@ public HTTPHeader::Transfer_Encoding(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2392,7 +2398,7 @@ public HTTPHeader::Upgrade(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2420,7 +2426,7 @@ public HTTPHeader::Upgrade_Insecure_Requests(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2438,7 +2444,7 @@ public HTTPHeader::User_Agent(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2480,7 +2486,7 @@ public HTTPHeader::Vary(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2508,7 +2514,7 @@ public HTTPHeader::Via(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2552,7 +2558,7 @@ public HTTPHeader::Want_Digest(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2581,7 +2587,7 @@ public HTTPHeader::WWW_Authenticate(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2624,7 +2630,7 @@ public HTTPHeader::X_Content_Type_Options(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
@@ -2642,7 +2648,7 @@ public HTTPHeader::X_Frame_Options(
 
 * _$string_
 
-  A string containing one or more headers, or a complete HTTP request.
+  A string containing one or more headers, or a complete HTTP message.
 
 #### Return Values
 
