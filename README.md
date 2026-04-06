@@ -30,14 +30,27 @@ $result = HTTPHeader::Accept("Accept: text/html, application/xhtml+xml");
 $result = HTTPHeader::Accept("Accept: text/html\r\nAccept-Encoding: gzip");
 ```
 
-All fields can be extracted from a string containing multiple headers, or from a complete HTTP request or response, using the `extract()` method. The return value is an associative array of arrays containing one entry for each occurence of a field:
+## Methods
 
-Example:
+### `extract`
 
-```
-$result = HTTPHeader::extract($request_or_response);
-print_r($result);
+#### Description
 
+Extract all header fields from a string containing multiple headers, or from a complete HTTP request or response.
+
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an associative array of arrays containing one entry for each occurence of a field.
+
+#### Examples
+
+``` php
 Array
 (
     [CONTENT_TYPE] => Array
@@ -60,10 +73,6 @@ Array
 )
 ```
 
-## Methods
-
-Methods will return `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
-
 ### `Accept`
 
 #### Description
@@ -74,9 +83,17 @@ public HTTPHeader::Accept(
 ): array|null|false
 ```
 
-Returns an array sorted by "q" value.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array sorted by "q" value. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -99,7 +116,16 @@ public HTTPHeader::Accept_CH(
 ): array|null|false
 ```
 
-Returns an array of client hint headers.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of client hint headers. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+ 
 
 ### `Accept_Charset`
 
@@ -111,7 +137,15 @@ public HTTPHeader::Accept_Charset(
 ): array|null|false
 ```
 
-Returns an array sorted by "q" value.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array sorted by "q" value. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Accept_Encoding`
 
@@ -123,9 +157,17 @@ public HTTPHeader::Accept_Encoding(
 ): array|null|false
 ```
 
-Returns an array sorted by "q" value.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array sorted by "q" value. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -145,9 +187,17 @@ public HTTPHeader::Accept_Language(
 ): array|null|false
 ```
 
-Returns an array sorted by "q" value.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array sorted by "q" value. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -168,9 +218,17 @@ public HTTPHeader::Accept_Patch(
 ): array|null|false
 ```
 
-Returns an array of media types.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of media types. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -190,9 +248,17 @@ public HTTPHeader::Accept_Post(
 ): array|null|false
 ```
 
-Returns an array of media types.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of media types. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -212,7 +278,15 @@ public HTTPHeader::Accept_Ranges(
 ): string|false
 ```
 
-Returns a range unit.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a range unit. Returns `false` if the header field is not present or empty.
 
 ### `Access_Control_Allow_Credentials`
 
@@ -223,6 +297,14 @@ public HTTPHeader::Access_Control_Allow_Credentials(
     string $string
 ): ?bool
 ```
+
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
 
 Returns `true` if the value is "true", or `null` otherwise.
 
@@ -236,9 +318,17 @@ public HTTPHeader::Access_Control_Allow_Headers(
 ): array|null|false
 ```
 
-Returns an array of headers.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of headers. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -258,9 +348,17 @@ public HTTPHeader::Access_Control_Allow_Methods(
 ): array|null|false
 ```
 
-Returns an array of method names.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of method names. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -281,7 +379,15 @@ public HTTPHeader::Access_Control_Allow_Origin(
 ): string|array|null|false
 ```
 
-Returns the string `"*"`, the string `"null"` if the value is "null", or the result of `parse_url()` on the supplied value.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the string `"*"`, the string `"null"` if the value is "null", or the result of `parse_url()` on the supplied value. Returns `false` if the header field is not present or empty.
 
 ### `Access_Control_Expose_Headers`
 
@@ -293,9 +399,17 @@ public HTTPHeader::Access_Control_Expose_Headers(
 ): array|null|false
 ```
 
-Returns an array of headers.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of headers. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -314,7 +428,15 @@ public HTTPHeader::Access_Control_Max_Age(
 ): int|null|false
 ```
 
-Returns a non-negative integer representing the number of seconds.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a non-negative integer representing the number of seconds. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Access_Control_Request_Headers`
 
@@ -326,9 +448,17 @@ public HTTPHeader::Access_Control_Request_Headers(
 ): array|null|false
 ```
 
-Returns an array of headers.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of headers. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -347,7 +477,15 @@ public HTTPHeader::Access_Control_Request_Method(
 ): string|null|false
 ```
 
-Returns the method name.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the method name. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Activate_Storage_Access`
 
@@ -359,7 +497,15 @@ public HTTPHeader::Activate_Storage_Access(
 ): array|null|false
 ```
 
-Returns an array containing the directive and parameters.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array containing the directive and parameters. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Age`
 
@@ -369,7 +515,15 @@ public HTTPHeader::Age(
 ): int|null|false
 ```
 
-Returns a non-negative integer representing a time delta in seconds.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a non-negative integer representing a time delta in seconds. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Allow`
 
@@ -379,9 +533,17 @@ public HTTPHeader::Allow(
 ): array|null|false
 ```
 
-Returns an array of method names.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of method names. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -400,9 +562,17 @@ public HTTPHeader::Alt_Svc(
 ): string|array|null|false
 ```
 
-Returns the string `"clear"`, or an array of associative arrays containing the parameters for each alternative service.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the string `"clear"`, or an array of associative arrays containing the parameters for each alternative service. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -434,9 +604,17 @@ public HTTPHeader::Alt_Used(
 ): array|null|false
 ```
 
-Returns an associative array containing the host, and port if supplied.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an associative array containing the host, and port if supplied. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -454,9 +632,17 @@ public HTTPHeader::Authorization(
 ): array|null|false
 ```
 
-Returns an array containing the authorization type and parameters.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array containing the authorization type and parameters. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -474,9 +660,17 @@ public HTTPHeader::Cache_Control(
 ): array|null|false
 ```
 
-Returns an array of directives.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of directives. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -493,9 +687,17 @@ public HTTPHeader::Clear_Site_Data(
 ): array|null|false
 ```
 
-Returns an array of directives.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of directives. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -513,9 +715,17 @@ public HTTPHeader::Connection(
 ): array|null|false
 ```
 
-Returns an array of directives.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of directives. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -532,9 +742,17 @@ public HTTPHeader::Content_Disposition(
 ): array|null|false
 ```
 
-Returns an associative array containing the content disposition, field name and filename (if supplied).
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an associative array containing the content disposition, field name and filename (if supplied). Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -552,9 +770,17 @@ public HTTPHeader::Content_Encoding(
 ): array|null|false
 ```
 
-Returns an array of encoding formats in the order in which they were applied.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of encoding formats in the order in which they were applied. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -572,9 +798,17 @@ public HTTPHeader::Content_Language(
 ): array|null|false
 ```
 
-Returns an array of language tags.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of language tags. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -592,7 +826,15 @@ public HTTPHeader::Content_Length(
 ): int|null|false
 ```
 
-Returns the content length in decimal number of octets.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the content length in decimal number of octets. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Content_Location`
 
@@ -602,7 +844,15 @@ public HTTPHeader::Content_Location(
 ): string|false
 ```
 
-Returns a string.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a string. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Content_Range`
 
@@ -612,9 +862,17 @@ public HTTPHeader::Content_Range(
 ): array|null|false
 ```
 
-Returns an associative array containing the unit, range, and size.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an associative array containing the unit, range, and size. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -633,9 +891,17 @@ public HTTPHeader::Content_Security_Policy(
 ): array|null|false
 ```
 
-Returns an array of arrays containing the policy directive and values.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of arrays containing the policy directive and values. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -667,7 +933,15 @@ public HTTPHeader::Content_Security_Policy_Report_Only(
 ): array|null|false
 ```
 
-See above.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of arrays containing the policy directive and values. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Content_Type`
 
@@ -677,9 +951,17 @@ public HTTPHeader::Content_Type(
 ): array|null|false
 ```
 
-Returns an associative array containing the content type, charset and boundary (if supplied).
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an associative array containing the content type, charset and boundary (if supplied). Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -697,9 +979,17 @@ public HTTPHeader::Cookie(
 ): array|null|false
 ```
 
-Returns an array of arrays containing the cookie names and value.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of arrays containing the cookie names and value. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -720,7 +1010,15 @@ public HTTPHeader::Cross_Origin_Embedder_Policy(
 ): string|null|false
 ```
 
-Returns a policy directive.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a policy directive. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Cross_Origin_Opener_Policy`
 
@@ -730,7 +1028,15 @@ public HTTPHeader::Cross_Origin_Opener_Policy(
 ): string|null|false
 ```
 
-Returns a policy directive.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a policy directive. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Cross_Origin_Resource_Policy`
 
@@ -740,7 +1046,15 @@ public HTTPHeader::Cross_Origin_Resource_Policy(
 ): string|null|false
 ```
 
-Returns a policy directive.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a policy directive. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Date`
 
@@ -750,9 +1064,17 @@ public HTTPHeader::Date(
 ): \DateTimeImmutable|null|false
 ```
 
-Returns a DateTimeImmutable object.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a DateTimeImmutable object. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 DateTimeImmutable Object
@@ -771,7 +1093,15 @@ public HTTPHeader::Device_Memory(
 ): float|null|false
 ```
 
-Returns a non-negative float representing the device memory in GiB.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a non-negative float representing the device memory in GiB. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Digest`
 
@@ -781,9 +1111,17 @@ public HTTPHeader::Digest(
 ): array|null|false
 ```
 
-Returns an array of arrays containing the digest algorithms and values.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of arrays containing the digest algorithms and values. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -809,7 +1147,15 @@ public HTTPHeader::Downlink(
 ): float|null|false
 ```
 
-Returns a non-negative float representing the downlink rate in Mbps.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a non-negative float representing the downlink rate in Mbps. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `DNT`
 
@@ -819,7 +1165,15 @@ public HTTPHeader::DNT(
 ): int|null|false
 ```
 
-Returns the integer `0`, `1`, or `null` if the value is indeterminate.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the integer `0`, `1`, or `null` if the value is indeterminate. Returns `false` if the header field is not present or empty.
 
 ### `ECT`
 
@@ -829,7 +1183,15 @@ public HTTPHeader::ECT(
 ): string|null|false
 ```
 
-Returns a string identifying the effective connection type, or `null` if the value is indeterminate.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a string identifying the effective connection type, or `null` if the value is indeterminate. Returns `false` if the header field is not present or empty.
 
 ### `ETag`
 
@@ -839,7 +1201,15 @@ public HTTPHeader::ETag(
 ): string|null|false
 ```
 
-Returns an ETag value.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an ETag value. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Expect`
 
@@ -849,7 +1219,15 @@ public HTTPHeader::Expect(
 ): int|null|false
 ```
 
-Returns the integer `100` if the value is "100-continue", or `null` otherwise.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the integer `100` if the value is "100-continue", or `null` otherwise. Returns `false` if the header field is not present or empty.
 
 ### `Expires`
 
@@ -859,9 +1237,17 @@ public HTTPHeader::Expires(
 ): \DateTimeImmutable|null|false
 ```
 
-Returns a DateTimeImmutable object.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a DateTimeImmutable object. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 DateTimeImmutable Object
@@ -880,9 +1266,17 @@ public HTTPHeader::Forwarded(
 ): array|null|false
 ```
 
-Returns an array of fields, each containing an associative array of directives.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of fields, each containing an associative array of directives. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -908,7 +1302,15 @@ public HTTPHeader::From(
 ): string|null|false
 ```
 
-Returns a string containing the supplied email address.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a string containing the supplied email address. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Host`
 
@@ -918,9 +1320,17 @@ public HTTPHeader::Host(
 ): array|null|false
 ```
 
-Returns an associative array containing the host, and port if supplied.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an associative array containing the host, and port if supplied. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -938,9 +1348,17 @@ public HTTPHeader::If_Match(
 ): array|null|false
 ```
 
-Returns an array of ETag values.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of ETag values. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -959,9 +1377,17 @@ public HTTPHeader::If_Modified_Since(
 ): \DateTimeImmutable|null|false
 ```
 
-Returns a DateTimeImmutable object.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a DateTimeImmutable object. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 DateTimeImmutable Object
@@ -980,9 +1406,17 @@ public HTTPHeader::If_None_Match(
 ): array|null|false
 ```
 
-Returns an array of ETag values.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of ETag values. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1001,7 +1435,15 @@ public HTTPHeader::If_Range(
 ): \DateTimeImmutable|string|null|false
 ```
 
-Returns a DateTimeImmutable object, or an ETag value.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a DateTimeImmutable object, or an ETag value. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `If_Unmodified_Since`
 
@@ -1011,9 +1453,17 @@ public HTTPHeader::If_Unmodified_Since(
 ): \DateTimeImmutable|null|false
 ```
 
-Returns a DateTimeImmutable object.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a DateTimeImmutable object. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 DateTimeImmutable Object
@@ -1032,9 +1482,17 @@ public HTTPHeader::Keep_Alive(
 ): array|null|false
 ```
 
-Returns an associative array of parameters.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an associative array of parameters. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1052,9 +1510,17 @@ public HTTPHeader::Last_Modified(
 ): \DateTimeImmutable|null|false
 ```
 
-Returns a DateTimeImmutable object.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a DateTimeImmutable object. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 DateTimeImmutable Object
@@ -1073,9 +1539,17 @@ public HTTPHeader::Link(
 ): array|null|false
 ```
 
-Returns an array of arrays containing the link URI and an array of parameters.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of arrays containing the link URI and an array of parameters. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1120,7 +1594,15 @@ public HTTPHeader::Location(
 ): string|false
 ```
 
-Returns a string.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a string. Returns `false` if the header field is not present or empty.
 
 ### `Max_Forwards`
 
@@ -1130,7 +1612,15 @@ public HTTPHeader::Max_Forwards(
 ): int|null|false
 ```
 
-Returns a non-negative integer.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a non-negative integer. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Origin`
 
@@ -1140,9 +1630,17 @@ public HTTPHeader::Origin(
 ): array|null|false
 ```
 
-Returns the result of `parse_url()` on the supplied value.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the result of `parse_url()` on the supplied value. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1160,9 +1658,17 @@ public HTTPHeader::Permissions_Policy(
 ): array|null|false
 ```
 
-Returns an array of arrays containing the policy directive and values.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of arrays containing the policy directive and values. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1202,7 +1708,15 @@ public HTTPHeader::Pragme(
 ): array|null|false
 ```
 
-Returns an array of directives.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of directives. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Proxy_Authenticate`
 
@@ -1212,9 +1726,17 @@ public HTTPHeader::Proxy_Authenticate(
 ): array|null|false
 ```
 
-Returns an array of arrays containing the authentication type and parameters.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of arrays containing the authentication type and parameters. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1240,9 +1762,17 @@ public HTTPHeader::Proxy_Authorization(
 ): array|null|false
 ```
 
-Returns an array containing the authorization type and parameters.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array containing the authorization type and parameters. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1260,9 +1790,17 @@ public HTTPHeader::Range(
 ): array|null|false
 ```
 
-Returns an associative array containing the unit and ranges.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an associative array containing the unit and ranges. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1285,9 +1823,17 @@ public HTTPHeader::Referer(
 ): array|null|false
 ```
 
-Returns the result of `parse_url()` on the supplied value.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the result of `parse_url()` on the supplied value. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1306,7 +1852,15 @@ public HTTPHeader::Referrer_Policy(
 ): string|null|false
 ```
 
-Returns a directive.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a directive. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Retry_After`
 
@@ -1316,7 +1870,15 @@ public HTTPHeader::Retry_After(
 ): \DateTimeImmutable|int|null|false
 ```
 
-Returns a DateTimeImmutable object, or a non-negative integer representing the delay in seconds.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a DateTimeImmutable object, or a non-negative integer representing the delay in seconds. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `RTT`
 
@@ -1326,7 +1888,15 @@ public HTTPHeader::RTT(
 ): array|null|false
 ```
 
-Returns a non-negative integer representing the approximate round trip time in milliseconds.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a non-negative integer representing the approximate round trip time in milliseconds. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Save_Data`
 
@@ -1336,7 +1906,15 @@ public HTTPHeader::Save_Data(
 ): int|null|false
 ```
 
-Returns the integer `0` for falsey values, `1` for truthy values, or `null` if the value is indeterminate.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the integer `0` for falsey values, `1` for truthy values, or `null` if the value is indeterminate. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Sec_Fetch_Dest`
 
@@ -1346,7 +1924,15 @@ public HTTPHeader::Sec_Fetch_Dest(
 ): string|null|false
 ```
 
-Returns a directive.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a directive. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Sec_Fetch_Mode`
 
@@ -1356,7 +1942,15 @@ public HTTPHeader::Sec_Fetch_Mode(
 ): string|null|false
 ```
 
-Returns a directive.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a directive. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Sec_Fetch_Site`
 
@@ -1366,7 +1960,15 @@ public HTTPHeader::Sec_Fetch_Site(
 ): string|null|false
 ```
 
-Returns a directive.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a directive. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Sec_Fetch_Storage_Access`
 
@@ -1376,8 +1978,15 @@ public HTTPHeader::Sec_Fetch_Storage_Access(
 ): string|null|false
 ```
 
-Returns a directive.
+#### Parameters
 
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a directive. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Sec_Fetch_User`
 
@@ -1386,6 +1995,14 @@ public HTTPHeader::Sec_Fetch_User(
     string $string = null
 ): ?bool
 ```
+
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
 
 Returns `true` if the value is "?1", or `null` otherwise.
 
@@ -1397,6 +2014,14 @@ public HTTPHeader::Sec_GPC(
 ): ?bool
 ```
 
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
 Returns `true` if the value is "1", or `null` otherwise.
 
 ### `Sec_Purpose`
@@ -1407,7 +2032,15 @@ public HTTPHeader::Sec_Purpose(
 ): string|null|false
 ```
 
-Returns a directive.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a directive. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Server`
 
@@ -1417,9 +2050,17 @@ public HTTPHeader::Server(
 ): array|null|false
 ```
 
-Returns an array of associative arrays containing the product, version and comment (if supplied).
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of associative arrays containing the product, version and comment (if supplied). Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1441,9 +2082,17 @@ public HTTPHeader::Server_Timing(
 ): string|null|false
 ```
 
-Returns an array of associative arrays containing the metric name, description and duration (if supplied).
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of associative arrays containing the metric name, description and duration (if supplied). Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1470,7 +2119,15 @@ public HTTPHeader::Service_Worker_Navigation_Preload(
 ): string|false
 ```
 
-Returns a string.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a string. Returns `false` if the header field is not present or empty.
 
 ### `Set_Cookie`
 
@@ -1480,9 +2137,17 @@ public HTTPHeader::Set_Cookie(
 ): array|null|false
 ```
 
-Returns an array of arrays containing the cookie name and value, and an associative array of parameter values.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of arrays containing the cookie name and value, and an associative array of parameter values. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1519,7 +2184,15 @@ public HTTPHeader::Set_Login(
 ): string|null|false
 ```
 
-Returns the string `"logged-in"`, the string `"logged-out"`, or `null` if the value is indeterminate.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the string `"logged-in"`, the string `"logged-out"`, or `null` if the value is indeterminate. Returns `false` if the header field is not present or empty.
 
 ### `SourceMap`
 
@@ -1529,7 +2202,15 @@ public HTTPHeader::SourceMap(
 ): string|false
 ```
 
-Returns a string.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a string. Returns `false` if the header field is not present or empty.
 
 ### `Strict_Transport_Security`
 
@@ -1539,9 +2220,17 @@ public HTTPHeader::Strict_Transport_Security(
 ): array|null|false
 ```
 
-Returns an associative array of parameter values.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an associative array of parameter values. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1560,9 +2249,17 @@ public HTTPHeader::TE(
 ): array|null|false
 ```
 
-Returns an array sorted by "q" value.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array sorted by "q" value. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1581,9 +2278,17 @@ public HTTPHeader::Timing_Allow_Origin(
 ): string|array|null|false
 ```
 
-Returns the string `"*"`, or an array containing the results of `parse_url()` on each of the supplied values.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the string `"*"`, or an array containing the results of `parse_url()` on each of the supplied values. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1609,7 +2314,15 @@ public HTTPHeader::Tk(
 ): string|null|false
 ```
 
-Returns one of the strings `!`, `?`, `G`, `N`, `T`, `C`, `P`, `D`, `U`, or `null` if the value is indeterminate.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns one of the strings `!`, `?`, `G`, `N`, `T`, `C`, `P`, `D`, `U`, or `null` if the value is indeterminate. Returns `false` if the header field is not present or empty.
 
 ### `Trailer`
 
@@ -1619,9 +2332,17 @@ public HTTPHeader::Trailer(
 ): array|null|false
 ```
 
-Returns an array of field names.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of field names. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1639,9 +2360,17 @@ public HTTPHeader::Transfer_Encoding(
 ): array|null|false
 ```
 
-Returns an array of encoding formats in the order in which they were applied.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of encoding formats in the order in which they were applied. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1659,9 +2388,17 @@ public HTTPHeader::Upgrade(
 ): array|null|false
 ```
 
-Returns an array of protocols in order of preference.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of protocols in order of preference. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1679,7 +2416,15 @@ public HTTPHeader::Upgrade_Insecure_Requests(
 ): int|null|false
 ```
 
-Returns the integer `0`, `1`, or `null` if the value is indeterminate.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the integer `0`, `1`, or `null` if the value is indeterminate. Returns `false` if the header field is not present or empty.
 
 ### `User_Agent`
 
@@ -1689,9 +2434,17 @@ public HTTPHeader::User_Agent(
 ): array|null|false
 ```
 
-Returns an array of associative arrays containing the product, version and comment (if supplied).
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of associative arrays containing the product, version and comment (if supplied). Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1723,9 +2476,17 @@ public HTTPHeader::Vary(
 ): string|array|null|false
 ```
 
-Returns the string `"*"`, or an array of field names.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the string `"*"`, or an array of field names. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1743,9 +2504,17 @@ public HTTPHeader::Via(
 ): array|null|false
 ```
 
-Returns an array of associative arrays containing the details supplied by each proxy.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of associative arrays containing the details supplied by each proxy. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1779,9 +2548,17 @@ public HTTPHeader::Want_Digest(
 ): array|null|false
 ```
 
-Returns an array sorted by "q" value.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array sorted by "q" value. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1800,9 +2577,17 @@ public HTTPHeader::WWW_Authenticate(
 ): array|null|false
 ```
 
-Returns an array of arrays containing the authentication type and parameters.
+#### Parameters
 
-#### Example:
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns an array of arrays containing the authentication type and parameters. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
 
 ```
 Array
@@ -1835,7 +2620,15 @@ public HTTPHeader::X_Content_Type_Options(
 ): string|null|false
 ```
 
-Returns the string `"nosniff"`, or `null` if the value is indeterminate.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns the string `"nosniff"`, or `null` if the value is indeterminate. Returns `false` if the header field is not present or empty.
 
 ### `X_Frame_Options`
 
@@ -1845,4 +2638,12 @@ public HTTPHeader::X_Frame_Options(
 ): string|null|false
 ```
 
-Returns a directive.
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP request.
+
+#### Return Values
+
+Returns a directive. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
