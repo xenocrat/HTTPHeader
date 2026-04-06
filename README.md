@@ -12,1084 +12,1837 @@ Methods for inspecting response headers must be supplied with a string containin
 
 Examples:
 
-    use xenocrat\HTTPHeader;
-    $result = HTTPHeader::Server("Server: Apache");
-    $result = HTTPHeader::Server("Content-Type: text/plain\r\nServer: Apache");
-    $result = HTTPHeader::Server("HTTP/1.1 200 OK\r\nServer: Apache\r\n\r\nHello, world!");
+``` php
+use xenocrat\HTTPHeader;
+$result = HTTPHeader::Server("Server: Apache");
+$result = HTTPHeader::Server("Content-Type: text/plain\r\nServer: Apache");
+$result = HTTPHeader::Server("HTTP/1.1 200 OK\r\nServer: Apache\r\n\r\nHello, world!");
+```
 
 Methods for inspecting request headers can optionally be supplied with a string containing one or more headers, or a complete HTTP request; if not supplied with a string, these methods will attempt to read the value from the `$_SERVER` superglobal.
 
 Examples:
 
-    use xenocrat\HTTPHeader;
-    $result = HTTPHeader::Accept();
-    $result = HTTPHeader::Accept("Accept: text/html, application/xhtml+xml");
-    $result = HTTPHeader::Accept("Accept: text/html\r\nAccept-Encoding: gzip");
+``` php
+use xenocrat\HTTPHeader;
+$result = HTTPHeader::Accept();
+$result = HTTPHeader::Accept("Accept: text/html, application/xhtml+xml");
+$result = HTTPHeader::Accept("Accept: text/html\r\nAccept-Encoding: gzip");
+```
 
 All fields can be extracted from a string containing multiple headers, or from a complete HTTP request or response, using the `extract()` method. The return value is an associative array of arrays containing one entry for each occurence of a field:
 
 Example:
 
-    $result = HTTPHeader::extract($request_or_response);
-    print_r($result);
-    
-    Array
-    (
-        [CONTENT_TYPE] => Array
-            (
-                [0] => Array
-                    (
-                        [type] => text/plain
-                    )
-            )
-        [SERVER] => Array
-            (
-                [0] => Array
-                    (
-                        [0] => Array
-                            (
-                                [product] => Apache
-                            )
-                    )
-            )
-    )
+```
+$result = HTTPHeader::extract($request_or_response);
+print_r($result);
+
+Array
+(
+    [CONTENT_TYPE] => Array
+        (
+            [0] => Array
+                (
+                    [type] => text/plain
+                )
+        )
+    [SERVER] => Array
+        (
+            [0] => Array
+                (
+                    [0] => Array
+                        (
+                            [product] => Apache
+                        )
+                )
+        )
+)
+```
 
 ## Methods
 
 Methods will return `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
-#### `Accept($string = null)`
+### `Accept`
+
+#### Description
+
+``` php
+public HTTPHeader::Accept(
+    string $string = null
+): array|null|false
+```
 
 Returns an array sorted by "q" value.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => text/html
-        [1] => application/xhtml+xml
-        [2] => image/webp
-        [3] => application/xml;q=0.9
-        [4] => */*;q=0.8
-    )
+```
+Array
+(
+    [0] => text/html
+    [1] => application/xhtml+xml
+    [2] => image/webp
+    [3] => application/xml;q=0.9
+    [4] => */*;q=0.8
+)
+```
 
-#### `Accept_CH($string)`
+### `Accept_CH`
+
+#### Description
+
+``` php
+public HTTPHeader::Accept_CH(
+    string $string
+): array|null|false
+```
 
 Returns an array of client hint headers.
 
-#### `Accept_Charset($string = null)`
+### `Accept_Charset`
+
+#### Description
+
+``` php
+public HTTPHeader::Accept_Charset(
+    string $string = null
+): array|null|false
+```
 
 Returns an array sorted by "q" value.
 
-#### `Accept_Encoding($string = null)`
+### `Accept_Encoding`
+
+#### Description
+
+``` php
+public HTTPHeader::Accept_Encoding(
+    string $string = null
+): array|null|false
+```
 
 Returns an array sorted by "q" value.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => gzip
-        [1] => deflate
-    )
+```
+Array
+(
+    [0] => gzip
+    [1] => deflate
+)
+```
 
-#### `Accept_Language($string = null)`
+### `Accept_Language`
+
+#### Description
+
+``` php
+public HTTPHeader::Accept_Language(
+    string $string = null
+): array|null|false
+```
 
 Returns an array sorted by "q" value.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => en-GB
-        [1] => en;q=0.7
-        [2] => en-US;q=0.3
-    )
+```
+Array
+(
+    [0] => en-GB
+    [1] => en;q=0.7
+    [2] => en-US;q=0.3
+)
+```
 
-#### `Accept_Patch($string)`
+### `Accept_Patch`
+
+#### Description
+
+``` php
+public HTTPHeader::Accept_Patch(
+    string $string
+): array|null|false
+```
 
 Returns an array of media types.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => application/example
-        [1] => text/example;charset=utf-8
-    )
+```
+Array
+(
+    [0] => application/example
+    [1] => text/example;charset=utf-8
+)
+```
 
-#### `Accept_Post($string)`
+### `Accept_Post`
+
+#### Description
+
+``` php
+public HTTPHeader::Accept_Post(
+    string $string
+): array|null|false
+```
 
 Returns an array of media types.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => image/webp
-        [1] => text/example;charset=utf-8
-    )
+```
+Array
+(
+    [0] => image/webp
+    [1] => text/example;charset=utf-8
+)
+```
 
-#### `Accept_Ranges($string)`
+### `Accept_Ranges`
+
+#### Description
+
+``` php
+public HTTPHeader::Accept_Ranges(
+    string $string
+): string|false
+```
 
 Returns a range unit.
 
-#### `Access_Control_Allow_Credentials($string)`
+### `Access_Control_Allow_Credentials`
+
+#### Description
+
+``` php
+public HTTPHeader::Access_Control_Allow_Credentials(
+    string $string
+): ?bool
+```
 
 Returns `true` if the value is "true", or `null` otherwise.
 
-#### `Access_Control_Allow_Headers($string)`
+### `Access_Control_Allow_Headers`
+
+#### Description
+
+``` php
+public HTTPHeader::Access_Control_Allow_Headers(
+    string $string
+): array|null|false
+```
 
 Returns an array of headers.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Accept
-        [1] => Upgrade-Insecure-Requests
-    )
+```
+Array
+(
+    [0] => Accept
+    [1] => Upgrade-Insecure-Requests
+)
+```
 
-#### `Access_Control_Allow_Methods($string)`
+### `Access_Control_Allow_Methods`
+
+#### Description
+
+``` php
+public HTTPHeader::Access_Control_Allow_Methods(
+    string $string
+): array|null|false
+```
 
 Returns an array of method names.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => POST
-        [1] => GET
-        [2] => OPTIONS
-    )
+```
+Array
+(
+    [0] => POST
+    [1] => GET
+    [2] => OPTIONS
+)
+```
 
-#### `Access_Control_Allow_Origin($string)`
+### `Access_Control_Allow_Origin`
+
+#### Description
+
+``` php
+public HTTPHeader::Access_Control_Allow_Origin(
+    string $string
+): string|array|null|false
+```
 
 Returns the string `"*"`, the string `"null"` if the value is "null", or the result of `parse_url()` on the supplied value.
 
-#### `Access_Control_Expose_Headers($string)`
+### `Access_Control_Expose_Headers`
+
+#### Description
+
+``` php
+public HTTPHeader::Access_Control_Expose_Headers(
+    string $string
+): array|null|false
+```
 
 Returns an array of headers.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Content-Encoding
-    )
+```
+Array
+(
+    [0] => Content-Encoding
+)
+```
 
-#### `Access_Control_Max_Age($string)`
+### `Access_Control_Max_Age`
+
+#### Description
+
+``` php
+public HTTPHeader::Access_Control_Max_Age(
+    string $string
+): int|null|false
+```
 
 Returns a non-negative integer representing the number of seconds.
 
-#### `Access_Control_Request_Headers($string = null)`
+### `Access_Control_Request_Headers`
+
+#### Description
+
+``` php
+public HTTPHeader::Access_Control_Request_Headers(
+    string $string = null
+): array|null|false
+```
 
 Returns an array of headers.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Content-Type
-    )
+```
+Array
+(
+    [0] => Content-Type
+)
+```
 
-#### `Access_Control_Request_Method($string = null)`
+### `Access_Control_Request_Method`
+
+#### Description
+
+``` php
+public HTTPHeader::Access_Control_Request_Method(
+    string $string = null
+): string|null|false
+```
 
 Returns the method name.
 
-#### `Age($string)`
+### `Activate_Storage_Access`
+
+#### Description
+
+``` php
+public HTTPHeader::Activate_Storage_Access(
+    string $string
+): array|null|false
+```
+
+Returns an array containing the directive and parameters.
+
+### `Age`
+
+``` php
+public HTTPHeader::Age(
+    string $string
+): int|null|false
+```
 
 Returns a non-negative integer representing a time delta in seconds.
 
-#### `Allow($string)`
+### `Allow`
+
+``` php
+public HTTPHeader::Allow(
+    string $string
+): array|null|false
+```
 
 Returns an array of method names.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => GET
-        [1] => POST
-        [2] => HEAD
-    )
+```
+Array
+(
+    [0] => GET
+    [1] => POST
+    [2] => HEAD
+)
+```
 
-#### `Alt_Svc($string)`
+### `Alt_Svc`
+
+``` php
+public HTTPHeader::Alt_Svc(
+    string $string
+): string|array|null|false
+```
 
 Returns the string `"clear"`, or an array of associative arrays containing the parameters for each alternative service.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [protocol] => h3-25
-                [host] => 
-                [port] => 443
-                [ma] => 3600
-                [persist] => <true|false>
-            )
-        [1] => Array
-            (
-                [protocol] => h2
-                [host] => example.com
-                [port] => 443
-                [ma] => 3600
-                [persist] => <true|false>
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [protocol] => h3-25
+            [host] => 
+            [port] => 443
+            [ma] => 3600
+            [persist] => <true|false>
+        )
+    [1] => Array
+        (
+            [protocol] => h2
+            [host] => example.com
+            [port] => 443
+            [ma] => 3600
+            [persist] => <true|false>
+        )
+)
+```
 
-#### `Alt_Used($string = null)`
+### `Alt_Used`
+
+``` php
+public HTTPHeader::Alt_Used(
+    string $string = null
+): array|null|false
+```
 
 Returns an associative array containing the host, and port if supplied.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [host] => example.com
-        [port] => 80
-    )
+```
+Array
+(
+    [host] => example.com
+    [port] => 80
+)
+```
 
-#### `Authorization($string = null)`
+### `Authorization`
+
+``` php
+public HTTPHeader::Authorization(
+    string $string = null
+): array|null|false
+```
 
 Returns an array containing the authorization type and parameters.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Basic
-        [1] => YWxhZGRpbjpvcGVuc2VzYW1l
-    )
+```
+Array
+(
+    [0] => Basic
+    [1] => YWxhZGRpbjpvcGVuc2VzYW1l
+)
+```
 
-#### `Cache_Control($string = null)`
+### `Cache_Control`
 
-Returns an array of directives.
-
-Example:
-
-    Array
-    (
-        [0] => only-if-cached
-    )
-
-#### `Clear_Site_Data($string)`
+``` php
+public HTTPHeader::Cache_Control(
+    string $string = null
+): array|null|false
+```
 
 Returns an array of directives.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => storage
-        [1] => cookies
-    )
+```
+Array
+(
+    [0] => only-if-cached
+)
+```
 
-#### `Connection($string = null)`
+### `Clear_Site_Data`
+
+``` php
+public HTTPHeader::Clear_Site_Data(
+    string $string
+): array|null|false
+```
 
 Returns an array of directives.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => keep-alive
-    )
+```
+Array
+(
+    [0] => storage
+    [1] => cookies
+)
+```
 
-#### `Content_Disposition($string)`
+### `Connection`
+
+``` php
+public HTTPHeader::Connection(
+    string $string = null
+): array|null|false
+```
+
+Returns an array of directives.
+
+#### Example:
+
+```
+Array
+(
+    [0] => keep-alive
+)
+```
+
+### `Content_Disposition`
+
+``` php
+public HTTPHeader::Content_Disposition(
+    string $string
+): array|null|false
+```
 
 Returns an associative array containing the content disposition, field name and filename (if supplied).
 
-Example:
+#### Example:
 
-    Array
-    (
-        [disposition] => attachment
-        [filename] => filename.jpg
-    )
+```
+Array
+(
+    [disposition] => attachment
+    [filename] => filename.jpg
+)
+```
 
-#### `Content_Encoding($string)`
+### `Content_Encoding`
+
+``` php
+public HTTPHeader::Content_Encoding(
+    string $string
+): array|null|false
+```
 
 Returns an array of encoding formats in the order in which they were applied.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => deflate
-        [1] => gzip
-    )
+```
+Array
+(
+    [0] => deflate
+    [1] => gzip
+)
+```
 
-#### `Content_Language($string = null)`
+### `Content_Language`
+
+``` php
+public HTTPHeader::Content_Language(
+    string $string = null
+): array|null|false
+```
 
 Returns an array of language tags.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => en-GB
-        [1] => en
-    )
+```
+Array
+(
+    [0] => en-GB
+    [1] => en
+)
+```
 
-#### `Content_Length($string = null)`
+### `Content_Length`
+
+``` php
+public HTTPHeader::Content_Length(
+    string $string = null
+): int|null|false
+```
 
 Returns the content length in decimal number of octets.
 
-#### `Content_Location($string)`
+### `Content_Location`
+
+``` php
+public HTTPHeader::Content_Location(
+    string $string
+): string|false
+```
 
 Returns a string.
 
-#### `Content_Range($string)`
+### `Content_Range`
+
+``` php
+public HTTPHeader::Content_Range(
+    string $string
+): array|null|false
+```
 
 Returns an associative array containing the unit, range, and size.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [unit] => bytes
-        [range] => 200-1000
-        [size] => 67589
-    )
+```
+Array
+(
+    [unit] => bytes
+    [range] => 200-1000
+    [size] => 67589
+)
+```
 
-#### `Content_Security_Policy($string)`
+### `Content_Security_Policy`
+
+``` php
+public HTTPHeader::Content_Security_Policy(
+    string $string
+): array|null|false
+```
 
 Returns an array of arrays containing the policy directive and values.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [0] => default-src
-                [1] => Array
-                    (
-                        [0] => self
-                        [1] => nonce-DhcnhD3khTMePgXwdayK9BsMqXjhguVV
-                    )
-            )
-        [1] => Array
-            (
-                [0] => form-action
-                [1] => Array
-                    (
-                        [0] => self
-                    )
-            )
+```
+Array
+(
+    [0] => Array
+        (
+            [0] => default-src
+            [1] => Array
+                (
+                    [0] => self
+                    [1] => nonce-DhcnhD3khTMePgXwdayK9BsMqXjhguVV
+                )
+        )
+    [1] => Array
+        (
+            [0] => form-action
+            [1] => Array
+                (
+                    [0] => self
+                )
+        )
+```
 
-#### `Content_Security_Policy_Report_Only($string)`
+### `Content_Security_Policy_Report_Only`
+
+``` php
+public HTTPHeader::Content_Security_Policy_Report_Only(
+    string $string
+): array|null|false
+```
 
 See above.
 
-#### `Content_Type($string = null)`
+### `Content_Type`
+
+``` php
+public HTTPHeader::Content_Type(
+    string $string = null
+): array|null|false
+```
 
 Returns an associative array containing the content type, charset and boundary (if supplied).
 
-Example:
+#### Example:
 
-    Array
-    (
-        [type] => multipart/form-data
-        [boundary] => something
-    )
+```
+Array
+(
+    [type] => multipart/form-data
+    [boundary] => something
+)
+```
 
-#### `Cookie($string = null)`
+### `Cookie`
+
+``` php
+public HTTPHeader::Cookie(
+    string $string = null
+): array|null|false
+```
 
 Returns an array of arrays containing the cookie names and value.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [0] => Session
-                [1] => 0ae5ab57925bcbee58917d552acb4cd4
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [0] => Session
+            [1] => 0ae5ab57925bcbee58917d552acb4cd4
+        )
+)
+```
 
-#### `Cross_Origin_Embedder_Policy($string)`
+### `Cross_Origin_Embedder_Policy`
+
+``` php
+public HTTPHeader::Cross_Origin_Embedder_Policy(
+    string $string
+): string|null|false
+```
 
 Returns a policy directive.
 
-#### `Cross_Origin_Opener_Policy($string)`
+### `Cross_Origin_Opener_Policy`
+
+``` php
+public HTTPHeader::Cross_Origin_Opener_Policy(
+    string $string
+): string|null|false
+```
 
 Returns a policy directive.
 
-#### `Cross_Origin_Resource_Policy($string)`
+### `Cross_Origin_Resource_Policy`
+
+``` php
+public HTTPHeader::Cross_Origin_Resource_Policy(
+    string $string
+): string|null|false
+```
 
 Returns a policy directive.
 
-#### `Date($string = null)`
+### `Date`
+
+``` php
+public HTTPHeader::Date(
+    string $string = null
+): \DateTimeImmutable|null|false
+```
 
 Returns a DateTimeImmutable object.
 
-Example:
+#### Example:
 
-    DateTimeImmutable Object
-    (
-        [date] => 2015-10-21 07:28:00.000000
-        [timezone_type] => 2
-        [timezone] => GMT
-    )
+```
+DateTimeImmutable Object
+(
+    [date] => 2015-10-21 07:28:00.000000
+    [timezone_type] => 2
+    [timezone] => GMT
+)
+```
 
-#### `Device_Memory($string = null)`
+### `Device_Memory`
+
+``` php
+public HTTPHeader::Device_Memory(
+    string $string = null
+): float|null|false
+```
 
 Returns a non-negative float representing the device memory in GiB.
 
-#### `Digest($string)`
+### `Digest`
+
+``` php
+public HTTPHeader::Digest(
+    string $string
+): array|null|false
+```
 
 Returns an array of arrays containing the digest algorithms and values.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [0] => sha-256
-                [1] => X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE=
-            )
-        [1] => Array
-            (
-                [0] => unixsum
-                [1] => 30637
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [0] => sha-256
+            [1] => X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE=
+        )
+    [1] => Array
+        (
+            [0] => unixsum
+            [1] => 30637
+        )
+)
+```
 
-#### `Downlink($string = null)`
+### `Downlink`
+
+``` php
+public HTTPHeader::Downlink(
+    string $string = null
+): float|null|false
+```
 
 Returns a non-negative float representing the downlink rate in Mbps.
 
-#### `DNT($string = null)`
+### `DNT`
+
+``` php
+public HTTPHeader::DNT(
+    string $string = null
+): int|null|false
+```
 
 Returns the integer `0`, `1`, or `null` if the value is indeterminate.
 
-#### `ECT($string = null)`
+### `ECT`
+
+``` php
+public HTTPHeader::ECT(
+    string $string = null
+): string|null|false
+```
 
 Returns a string identifying the effective connection type, or `null` if the value is indeterminate.
 
-#### `ETag($string)`
+### `ETag`
+
+``` php
+public HTTPHeader::ETag(
+    string $string
+): string|null|false
+```
 
 Returns an ETag value.
 
-#### `Expect($string = null)`
+### `Expect`
+
+``` php
+public HTTPHeader::Expect(
+    string $string = null
+): int|null|false
+```
 
 Returns the integer `100` if the value is "100-continue", or `null` otherwise.
 
-#### `Expires($string)`
+### `Expires`
+
+``` php
+public HTTPHeader::Expires(
+    string $string
+): \DateTimeImmutable|null|false
+```
 
 Returns a DateTimeImmutable object.
 
-Example:
+#### Example:
 
-    DateTimeImmutable Object
-    (
-        [date] => 2015-10-21 07:28:00.000000
-        [timezone_type] => 2
-        [timezone] => GMT
-    )
+```
+DateTimeImmutable Object
+(
+    [date] => 2015-10-21 07:28:00.000000
+    [timezone_type] => 2
+    [timezone] => GMT
+)
+```
 
-#### `Forwarded($string = null)`
+### `Forwarded`
+
+``` php
+public HTTPHeader::Forwarded(
+    string $string = null
+): array|null|false
+```
 
 Returns an array of fields, each containing an associative array of directives.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [for] => 192.0.2.60
-                [proto] => http
-                [by] => 203.0.113.43
-            )
-        [1] => Array
-            (
-                [for] => 198.51.100.17
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [for] => 192.0.2.60
+            [proto] => http
+            [by] => 203.0.113.43
+        )
+    [1] => Array
+        (
+            [for] => 198.51.100.17
+        )
+)
+```
 
-#### `From($string = null)`
+### `From`
+
+``` php
+public HTTPHeader::From(
+    string $string = null
+): string|null|false
+```
 
 Returns a string containing the supplied email address.
 
-#### `Host($string = null)`
+### `Host`
+
+``` php
+public HTTPHeader::Host(
+    string $string = null
+): array|null|false
+```
 
 Returns an associative array containing the host, and port if supplied.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [host] => example.com
-        [port] => 80
-    )
+```
+Array
+(
+    [host] => example.com
+    [port] => 80
+)
+```
 
-#### `If_Match($string = null)`
+### `If_Match`
 
-Returns an array of ETag values.
-
-Example:
-
-    Array
-    (
-        [0] => W/"67ab43"
-        [1] => "54ed21"
-        [2] => "7892dd"
-    )
-
-#### `If_Modified_Since($string = null)`
-
-Returns a DateTimeImmutable object.
-
-Example:
-
-    DateTimeImmutable Object
-    (
-        [date] => 2015-10-21 07:28:00.000000
-        [timezone_type] => 2
-        [timezone] => GMT
-    )
-
-#### `If_None_Match($string = null)`
+``` php
+public HTTPHeader::If_Match(
+    string $string = null
+): array|null|false
+```
 
 Returns an array of ETag values.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => W/"67ab43"
-        [1] => "54ed21"
-        [2] => "7892dd"
-    )
+```
+Array
+(
+    [0] => W/"67ab43"
+    [1] => "54ed21"
+    [2] => "7892dd"
+)
+```
 
-#### `If_Range($string = null)`
+### `If_Modified_Since`
 
-Returns a DateTimeImmutable object, or an array of ETag values.
-
-#### `If_Unmodified_Since($string = null)`
+``` php
+public HTTPHeader::If_Modified_Since(
+    string $string = null
+): \DateTimeImmutable|null|false
+```
 
 Returns a DateTimeImmutable object.
 
-Example:
+#### Example:
 
-    DateTimeImmutable Object
-    (
-        [date] => 2015-10-21 07:28:00.000000
-        [timezone_type] => 2
-        [timezone] => GMT
-    )
+```
+DateTimeImmutable Object
+(
+    [date] => 2015-10-21 07:28:00.000000
+    [timezone_type] => 2
+    [timezone] => GMT
+)
+```
 
-#### `Keep_Alive($string = null)`
+### `If_None_Match`
+
+``` php
+public HTTPHeader::If_None_Match(
+    string $string = null
+): array|null|false
+```
+
+Returns an array of ETag values.
+
+#### Example:
+
+```
+Array
+(
+    [0] => W/"67ab43"
+    [1] => "54ed21"
+    [2] => "7892dd"
+)
+```
+
+### `If_Range`
+
+``` php
+public HTTPHeader::If_Range(
+    string $string = null
+): \DateTimeImmutable|string|null|false
+```
+
+Returns a DateTimeImmutable object, or an ETag value.
+
+### `If_Unmodified_Since`
+
+``` php
+public HTTPHeader::If_Unmodified_Since(
+    string $string = null
+): \DateTimeImmutable|null|false
+```
+
+Returns a DateTimeImmutable object.
+
+#### Example:
+
+```
+DateTimeImmutable Object
+(
+    [date] => 2015-10-21 07:28:00.000000
+    [timezone_type] => 2
+    [timezone] => GMT
+)
+```
+
+### `Keep_Alive`
+
+``` php
+public HTTPHeader::Keep_Alive(
+    string $string = null
+): array|null|false
+```
 
 Returns an associative array of parameters.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [timeout] => 5
-        [max] => 1000
-    )
+```
+Array
+(
+    [timeout] => 5
+    [max] => 1000
+)
+```
 
-#### `Last_Modified($string)`
+### `Last_Modified`
+
+``` php
+public HTTPHeader::Last_Modified(
+    string $string
+): \DateTimeImmutable|null|false
+```
 
 Returns a DateTimeImmutable object.
 
-Example:
+#### Example:
 
-    DateTimeImmutable Object
-    (
-        [date] => 2015-10-21 07:28:00.000000
-        [timezone_type] => 2
-        [timezone] => GMT
-    )
+```
+DateTimeImmutable Object
+(
+    [date] => 2015-10-21 07:28:00.000000
+    [timezone_type] => 2
+    [timezone] => GMT
+)
+```
 
-#### `Link($string)`
+### `Link`
+
+``` php
+public HTTPHeader::Link(
+    string $string
+): array|null|false
+```
 
 Returns an array of arrays containing the link URI and an array of parameters.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [0] => https://one.example.com
-                [1] => Array
-                    (
-                        [0] => Array
-                            (
-                                [0] => rel
-                                [1] => preconnect
-                            )
-                    )
-            )
-        [1] => Array
-            (
-                [0] => https://two.example.com
-                [1] => Array
-                    (
-                        [0] => Array
-                            (
-                                [0] => rel
-                                [1] => preconnect
-                            )
-                        [1] => Array
-                            (
-                                [0] => foo
-                                [1] => bar
-                            )
-                    )
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [0] => https://one.example.com
+            [1] => Array
+                (
+                    [0] => Array
+                        (
+                            [0] => rel
+                            [1] => preconnect
+                        )
+                )
+        )
+    [1] => Array
+        (
+            [0] => https://two.example.com
+            [1] => Array
+                (
+                    [0] => Array
+                        (
+                            [0] => rel
+                            [1] => preconnect
+                        )
+                    [1] => Array
+                        (
+                            [0] => foo
+                            [1] => bar
+                        )
+                )
+        )
+)
+```
 
-#### `Location($string)`
+### `Location`
+
+``` php
+public HTTPHeader::Location(
+    string $string
+): string|false
+```
 
 Returns a string.
 
-#### `Max_Forwards($string = null)`
+### `Max_Forwards`
+
+``` php
+public HTTPHeader::Max_Forwards(
+    string $string = null
+): int|null|false
+```
 
 Returns a non-negative integer.
 
-#### `Origin($string = null)`
+### `Origin`
+
+``` php
+public HTTPHeader::Origin(
+    string $string = null
+): array|null|false
+```
 
 Returns the result of `parse_url()` on the supplied value.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [scheme] => https
-        [host] => example.com
-    )
+```
+Array
+(
+    [scheme] => https
+    [host] => example.com
+)
+```
 
-#### `Permissions_Policy($string)`
+### `Permissions_Policy`
+
+``` php
+public HTTPHeader::Permissions_Policy(
+    string $string
+): array|null|false
+```
 
 Returns an array of arrays containing the policy directive and values.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [0] => picture-in-picture
-                [1] => Array
-                    (
-                    )
-            )
-        [1] => Array
-            (
-                [0] => geolocation
-                [1] => Array
-                    (
-                        [0] => self
-                        [1] => https://example.com
-                    )
-            )
-        [2] => Array
-            (
-                [0] => camera
-                [1] => Array
-                    (
-                        [0] => *
-                    )
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [0] => picture-in-picture
+            [1] => Array
+                (
+                )
+        )
+    [1] => Array
+        (
+            [0] => geolocation
+            [1] => Array
+                (
+                    [0] => self
+                    [1] => https://example.com
+                )
+        )
+    [2] => Array
+        (
+            [0] => camera
+            [1] => Array
+                (
+                    [0] => *
+                )
+        )
+)
+```
 
-#### `Pragma($string = null)`
+### `Pragma`
+
+``` php
+public HTTPHeader::Pragme(
+    string $string = null
+): array|null|false
+```
 
 Returns an array of directives.
 
-#### `Proxy_Authenticate($string)`
+### `Proxy_Authenticate`
+
+``` php
+public HTTPHeader::Proxy_Authenticate(
+    string $string
+): array|null|false
+```
 
 Returns an array of arrays containing the authentication type and parameters.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [0] => Basic
-                [1] => realm="foo"
-            )
-        [1] => Array
-            (
-                [0] => Other
-                [1] => realm="bar"
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [0] => Basic
+            [1] => realm="foo"
+        )
+    [1] => Array
+        (
+            [0] => Other
+            [1] => realm="bar"
+        )
+)
+```
 
-#### `Proxy_Authorization($string = null)`
+### `Proxy_Authorization`
+
+``` php
+public HTTPHeader::Proxy_Authorization(
+    string $string = null
+): array|null|false
+```
 
 Returns an array containing the authorization type and parameters.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Basic
-        [1] => YWxhZGRpbjpvcGVuc2VzYW1l
-    )
+```
+Array
+(
+    [0] => Basic
+    [1] => YWxhZGRpbjpvcGVuc2VzYW1l
+)
+```
 
-#### `Range($string = null)`
+### `Range`
+
+``` php
+public HTTPHeader::Range(
+    string $string = null
+): array|null|false
+```
 
 Returns an associative array containing the unit and ranges.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [unit] => bytes
-        [ranges] => Array
-            (
-                [0] => 200-1000
-                [1] => 2000-6576
-                [2] => 19000-
-            )
-    )
+```
+Array
+(
+    [unit] => bytes
+    [ranges] => Array
+        (
+            [0] => 200-1000
+            [1] => 2000-6576
+            [2] => 19000-
+        )
+)
+```
 
-#### `Referer($string = null)`
+### `Referer`
+
+``` php
+public HTTPHeader::Referer(
+    string $string = null
+): array|null|false
+```
 
 Returns the result of `parse_url()` on the supplied value.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [scheme] => https
-        [host] => example.com
-        [path] => /foo/
-    )
+```
+Array
+(
+    [scheme] => https
+    [host] => example.com
+    [path] => /foo/
+)
+```
 
-#### `Referrer_Policy($string)`
+### `Referrer_Policy`
+
+``` php
+public HTTPHeader::Referrer_Policy(
+    string $string
+): string|null|false
+```
 
 Returns a directive.
 
-#### `Retry_After($string)`
+### `Retry_After`
+
+``` php
+public HTTPHeader::Retry_After(
+    string $string
+): \DateTimeImmutable|int|null|false
+```
 
 Returns a DateTimeImmutable object, or a non-negative integer representing the delay in seconds.
 
-#### `RTT($string = null)`
+### `RTT`
+
+``` php
+public HTTPHeader::RTT(
+    string $string = null
+): array|null|false
+```
 
 Returns a non-negative integer representing the approximate round trip time in milliseconds.
 
-#### `Save_Data($string = null)`
+### `Save_Data`
+
+``` php
+public HTTPHeader::Save_Data(
+    string $string = null
+): int|null|false
+```
 
 Returns the integer `0` for falsey values, `1` for truthy values, or `null` if the value is indeterminate.
 
-#### `Sec_Fetch_Dest($string = null)`
+### `Sec_Fetch_Dest`
+
+``` php
+public HTTPHeader::Sec_Fetch_Dest(
+    string $string = null
+): string|null|false
+```
 
 Returns a directive.
 
-#### `Sec_Fetch_Mode($string = null)`
+### `Sec_Fetch_Mode`
+
+``` php
+public HTTPHeader::Sec_Fetch_Mode(
+    string $string = null
+): string|null|false
+```
 
 Returns a directive.
 
-#### `Sec_Fetch_Site($string = null)`
+### `Sec_Fetch_Site`
+
+``` php
+public HTTPHeader::Sec_Fetch_Site(
+    string $string = null
+): string|null|false
+```
 
 Returns a directive.
 
-#### `Sec_Fetch_User($string = null)`
+### `Sec_Fetch_Storage_Access`
+
+``` php
+public HTTPHeader::Sec_Fetch_Storage_Access(
+    string $string = null
+): string|null|false
+```
+
+Returns a directive.
+
+
+### `Sec_Fetch_User`
+
+``` php
+public HTTPHeader::Sec_Fetch_User(
+    string $string = null
+): ?bool
+```
 
 Returns `true` if the value is "?1", or `null` otherwise.
 
-#### `Sec_GPC($string = null)`
+### `Sec_GPC`
+
+``` php
+public HTTPHeader::Sec_GPC(
+    string $string = null
+): ?bool
+```
 
 Returns `true` if the value is "1", or `null` otherwise.
 
-#### `Sec_Purpose($string = null)`
+### `Sec_Purpose`
+
+``` php
+public HTTPHeader::Sec_Purpose(
+    string $string = null
+): string|null|false
+```
 
 Returns a directive.
 
-#### `Server($string)`
+### `Server`
+
+``` php
+public HTTPHeader::Server(
+    string $string
+): array|null|false
+```
 
 Returns an array of associative arrays containing the product, version and comment (if supplied).
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [product] => Apache
-                [version] => 2.4.1
-                [comment] => Unix
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [product] => Apache
+            [version] => 2.4.1
+            [comment] => Unix
+        )
+)
+```
 
-#### `Server_Timing($string)`
+### `Server_Timing`
+
+``` php
+public HTTPHeader::Server_Timing(
+    string $string
+): string|null|false
+```
 
 Returns an array of associative arrays containing the metric name, description and duration (if supplied).
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [name] => db
-                [dur] => 53
-            )
-        [1] => Array
-            (
-                [name] => cache
-                [desc] => Cache Read
-                [dur] => 23.2
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [name] => db
+            [dur] => 53
+        )
+    [1] => Array
+        (
+            [name] => cache
+            [desc] => Cache Read
+            [dur] => 23.2
+        )
+)
+```
 
-#### `Service_Worker_Navigation_Preload($string = null)`
+### `Service_Worker_Navigation_Preload`
+
+``` php
+public HTTPHeader::Service_Worker_Navigation_Preload(
+    string $string = null
+): string|false
+```
 
 Returns a string.
 
-#### `Set_Cookie($string)`
+### `Set_Cookie`
+
+``` php
+public HTTPHeader::Set_Cookie(
+    string $string
+): array|null|false
+```
 
 Returns an array of arrays containing the cookie name and value, and an associative array of parameter values.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [0] => Session
-                [1] => 0ae5ab57925bcbee58917d552acb4cd4
-            )
-        [1] => Array
-            (
-                [Path] => /
-                [Domain] => example.com
-                [SameSite] => 
-                [Expires] => DateTimeImmutable Object
-                    (
-                        [date] => 2015-10-21 07:28:00.000000
-                        [timezone_type] => 2
-                        [timezone] => GMT
-                    )
-                [Max-Age] => 20
-                [HttpOnly] => <true|false>
-                [Secure] => <true|false>
-                [Partitioned] => <true|false>
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [0] => Session
+            [1] => 0ae5ab57925bcbee58917d552acb4cd4
+        )
+    [1] => Array
+        (
+            [Path] => /
+            [Domain] => example.com
+            [SameSite] => 
+            [Expires] => DateTimeImmutable Object
+                (
+                    [date] => 2015-10-21 07:28:00.000000
+                    [timezone_type] => 2
+                    [timezone] => GMT
+                )
+            [Max-Age] => 20
+            [HttpOnly] => <true|false>
+            [Secure] => <true|false>
+            [Partitioned] => <true|false>
+        )
+)
+```
 
-#### `Set_Login($string)`
+### `Set_Login`
+
+``` php
+public HTTPHeader::Set_Login(
+    string $string
+): string|null|false
+```
 
 Returns the string `"logged-in"`, the string `"logged-out"`, or `null` if the value is indeterminate.
 
-#### `SourceMap($string)`
+### `SourceMap`
+
+``` php
+public HTTPHeader::SourceMap(
+    string $string
+): string|false
+```
 
 Returns a string.
 
-#### `Strict_Transport_Security($string)`
+### `Strict_Transport_Security`
+
+``` php
+public HTTPHeader::Strict_Transport_Security(
+    string $string
+): array|null|false
+```
 
 Returns an associative array of parameter values.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [max-age] => 63072000
-        [includeSubDomains] => <true|false>
-        [preload] => <true|false>
-    )
+```
+Array
+(
+    [max-age] => 63072000
+    [includeSubDomains] => <true|false>
+    [preload] => <true|false>
+)
+```
 
-#### `TE($string = null)`
+### `TE`
+
+``` php
+public HTTPHeader::TE(
+    string $string = null
+): array|null|false
+```
 
 Returns an array sorted by "q" value.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => trailers
-        [1] => gzip
-        [2] => deflate;q=0.5
-    ) 
+```
+Array
+(
+    [0] => trailers
+    [1] => gzip
+    [2] => deflate;q=0.5
+)
+```
 
-#### `Timing_Allow_Origin($string)`
+### `Timing_Allow_Origin`
+
+``` php
+public HTTPHeader::Timing_Allow_Origin(
+    string $string
+): string|array|null|false
+```
 
 Returns the string `"*"`, or an array containing the results of `parse_url()` on each of the supplied values.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [scheme] => https
-                [host] => mozilla.org
-            )
-        [1] => Array
-            (
-                [scheme] => http
-                [host] => example.com
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [scheme] => https
+            [host] => mozilla.org
+        )
+    [1] => Array
+        (
+            [scheme] => http
+            [host] => example.com
+        )
+)
+```
 
-#### `Tk($string)`
+### `Tk`
+
+``` php
+public HTTPHeader::Tk(
+    string $string
+): string|null|false
+```
 
 Returns one of the strings `!`, `?`, `G`, `N`, `T`, `C`, `P`, `D`, `U`, or `null` if the value is indeterminate.
 
-#### `Trailer($string)`
+### `Trailer`
+
+``` php
+public HTTPHeader::Trailer(
+    string $string
+): array|null|false
+```
 
 Returns an array of field names.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Expires
-        [1] => Date
-    )
+```
+Array
+(
+    [0] => Expires
+    [1] => Date
+)
+```
 
-#### `Transfer_Encoding($string)`
+### `Transfer_Encoding`
+
+``` php
+public HTTPHeader::Transfer_Encoding(
+    string $string
+): array|null|false
+```
 
 Returns an array of encoding formats in the order in which they were applied.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => gzip
-        [1] => chunked
-    )
+```
+Array
+(
+    [0] => gzip
+    [1] => chunked
+)
+```
 
-#### `Upgrade($string = null)`
+### `Upgrade`
+
+``` php
+public HTTPHeader::Upgrade(
+    string $string = null
+): array|null|false
+```
 
 Returns an array of protocols in order of preference.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => HTTP/2
-        [1] => HTTP/1.1
-    ) 
+```
+Array
+(
+    [0] => HTTP/2
+    [1] => HTTP/1.1
+)
+```
 
-#### `Upgrade_Insecure_Requests($string = null)`
+### `Upgrade_Insecure_Requests`
+
+``` php
+public HTTPHeader::Upgrade_Insecure_Requests(
+    string $string = null
+): int|null|false
+```
 
 Returns the integer `0`, `1`, or `null` if the value is indeterminate.
 
-#### `User_Agent($string = null)`
+### `User_Agent`
+
+``` php
+public HTTPHeader::User_Agent(
+    string $string = null
+): array|null|false
+```
 
 Returns an array of associative arrays containing the product, version and comment (if supplied).
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [product] => Mozilla
-                [version] => 5.0
-                [comment] => Windows NT 10.0; Win64; x64; rv:109.0
-            )
-        [1] => Array
-            (
-                [product] => Gecko
-                [version] => 20100101
-            )
-        [2] => Array
-            (
-                [product] => Firefox
-                [version] => 115.0
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [product] => Mozilla
+            [version] => 5.0
+            [comment] => Windows NT 10.0; Win64; x64; rv:109.0
+        )
+    [1] => Array
+        (
+            [product] => Gecko
+            [version] => 20100101
+        )
+    [2] => Array
+        (
+            [product] => Firefox
+            [version] => 115.0
+        )
+)
+```
 
-#### `Vary($string)`
+### `Vary`
+
+``` php
+public HTTPHeader::Vary(
+    string $string
+): string|array|null|false
+```
 
 Returns the string `"*"`, or an array of field names.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Cookie
-        [1] => Save-Data
-    )
+```
+Array
+(
+    [0] => Cookie
+    [1] => Save-Data
+)
+```
 
-#### `Via($string = null)`
+### `Via`
+
+``` php
+public HTTPHeader::Via(
+    string $string = null
+): array|null|false
+```
 
 Returns an array of associative arrays containing the details supplied by each proxy.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [protocol] => HTTP
-                [version] => 1.0
-                [pseudonym] => foo
-            )
-        [1] => Array
-            (
-                [version] => 1.1
-                [pseudonym] => bar
-            )
-        [2] => Array
-            (
-                [version] => 1.1
-                [pseudonym] => example.com
-                [port] => 80
-                [comment] => this is a comment
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [protocol] => HTTP
+            [version] => 1.0
+            [pseudonym] => foo
+        )
+    [1] => Array
+        (
+            [version] => 1.1
+            [pseudonym] => bar
+        )
+    [2] => Array
+        (
+            [version] => 1.1
+            [pseudonym] => example.com
+            [port] => 80
+            [comment] => this is a comment
+        )
+)
+```
 
-#### `Want_Digest($string = null)`
+### `Want_Digest`
+
+``` php
+public HTTPHeader::Want_Digest(
+    string $string = null
+): array|null|false
+```
 
 Returns an array sorted by "q" value.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => sha-256;q=1
-        [1] => SHA-512;q=0.3
-        [2] => md5;q=0
-    )
+```
+Array
+(
+    [0] => sha-256;q=1
+    [1] => SHA-512;q=0.3
+    [2] => md5;q=0
+)
+```
 
-#### `WWW_Authenticate($string)`
+### `WWW_Authenticate`
+
+``` php
+public HTTPHeader::WWW_Authenticate(
+    string $string
+): array|null|false
+```
 
 Returns an array of arrays containing the authentication type and parameters.
 
-Example:
+#### Example:
 
-    Array
-    (
-        [0] => Array
-            (
-                [0] => scheme1
-                [3] => realm="foo"
-                [4] => param1=token1
-                [5] => param2=token2
-            )
-        [1] => Array
-            (
-                [0] => scheme2
-                [1] => token68
-                [2] => realm="bar"
-            )
-        [2] => Array
-            (
-                [0] => scheme3
-            )
-    )
+```
+Array
+(
+    [0] => Array
+        (
+            [0] => scheme1
+            [3] => realm="foo"
+            [4] => param1=token1
+            [5] => param2=token2
+        )
+    [1] => Array
+        (
+            [0] => scheme2
+            [1] => token68
+            [2] => realm="bar"
+        )
+    [2] => Array
+        (
+            [0] => scheme3
+        )
+)
+```
 
-#### `X_Content_Type_Options($string)`
+### `X_Content_Type_Options`
+
+``` php
+public HTTPHeader::X_Content_Type_Options(
+    string $string
+): string|null|false
+```
 
 Returns the string `"nosniff"`, or `null` if the value is indeterminate.
 
-#### `X_Frame_Options($string)`
+### `X_Frame_Options`
+
+``` php
+public HTTPHeader::X_Frame_Options(
+    string $string
+): string|null|false
+```
 
 Returns a directive.
