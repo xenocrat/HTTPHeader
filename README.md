@@ -37,7 +37,7 @@ $result = HTTPHeader::Accept("Accept: text/html\r\nAccept-Encoding: gzip");
 #### Description
 
 ``` php
-public HTTPHeader::extract(
+public static HTTPHeader::extract(
     string $string
 ): array
 ```
@@ -84,7 +84,7 @@ Array
 #### Description
 
 ``` php
-public HTTPHeader::Accept(
+public static HTTPHeader::Accept(
     string $string = null
 ): array|null|false
 ```
@@ -117,7 +117,7 @@ Array
 #### Description
 
 ``` php
-public HTTPHeader::Accept_CH(
+public static HTTPHeader::Accept_CH(
     string $string
 ): array|null|false
 ```
@@ -138,7 +138,7 @@ Returns an array of client hint headers. Returns `false` if the header field is 
 #### Description
 
 ``` php
-public HTTPHeader::Accept_Charset(
+public static HTTPHeader::Accept_Charset(
     string $string = null
 ): array|null|false
 ```
@@ -158,7 +158,7 @@ Returns an array sorted by "q" value. Returns `false` if the header field is not
 #### Description
 
 ``` php
-public HTTPHeader::Accept_Encoding(
+public static HTTPHeader::Accept_Encoding(
     string $string = null
 ): array|null|false
 ```
@@ -188,7 +188,7 @@ Array
 #### Description
 
 ``` php
-public HTTPHeader::Accept_Language(
+public static HTTPHeader::Accept_Language(
     string $string = null
 ): array|null|false
 ```
@@ -219,7 +219,7 @@ Array
 #### Description
 
 ``` php
-public HTTPHeader::Accept_Patch(
+public static HTTPHeader::Accept_Patch(
     string $string
 ): array|null|false
 ```
@@ -249,7 +249,7 @@ Array
 #### Description
 
 ``` php
-public HTTPHeader::Accept_Post(
+public static HTTPHeader::Accept_Post(
     string $string
 ): array|null|false
 ```
@@ -279,7 +279,7 @@ Array
 #### Description
 
 ``` php
-public HTTPHeader::Accept_Ranges(
+public static HTTPHeader::Accept_Ranges(
     string $string
 ): string|false
 ```
@@ -299,7 +299,7 @@ Returns a range unit. Returns `false` if the header field is not present or empt
 #### Description
 
 ``` php
-public HTTPHeader::Access_Control_Allow_Credentials(
+public static HTTPHeader::Access_Control_Allow_Credentials(
     string $string
 ): ?bool
 ```
@@ -319,7 +319,7 @@ Returns `true` if the value is "true", or `null` otherwise.
 #### Description
 
 ``` php
-public HTTPHeader::Access_Control_Allow_Headers(
+public static HTTPHeader::Access_Control_Allow_Headers(
     string $string
 ): array|null|false
 ```
@@ -349,7 +349,7 @@ Array
 #### Description
 
 ``` php
-public HTTPHeader::Access_Control_Allow_Methods(
+public static HTTPHeader::Access_Control_Allow_Methods(
     string $string
 ): array|null|false
 ```
@@ -380,7 +380,7 @@ Array
 #### Description
 
 ``` php
-public HTTPHeader::Access_Control_Allow_Origin(
+public static HTTPHeader::Access_Control_Allow_Origin(
     string $string
 ): string|array|null|false
 ```
@@ -400,7 +400,7 @@ Returns the string `"*"`, the string `"null"` if the value is "null", or the res
 #### Description
 
 ``` php
-public HTTPHeader::Access_Control_Expose_Headers(
+public static HTTPHeader::Access_Control_Expose_Headers(
     string $string
 ): array|null|false
 ```
@@ -429,7 +429,7 @@ Array
 #### Description
 
 ``` php
-public HTTPHeader::Access_Control_Max_Age(
+public static HTTPHeader::Access_Control_Max_Age(
     string $string
 ): int|null|false
 ```
@@ -449,7 +449,7 @@ Returns a non-negative integer representing the number of seconds. Returns `fals
 #### Description
 
 ``` php
-public HTTPHeader::Access_Control_Request_Headers(
+public static HTTPHeader::Access_Control_Request_Headers(
     string $string = null
 ): array|null|false
 ```
@@ -478,7 +478,7 @@ Array
 #### Description
 
 ``` php
-public HTTPHeader::Access_Control_Request_Method(
+public static HTTPHeader::Access_Control_Request_Method(
     string $string = null
 ): string|null|false
 ```
@@ -498,7 +498,7 @@ Returns the method name. Returns `false` if the header field is not present or e
 #### Description
 
 ``` php
-public HTTPHeader::Activate_Storage_Access(
+public static HTTPHeader::Activate_Storage_Access(
     string $string
 ): array|null|false
 ```
@@ -516,7 +516,7 @@ Returns an array containing the directive and parameters. Returns `false` if the
 ### `Age`
 
 ``` php
-public HTTPHeader::Age(
+public static HTTPHeader::Age(
     string $string
 ): int|null|false
 ```
@@ -534,7 +534,7 @@ Returns a non-negative integer representing a time delta in seconds. Returns `fa
 ### `Allow`
 
 ``` php
-public HTTPHeader::Allow(
+public static HTTPHeader::Allow(
     string $string
 ): array|null|false
 ```
@@ -563,7 +563,7 @@ Array
 ### `Alt_Svc`
 
 ``` php
-public HTTPHeader::Alt_Svc(
+public static HTTPHeader::Alt_Svc(
     string $string
 ): string|array|null|false
 ```
@@ -605,7 +605,7 @@ Array
 ### `Alt_Used`
 
 ``` php
-public HTTPHeader::Alt_Used(
+public static HTTPHeader::Alt_Used(
     string $string = null
 ): array|null|false
 ```
@@ -633,7 +633,7 @@ Array
 ### `Authorization`
 
 ``` php
-public HTTPHeader::Authorization(
+public static HTTPHeader::Authorization(
     string $string = null
 ): array|null|false
 ```
@@ -661,7 +661,7 @@ Array
 ### `Cache_Control`
 
 ``` php
-public HTTPHeader::Cache_Control(
+public static HTTPHeader::Cache_Control(
     string $string = null
 ): array|null|false
 ```
@@ -688,7 +688,7 @@ Array
 ### `Clear_Site_Data`
 
 ``` php
-public HTTPHeader::Clear_Site_Data(
+public static HTTPHeader::Clear_Site_Data(
     string $string
 ): array|null|false
 ```
@@ -716,7 +716,7 @@ Array
 ### `Connection`
 
 ``` php
-public HTTPHeader::Connection(
+public static HTTPHeader::Connection(
     string $string = null
 ): array|null|false
 ```
@@ -743,7 +743,7 @@ Array
 ### `Content_Disposition`
 
 ``` php
-public HTTPHeader::Content_Disposition(
+public static HTTPHeader::Content_Disposition(
     string $string
 ): array|null|false
 ```
@@ -771,7 +771,7 @@ Array
 ### `Content_Encoding`
 
 ``` php
-public HTTPHeader::Content_Encoding(
+public static HTTPHeader::Content_Encoding(
     string $string
 ): array|null|false
 ```
@@ -799,7 +799,7 @@ Array
 ### `Content_Language`
 
 ``` php
-public HTTPHeader::Content_Language(
+public static HTTPHeader::Content_Language(
     string $string = null
 ): array|null|false
 ```
@@ -827,7 +827,7 @@ Array
 ### `Content_Length`
 
 ``` php
-public HTTPHeader::Content_Length(
+public static HTTPHeader::Content_Length(
     string $string = null
 ): int|null|false
 ```
@@ -845,7 +845,7 @@ Returns the content length in decimal number of octets. Returns `false` if the h
 ### `Content_Location`
 
 ``` php
-public HTTPHeader::Content_Location(
+public static HTTPHeader::Content_Location(
     string $string
 ): string|false
 ```
@@ -863,7 +863,7 @@ Returns a string. Returns `false` if the header field is not present or empty, a
 ### `Content_Range`
 
 ``` php
-public HTTPHeader::Content_Range(
+public static HTTPHeader::Content_Range(
     string $string
 ): array|null|false
 ```
@@ -892,7 +892,7 @@ Array
 ### `Content_Security_Policy`
 
 ``` php
-public HTTPHeader::Content_Security_Policy(
+public static HTTPHeader::Content_Security_Policy(
     string $string
 ): array|null|false
 ```
@@ -934,7 +934,7 @@ Array
 ### `Content_Security_Policy_Report_Only`
 
 ``` php
-public HTTPHeader::Content_Security_Policy_Report_Only(
+public static HTTPHeader::Content_Security_Policy_Report_Only(
     string $string
 ): array|null|false
 ```
@@ -952,7 +952,7 @@ Returns an array of arrays containing the policy directive and values. Returns `
 ### `Content_Type`
 
 ``` php
-public HTTPHeader::Content_Type(
+public static HTTPHeader::Content_Type(
     string $string = null
 ): array|null|false
 ```
@@ -980,7 +980,7 @@ Array
 ### `Cookie`
 
 ``` php
-public HTTPHeader::Cookie(
+public static HTTPHeader::Cookie(
     string $string = null
 ): array|null|false
 ```
@@ -1011,7 +1011,7 @@ Array
 ### `Cross_Origin_Embedder_Policy`
 
 ``` php
-public HTTPHeader::Cross_Origin_Embedder_Policy(
+public static HTTPHeader::Cross_Origin_Embedder_Policy(
     string $string
 ): string|null|false
 ```
@@ -1029,7 +1029,7 @@ Returns a policy directive. Returns `false` if the header field is not present o
 ### `Cross_Origin_Opener_Policy`
 
 ``` php
-public HTTPHeader::Cross_Origin_Opener_Policy(
+public static HTTPHeader::Cross_Origin_Opener_Policy(
     string $string
 ): string|null|false
 ```
@@ -1047,7 +1047,7 @@ Returns a policy directive. Returns `false` if the header field is not present o
 ### `Cross_Origin_Resource_Policy`
 
 ``` php
-public HTTPHeader::Cross_Origin_Resource_Policy(
+public static HTTPHeader::Cross_Origin_Resource_Policy(
     string $string
 ): string|null|false
 ```
@@ -1065,7 +1065,7 @@ Returns a policy directive. Returns `false` if the header field is not present o
 ### `Date`
 
 ``` php
-public HTTPHeader::Date(
+public static HTTPHeader::Date(
     string $string = null
 ): \DateTimeImmutable|null|false
 ```
@@ -1094,7 +1094,7 @@ DateTimeImmutable Object
 ### `Device_Memory`
 
 ``` php
-public HTTPHeader::Device_Memory(
+public static HTTPHeader::Device_Memory(
     string $string = null
 ): float|null|false
 ```
@@ -1112,7 +1112,7 @@ Returns a non-negative float representing the device memory in GiB. Returns `fal
 ### `Digest`
 
 ``` php
-public HTTPHeader::Digest(
+public static HTTPHeader::Digest(
     string $string
 ): array|null|false
 ```
@@ -1148,7 +1148,7 @@ Array
 ### `Downlink`
 
 ``` php
-public HTTPHeader::Downlink(
+public static HTTPHeader::Downlink(
     string $string = null
 ): float|null|false
 ```
@@ -1166,7 +1166,7 @@ Returns a non-negative float representing the downlink rate in Mbps. Returns `fa
 ### `DNT`
 
 ``` php
-public HTTPHeader::DNT(
+public static HTTPHeader::DNT(
     string $string = null
 ): int|null|false
 ```
@@ -1184,7 +1184,7 @@ Returns the integer `0`, `1`, or `null` if the value is indeterminate. Returns `
 ### `ECT`
 
 ``` php
-public HTTPHeader::ECT(
+public static HTTPHeader::ECT(
     string $string = null
 ): string|null|false
 ```
@@ -1202,7 +1202,7 @@ Returns a string identifying the effective connection type, or `null` if the val
 ### `ETag`
 
 ``` php
-public HTTPHeader::ETag(
+public static HTTPHeader::ETag(
     string $string
 ): string|null|false
 ```
@@ -1220,7 +1220,7 @@ Returns an ETag value. Returns `false` if the header field is not present or emp
 ### `Expect`
 
 ``` php
-public HTTPHeader::Expect(
+public static HTTPHeader::Expect(
     string $string = null
 ): int|null|false
 ```
@@ -1238,7 +1238,7 @@ Returns the integer `100` if the value is "100-continue", or `null` otherwise. R
 ### `Expires`
 
 ``` php
-public HTTPHeader::Expires(
+public static HTTPHeader::Expires(
     string $string
 ): \DateTimeImmutable|null|false
 ```
@@ -1267,7 +1267,7 @@ DateTimeImmutable Object
 ### `Forwarded`
 
 ``` php
-public HTTPHeader::Forwarded(
+public static HTTPHeader::Forwarded(
     string $string = null
 ): array|null|false
 ```
@@ -1303,7 +1303,7 @@ Array
 ### `From`
 
 ``` php
-public HTTPHeader::From(
+public static HTTPHeader::From(
     string $string = null
 ): string|null|false
 ```
@@ -1321,7 +1321,7 @@ Returns a string containing the supplied email address. Returns `false` if the h
 ### `Host`
 
 ``` php
-public HTTPHeader::Host(
+public static HTTPHeader::Host(
     string $string = null
 ): array|null|false
 ```
@@ -1349,7 +1349,7 @@ Array
 ### `If_Match`
 
 ``` php
-public HTTPHeader::If_Match(
+public static HTTPHeader::If_Match(
     string $string = null
 ): array|null|false
 ```
@@ -1378,7 +1378,7 @@ Array
 ### `If_Modified_Since`
 
 ``` php
-public HTTPHeader::If_Modified_Since(
+public static HTTPHeader::If_Modified_Since(
     string $string = null
 ): \DateTimeImmutable|null|false
 ```
@@ -1407,7 +1407,7 @@ DateTimeImmutable Object
 ### `If_None_Match`
 
 ``` php
-public HTTPHeader::If_None_Match(
+public static HTTPHeader::If_None_Match(
     string $string = null
 ): array|null|false
 ```
@@ -1436,7 +1436,7 @@ Array
 ### `If_Range`
 
 ``` php
-public HTTPHeader::If_Range(
+public static HTTPHeader::If_Range(
     string $string = null
 ): \DateTimeImmutable|string|null|false
 ```
@@ -1454,7 +1454,7 @@ Returns a DateTimeImmutable object, or an ETag value. Returns `false` if the hea
 ### `If_Unmodified_Since`
 
 ``` php
-public HTTPHeader::If_Unmodified_Since(
+public static HTTPHeader::If_Unmodified_Since(
     string $string = null
 ): \DateTimeImmutable|null|false
 ```
@@ -1483,7 +1483,7 @@ DateTimeImmutable Object
 ### `Keep_Alive`
 
 ``` php
-public HTTPHeader::Keep_Alive(
+public static HTTPHeader::Keep_Alive(
     string $string = null
 ): array|null|false
 ```
@@ -1511,7 +1511,7 @@ Array
 ### `Last_Modified`
 
 ``` php
-public HTTPHeader::Last_Modified(
+public static HTTPHeader::Last_Modified(
     string $string
 ): \DateTimeImmutable|null|false
 ```
@@ -1540,7 +1540,7 @@ DateTimeImmutable Object
 ### `Link`
 
 ``` php
-public HTTPHeader::Link(
+public static HTTPHeader::Link(
     string $string
 ): array|null|false
 ```
@@ -1595,7 +1595,7 @@ Array
 ### `Location`
 
 ``` php
-public HTTPHeader::Location(
+public static HTTPHeader::Location(
     string $string
 ): string|false
 ```
@@ -1613,7 +1613,7 @@ Returns a string. Returns `false` if the header field is not present or empty.
 ### `Max_Forwards`
 
 ``` php
-public HTTPHeader::Max_Forwards(
+public static HTTPHeader::Max_Forwards(
     string $string = null
 ): int|null|false
 ```
@@ -1631,7 +1631,7 @@ Returns a non-negative integer. Returns `false` if the header field is not prese
 ### `Origin`
 
 ``` php
-public HTTPHeader::Origin(
+public static HTTPHeader::Origin(
     string $string = null
 ): array|null|false
 ```
@@ -1659,7 +1659,7 @@ Array
 ### `Permissions_Policy`
 
 ``` php
-public HTTPHeader::Permissions_Policy(
+public static HTTPHeader::Permissions_Policy(
     string $string
 ): array|null|false
 ```
@@ -1709,7 +1709,7 @@ Array
 ### `Pragma`
 
 ``` php
-public HTTPHeader::Pragme(
+public static HTTPHeader::Pragme(
     string $string = null
 ): array|null|false
 ```
@@ -1727,7 +1727,7 @@ Returns an array of directives. Returns `false` if the header field is not prese
 ### `Proxy_Authenticate`
 
 ``` php
-public HTTPHeader::Proxy_Authenticate(
+public static HTTPHeader::Proxy_Authenticate(
     string $string
 ): array|null|false
 ```
@@ -1763,7 +1763,7 @@ Array
 ### `Proxy_Authorization`
 
 ``` php
-public HTTPHeader::Proxy_Authorization(
+public static HTTPHeader::Proxy_Authorization(
     string $string = null
 ): array|null|false
 ```
@@ -1791,7 +1791,7 @@ Array
 ### `Range`
 
 ``` php
-public HTTPHeader::Range(
+public static HTTPHeader::Range(
     string $string = null
 ): array|null|false
 ```
@@ -1824,7 +1824,7 @@ Array
 ### `Referer`
 
 ``` php
-public HTTPHeader::Referer(
+public static HTTPHeader::Referer(
     string $string = null
 ): array|null|false
 ```
@@ -1853,7 +1853,7 @@ Array
 ### `Referrer_Policy`
 
 ``` php
-public HTTPHeader::Referrer_Policy(
+public static HTTPHeader::Referrer_Policy(
     string $string
 ): string|null|false
 ```
@@ -1871,7 +1871,7 @@ Returns a directive. Returns `false` if the header field is not present or empty
 ### `Retry_After`
 
 ``` php
-public HTTPHeader::Retry_After(
+public static HTTPHeader::Retry_After(
     string $string
 ): \DateTimeImmutable|int|null|false
 ```
@@ -1889,7 +1889,7 @@ Returns a DateTimeImmutable object, or a non-negative integer representing the d
 ### `RTT`
 
 ``` php
-public HTTPHeader::RTT(
+public static HTTPHeader::RTT(
     string $string = null
 ): array|null|false
 ```
@@ -1907,7 +1907,7 @@ Returns a non-negative integer representing the approximate round trip time in m
 ### `Save_Data`
 
 ``` php
-public HTTPHeader::Save_Data(
+public static HTTPHeader::Save_Data(
     string $string = null
 ): int|null|false
 ```
@@ -1925,7 +1925,7 @@ Returns the integer `0` for falsey values, `1` for truthy values, or `null` if t
 ### `Sec_Fetch_Dest`
 
 ``` php
-public HTTPHeader::Sec_Fetch_Dest(
+public static HTTPHeader::Sec_Fetch_Dest(
     string $string = null
 ): string|null|false
 ```
@@ -1943,7 +1943,7 @@ Returns a directive. Returns `false` if the header field is not present or empty
 ### `Sec_Fetch_Mode`
 
 ``` php
-public HTTPHeader::Sec_Fetch_Mode(
+public static HTTPHeader::Sec_Fetch_Mode(
     string $string = null
 ): string|null|false
 ```
@@ -1961,7 +1961,7 @@ Returns a directive. Returns `false` if the header field is not present or empty
 ### `Sec_Fetch_Site`
 
 ``` php
-public HTTPHeader::Sec_Fetch_Site(
+public static HTTPHeader::Sec_Fetch_Site(
     string $string = null
 ): string|null|false
 ```
@@ -1979,7 +1979,7 @@ Returns a directive. Returns `false` if the header field is not present or empty
 ### `Sec_Fetch_Storage_Access`
 
 ``` php
-public HTTPHeader::Sec_Fetch_Storage_Access(
+public static HTTPHeader::Sec_Fetch_Storage_Access(
     string $string = null
 ): string|null|false
 ```
@@ -1997,7 +1997,7 @@ Returns a directive. Returns `false` if the header field is not present or empty
 ### `Sec_Fetch_User`
 
 ``` php
-public HTTPHeader::Sec_Fetch_User(
+public static HTTPHeader::Sec_Fetch_User(
     string $string = null
 ): ?bool
 ```
@@ -2015,7 +2015,7 @@ Returns `true` if the value is "?1", or `null` otherwise.
 ### `Sec_GPC`
 
 ``` php
-public HTTPHeader::Sec_GPC(
+public static HTTPHeader::Sec_GPC(
     string $string = null
 ): ?bool
 ```
@@ -2033,7 +2033,7 @@ Returns `true` if the value is "1", or `null` otherwise.
 ### `Sec_Purpose`
 
 ``` php
-public HTTPHeader::Sec_Purpose(
+public static HTTPHeader::Sec_Purpose(
     string $string = null
 ): string|null|false
 ```
@@ -2051,7 +2051,7 @@ Returns a directive. Returns `false` if the header field is not present or empty
 ### `Server`
 
 ``` php
-public HTTPHeader::Server(
+public static HTTPHeader::Server(
     string $string
 ): array|null|false
 ```
@@ -2083,7 +2083,7 @@ Array
 ### `Server_Timing`
 
 ``` php
-public HTTPHeader::Server_Timing(
+public static HTTPHeader::Server_Timing(
     string $string
 ): string|null|false
 ```
@@ -2120,7 +2120,7 @@ Array
 ### `Service_Worker_Navigation_Preload`
 
 ``` php
-public HTTPHeader::Service_Worker_Navigation_Preload(
+public static HTTPHeader::Service_Worker_Navigation_Preload(
     string $string = null
 ): string|false
 ```
@@ -2138,7 +2138,7 @@ Returns a string. Returns `false` if the header field is not present or empty.
 ### `Set_Cookie`
 
 ``` php
-public HTTPHeader::Set_Cookie(
+public static HTTPHeader::Set_Cookie(
     string $string
 ): array|null|false
 ```
@@ -2185,7 +2185,7 @@ Array
 ### `Set_Login`
 
 ``` php
-public HTTPHeader::Set_Login(
+public static HTTPHeader::Set_Login(
     string $string
 ): string|null|false
 ```
@@ -2203,7 +2203,7 @@ Returns the string `"logged-in"`, the string `"logged-out"`, or `null` if the va
 ### `SourceMap`
 
 ``` php
-public HTTPHeader::SourceMap(
+public static HTTPHeader::SourceMap(
     string $string
 ): string|false
 ```
@@ -2221,7 +2221,7 @@ Returns a string. Returns `false` if the header field is not present or empty.
 ### `Strict_Transport_Security`
 
 ``` php
-public HTTPHeader::Strict_Transport_Security(
+public static HTTPHeader::Strict_Transport_Security(
     string $string
 ): array|null|false
 ```
@@ -2250,7 +2250,7 @@ Array
 ### `TE`
 
 ``` php
-public HTTPHeader::TE(
+public static HTTPHeader::TE(
     string $string = null
 ): array|null|false
 ```
@@ -2279,7 +2279,7 @@ Array
 ### `Timing_Allow_Origin`
 
 ``` php
-public HTTPHeader::Timing_Allow_Origin(
+public static HTTPHeader::Timing_Allow_Origin(
     string $string
 ): string|array|null|false
 ```
@@ -2315,7 +2315,7 @@ Array
 ### `Tk`
 
 ``` php
-public HTTPHeader::Tk(
+public static HTTPHeader::Tk(
     string $string
 ): string|null|false
 ```
@@ -2333,7 +2333,7 @@ Returns one of the strings `!`, `?`, `G`, `N`, `T`, `C`, `P`, `D`, `U`, or `null
 ### `Trailer`
 
 ``` php
-public HTTPHeader::Trailer(
+public static HTTPHeader::Trailer(
     string $string
 ): array|null|false
 ```
@@ -2361,7 +2361,7 @@ Array
 ### `Transfer_Encoding`
 
 ``` php
-public HTTPHeader::Transfer_Encoding(
+public static HTTPHeader::Transfer_Encoding(
     string $string
 ): array|null|false
 ```
@@ -2389,7 +2389,7 @@ Array
 ### `Upgrade`
 
 ``` php
-public HTTPHeader::Upgrade(
+public static HTTPHeader::Upgrade(
     string $string = null
 ): array|null|false
 ```
@@ -2417,7 +2417,7 @@ Array
 ### `Upgrade_Insecure_Requests`
 
 ``` php
-public HTTPHeader::Upgrade_Insecure_Requests(
+public static HTTPHeader::Upgrade_Insecure_Requests(
     string $string = null
 ): int|null|false
 ```
@@ -2435,7 +2435,7 @@ Returns the integer `0`, `1`, or `null` if the value is indeterminate. Returns `
 ### `User_Agent`
 
 ``` php
-public HTTPHeader::User_Agent(
+public static HTTPHeader::User_Agent(
     string $string = null
 ): array|null|false
 ```
@@ -2477,7 +2477,7 @@ Array
 ### `Vary`
 
 ``` php
-public HTTPHeader::Vary(
+public static HTTPHeader::Vary(
     string $string
 ): string|array|null|false
 ```
@@ -2505,7 +2505,7 @@ Array
 ### `Via`
 
 ``` php
-public HTTPHeader::Via(
+public static HTTPHeader::Via(
     string $string = null
 ): array|null|false
 ```
@@ -2549,7 +2549,7 @@ Array
 ### `Want_Digest`
 
 ``` php
-public HTTPHeader::Want_Digest(
+public static HTTPHeader::Want_Digest(
     string $string = null
 ): array|null|false
 ```
@@ -2578,7 +2578,7 @@ Array
 ### `WWW_Authenticate`
 
 ``` php
-public HTTPHeader::WWW_Authenticate(
+public static HTTPHeader::WWW_Authenticate(
     string $string
 ): array|null|false
 ```
@@ -2621,7 +2621,7 @@ Array
 ### `X_Content_Type_Options`
 
 ``` php
-public HTTPHeader::X_Content_Type_Options(
+public static HTTPHeader::X_Content_Type_Options(
     string $string
 ): string|null|false
 ```
@@ -2639,7 +2639,7 @@ Returns the string `"nosniff"`, or `null` if the value is indeterminate. Returns
 ### `X_Frame_Options`
 
 ``` php
-public HTTPHeader::X_Frame_Options(
+public static HTTPHeader::X_Frame_Options(
     string $string
 ): string|null|false
 ```
