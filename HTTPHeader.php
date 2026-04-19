@@ -69,10 +69,7 @@
                 $b_match
             ) ? floatval($b_match[1]) : 1.0 ;
 
-            if ($a_q == $b_q)
-                return 0;
-
-            return ($a_q > $b_q) ? -1 : 1 ;
+            return $b_q <=> $a_q;
         }
 
         protected static function explode_preserve_quoted(
@@ -556,6 +553,7 @@
                     case "OPTIONS":
                     case "TRACE":
                     case "PATCH":
+                    case "*":
                         break;
                     default:
                         return null;
