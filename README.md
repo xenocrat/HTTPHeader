@@ -56,7 +56,7 @@ Returns an associative array of arrays containing one entry for each occurence o
 
 #### Examples
 
-``` php
+```
 Array
 (
     [CONTENT_TYPE] => Array
