@@ -1,0 +1,8 @@
+array(3) {
+  [0]=>
+  string(7) "deflate"
+  [1]=>
+  string(10) "gzip;q=1.0"
+  [2]=>
+  string(7) "*;q=0.5"
+}

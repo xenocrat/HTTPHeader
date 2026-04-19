@@ -1,0 +1,17 @@
+array(1) {
+  ["SERVER"]=>
+  array(1) {
+    [0]=>
+    array(1) {
+      [0]=>
+      array(3) {
+        ["product"]=>
+        string(6) "Apache"
+        ["version"]=>
+        string(5) "2.4.1"
+        ["comment"]=>
+        string(4) "Unix"
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+array(4) {
+  [0]=>
+  string(4) "gzip"
+  [1]=>
+  string(7) "deflate"
+  [2]=>
+  string(2) "br"
+  [3]=>
+  string(4) "zstd"
+}

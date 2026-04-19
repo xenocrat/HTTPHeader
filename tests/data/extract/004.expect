@@ -1,0 +1,19 @@
+array(1) {
+  ["VARY"]=>
+  array(2) {
+    [0]=>
+    array(1) {
+      [0]=>
+      string(8) "Encoding"
+    }
+    [1]=>
+    array(3) {
+      [0]=>
+      string(15) "Accept-Encoding"
+      [1]=>
+      string(6) "Cookie"
+      [2]=>
+      string(9) "Save-Data"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+array(3) {
+  [0]=>
+  string(6) "Accept"
+  [1]=>
+  string(1) "*"
+  [2]=>
+  string(12) "Content-Type"
+}

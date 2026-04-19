@@ -1,0 +1,21 @@
+array(2) {
+  ["CONTENT_TYPE"]=>
+  array(1) {
+    [0]=>
+    array(1) {
+      ["type"]=>
+      string(10) "text/plain"
+    }
+  }
+  ["SERVER"]=>
+  array(1) {
+    [0]=>
+    array(1) {
+      [0]=>
+      array(1) {
+        ["product"]=>
+        string(6) "Apache"
+      }
+    }
+  }
+}

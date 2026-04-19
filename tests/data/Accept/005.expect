@@ -1,0 +1,14 @@
+array(6) {
+  [0]=>
+  string(10) "image/avif"
+  [1]=>
+  string(10) "image/webp"
+  [2]=>
+  string(9) "image/png"
+  [3]=>
+  string(13) "image/svg+xml"
+  [4]=>
+  string(13) "image/*;q=0.8"
+  [5]=>
+  string(9) "*/*;q=0.5"
+}

@@ -1,0 +1,8 @@
+array(3) {
+  [0]=>
+  string(8) "br;q=1.0"
+  [1]=>
+  string(10) "gzip;q=0.8"
+  [2]=>
+  string(7) "*;q=0.1"
+}

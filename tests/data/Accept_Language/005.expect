@@ -1,0 +1,14 @@
+array(6) {
+  [0]=>
+  string(5) "fr-CH"
+  [1]=>
+  string(1) ";"
+  [2]=>
+  string(8) "fr;q=0.9"
+  [3]=>
+  string(8) "en;q=0.8"
+  [4]=>
+  string(8) "de;q=0.7"
+  [5]=>
+  string(7) "*;q=0.5"
+}
