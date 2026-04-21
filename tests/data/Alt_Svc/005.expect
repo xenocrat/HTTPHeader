@@ -1,0 +1,15 @@
+array(1) {
+  [0]=>
+  array(5) {
+    ["protocol"]=>
+    string(2) "h2"
+    ["host"]=>
+    NULL
+    ["port"]=>
+    string(3) "443"
+    ["ma"]=>
+    int(2592000)
+    ["persist"]=>
+    bool(true)
+  }
+}

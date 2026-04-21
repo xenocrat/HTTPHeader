@@ -1,0 +1,6 @@
+array(2) {
+  ["host"]=>
+  string(15) "alt.example.com"
+  ["port"]=>
+  string(3) "443"
+}

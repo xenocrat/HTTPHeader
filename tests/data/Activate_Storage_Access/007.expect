@@ -1,0 +1,13 @@
+array(2) {
+  [0]=>
+  string(5) "retry"
+  [1]=>
+  array(3) {
+    ["scheme"]=>
+    string(4) "http"
+    ["host"]=>
+    string(11) "example.com"
+    ["path"]=>
+    string(1) "/"
+  }
+}

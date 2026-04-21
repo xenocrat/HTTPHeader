@@ -1,0 +1,28 @@
+array(2) {
+  [0]=>
+  array(5) {
+    ["protocol"]=>
+    string(2) "h2"
+    ["host"]=>
+    string(15) "alt.example.com"
+    ["port"]=>
+    string(3) "443"
+    ["ma"]=>
+    NULL
+    ["persist"]=>
+    bool(false)
+  }
+  [1]=>
+  array(5) {
+    ["protocol"]=>
+    string(2) "h2"
+    ["host"]=>
+    NULL
+    ["port"]=>
+    string(3) "443"
+    ["ma"]=>
+    NULL
+    ["persist"]=>
+    bool(false)
+  }
+}
