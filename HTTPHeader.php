@@ -192,7 +192,10 @@
         ): ?array {
             if (
                 !preg_match(
-                    "/^[a-z]+:\/\/[a-z0-9\[\.][a-z0-9:\-\.]+?[a-z0-9\]\.]
+                    "/^[a-z]+:\/\/
+                        ([a-z0-9]([a-z0-9\-\.]*[a-z0-9])?\.[a-z]{2,63}\.?
+                            |[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}
+                            |\[[a-f0-9\:]{3,39}\])
                         (:[0-9]{1,5})?(\/|$)/ix",
                     $string
                 )
@@ -838,20 +841,15 @@
                     )
                         return null;
 
-                    $pn = $match[1];
-                    $pv = $match[2];
+                    $pn = trim($match[1], " ");
+                    $pv = trim($match[2], " ");
 
                     if ($index == 0) {
-                        if (preg_match("/^\".+\"$/", $pv)) {
-                            $pv = stripslashes(
-                                substr($pv, 1, -1)
-                            );
-                        }
-
                         if (
                             !preg_match(
-                                "/^([a-z0-9\[\.][a-z0-9:\-\.]+[a-z0-9\]\.])?
-                                    (:([0-9]{1,5}))$/ix",
+                                "/^\"
+                                    ([a-z0-9]([a-z0-9\-\.]*[a-z0-9])?\.[a-z]{2,63}\.?)?
+                                    (:([0-9]{1,5}))\"$/ix",
                                 $pv,
                                 $authority,
                                 PREG_UNMATCHED_AS_NULL
@@ -861,7 +859,7 @@
 
                         $service["protocol"] = rawurldecode($pn);
                         $service["host"] = $authority[1];
-                        $service["port"] = $authority[3];
+                        $service["port"] = $authority[4];
                     } else {
                         switch ($pn) {
                             case "ma":
@@ -909,7 +907,7 @@
 
             if (
                 !preg_match(
-                    "/^([a-z0-9\[\.][a-z0-9:\-\.]+?[a-z0-9\]\.])
+                    "/^([a-z0-9]([a-z0-9\-\.]*[a-z0-9])?\.[a-z]{2,63}\.?)
                         (:([0-9]{1,5}))?$/ix",
                     $value,
                     $match
@@ -919,8 +917,8 @@
 
             $return = array("host" => $match[1]);
 
-            if (isset($match[3]))
-                $return["port"] = $match[3];
+            if (isset($match[4]))
+                $return["port"] = $match[4];
 
             return $return;
         }
