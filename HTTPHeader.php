@@ -951,7 +951,14 @@
                 return null;
 
             self::trim_whitespace($array);
-            return $array;
+            $params = self::explode_preserve_quoted(",", $array[1]);
+
+            if ($params === null)
+                return null;
+
+            self::trim_whitespace($params);
+            self::filter_no_empty($params);
+            return array($array[0], $params);
         }
 
         public static function Cache_Control(
@@ -2163,6 +2170,7 @@
                     return null;
 
                 $directive = $match[1];
+
                 $allowlist = self::explode_preserve_quoted(
                     " ",
                     isset($match[3]) ? $match[3] : $match[2]
@@ -2335,7 +2343,14 @@
                 return null;
 
             self::trim_whitespace($array);
-            return $array;
+            $params = self::explode_preserve_quoted(",", $array[1]);
+
+            if ($params === null)
+                return null;
+
+            self::trim_whitespace($params);
+            self::filter_no_empty($params);
+            return array($array[0], $params);
         }
 
         public static function Range(
