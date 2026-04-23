@@ -717,13 +717,14 @@
                 return null;
 
             if ($origin[1] != "*") {
-                if (preg_match("/^\".+\"$/", $origin[1])) {
-                    $origin[1] = stripslashes(
-                        substr($origin[1], 1, -1)
-                    );
-                }
+                if (!preg_match("/^\".+\"$/", $origin[1]))
+                    return null;
 
-                $origin[1] = self::parse_origin($origin[1]);
+                $origin[1] = self::parse_origin(
+                    stripslashes(
+                        substr($origin[1], 1, -1)
+                    )
+                );
             }
 
             return array($params[0], $origin[1]);
@@ -1007,11 +1008,12 @@
                 return null;
 
             foreach ($directives as &$directive) {
-                if (preg_match("/^\".+\"$/", $directive)) {
-                    $directive = stripslashes(
-                        substr($directive, 1, -1)
-                    );
-                }
+                if (!preg_match("/^\".+\"$/", $directive))
+                    return null;
+
+                $directive = stripslashes(
+                    substr($directive, 1, -1)
+                );
             }
 
             return $directives;
@@ -1044,6 +1046,50 @@
             return $directives;
         }
 
+        public static function Content_Digest(
+            $string = null
+        ): array|null|false {
+            if (!isset($string)) {
+                $value = self::header_from_string(
+                    "HTTP_CONTENT_DIGEST",
+                    $string
+                );
+            } else {
+                $value = self::header_from_string(
+                    "Content-Digest",
+                    $string
+                );
+            }
+
+            if ($value === false)
+                return false;
+
+            $params = explode(",", $value);
+            self::trim_whitespace($params);
+            self::filter_no_empty($params);
+
+            if (empty($params))
+                return null;
+
+            $return = array();
+
+            foreach ($params as $param) {
+                if (
+                    !preg_match(
+                        "/^([^=]+)=(.+)$/",
+                        $param,
+                        $match
+                    )
+                )
+                    return null;
+
+                $return[] = array($match[1], $match[2]);
+            }
+
+            self::trim_whitespace($return);
+            return $return;
+        }
+
         public static function Content_Disposition(
             $string
         ): array|null|false {
@@ -1071,7 +1117,7 @@
             foreach ($params as $param) {
                 if (
                     !preg_match(
-                        "/^(name|filename\*?)=(\"(.+)\"|([^ ]+))$/",
+                        "/^(name|filename(\*)?)=(\"(.+)\"|([^ ]+))$/i",
                         $param,
                         $match,
                         PREG_UNMATCHED_AS_NULL
@@ -1079,9 +1125,13 @@
                 )
                     return null;
 
-                $return[$match[1]] = isset($match[3]) ?
-                    stripslashes($match[3]) :
-                    rawurldecode($match[4]) ;
+                $return[$match[1]] = isset($match[2]) ?
+                    $match[3] :
+                    (
+                        isset($match[4]) ?
+                            stripslashes($match[4]) :
+                            rawurldecode($match[5])
+                    ) ;
             }
 
             return $return;
@@ -1104,18 +1154,6 @@
 
             if (empty($directives))
                 return null;
-
-            foreach ($directives as $directive) {
-                switch ($directive) {
-                    case "gzip":
-                    case "compress":
-                    case "deflate":
-                    case "br":
-                        break;
-                    default:
-                        return null;
-                }
-            }
 
             return $directives;
         }
