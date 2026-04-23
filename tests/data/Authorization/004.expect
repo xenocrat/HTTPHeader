@@ -1,0 +1,27 @@
+array(2) {
+  [0]=>
+  string(6) "Digest"
+  [1]=>
+  array(10) {
+    [0]=>
+    string(12) "username=foo"
+    [1]=>
+    string(15) "realm="<realm>""
+    [2]=>
+    string(11) "uri="<url>""
+    [3]=>
+    string(21) "algorithm=<algorithm>"
+    [4]=>
+    string(15) "nonce="<nonce>""
+    [5]=>
+    string(7) "nc=<nc>"
+    [6]=>
+    string(17) "cnonce="<cnonce>""
+    [7]=>
+    string(9) "qop=<qop>"
+    [8]=>
+    string(21) "response="<response>""
+    [9]=>
+    string(17) "opaque="<opaque>""
+  }
+}

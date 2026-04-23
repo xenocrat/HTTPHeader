@@ -1,0 +1,6 @@
+array(2) {
+  ["disposition"]=>
+  string(10) "attachment"
+  ["filename"]=>
+  string(13) "file name.jpg"
+}

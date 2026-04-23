@@ -1,0 +1,16 @@
+array(7) {
+  [0]=>
+  string(2) "br"
+  [1]=>
+  string(4) "gzip"
+  [2]=>
+  string(7) "deflate"
+  [3]=>
+  string(8) "compress"
+  [4]=>
+  string(4) "zstd"
+  [5]=>
+  string(3) "dcb"
+  [6]=>
+  string(3) "dcz"
+}

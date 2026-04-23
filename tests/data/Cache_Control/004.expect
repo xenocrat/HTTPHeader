@@ -1,0 +1,6 @@
+array(2) {
+  [0]=>
+  string(6) "public"
+  [1]=>
+  string(14) "max-age=604800"
+}

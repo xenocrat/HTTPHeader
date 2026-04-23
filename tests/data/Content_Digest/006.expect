@@ -1,0 +1,16 @@
+array(2) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(7) "sha-256"
+    [1]=>
+    string(46) ":d435Qo+nKZ+gLcUHn7GQtQ72hiBVAgqoLsZnZPiTGPk=:"
+  }
+  [1]=>
+  array(2) {
+    [0]=>
+    string(7) "sha-512"
+    [1]=>
+    string(90) ":YMAam51Jz/jOATT6/zvHrLVgOYTGFy1d6GJiOHTohq4yP+pgk4vf2aCsyRZOtw8MjkM7iw7yZ/WkppmM44T3qg==:"
+  }
+}

@@ -1,0 +1,10 @@
+array(4) {
+  [0]=>
+  string(6) "public"
+  [1]=>
+  string(15) "must-revalidate"
+  [2]=>
+  string(18) "stale-if-error=600"
+  [3]=>
+  string(11) "max-age=900"
+}

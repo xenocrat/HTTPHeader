@@ -1,0 +1,9 @@
+array(2) {
+  [0]=>
+  string(5) "Basic"
+  [1]=>
+  array(1) {
+    [0]=>
+    string(24) "YWxhZGRpbjpvcGVuc2VzYW1l"
+  }
+}

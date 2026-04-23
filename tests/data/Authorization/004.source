@@ -1,0 +1,1 @@
+Authorization: Digest username=foo, realm="<realm>", uri="<url>", algorithm=<algorithm>, nonce="<nonce>", nc=<nc>, cnonce="<cnonce>", qop=<qop>, response="<response>", opaque="<opaque>"
