@@ -457,7 +457,31 @@
             if (empty($types))
                 return null;
 
-            return $types;
+            $return = array();
+
+            foreach ($types as $type) {
+                $params = explode(";", $type);
+                self::trim_whitespace($params);
+                self::filter_no_empty($params);
+
+                $array = array("type" => array_shift($params));
+
+                foreach ($params as $param) {
+                    if (
+                        preg_match(
+                            "/^(charset)=(.+)$/",
+                            $param,
+                            $match
+                        )
+                    )
+                        $array[$match[1]] = $match[2];
+                }
+
+                $return[] = $array;
+            }
+
+            self::trim_whitespace($return);
+            return $return;
         }
 
         public static function Accept_Post(
@@ -478,7 +502,31 @@
             if (empty($types))
                 return null;
 
-            return $types;
+            $return = array();
+
+            foreach ($types as $type) {
+                $params = explode(";", $type);
+                self::trim_whitespace($params);
+                self::filter_no_empty($params);
+
+                $array = array("type" => array_shift($params));
+
+                foreach ($params as $param) {
+                    if (
+                        preg_match(
+                            "/^(charset)=(.+)$/",
+                            $param,
+                            $match
+                        )
+                    )
+                        $array[$match[1]] = $match[2];
+                }
+
+                $return[] = $array;
+            }
+
+            self::trim_whitespace($return);
+            return $return;
         }
 
         public static function Accept_Ranges(
@@ -1397,7 +1445,7 @@
                 if (
                     !preg_match(
                         "/^([^()<>@,;:\\\\ \"\/\[\]\?={}\t]+)=
-                            (\")?([^\",;\\\\]+)(?(2)\")?$/x",
+                            (\")?([^\",;\\\\]+)(?(2)\")$/x",
                         $pair,
                         $match
                     )
@@ -2931,7 +2979,7 @@
                     if (
                         !preg_match(
                             "/^([^()<>@,;:\\\\ \"\/\[\]\?={}\t]+)=
-                                (\")?([^\",;\\\\]+)(?(2)\")?$/x",
+                                (\")?([^\",;\\\\]+)(?(2)\")$/x",
                             $param,
                             $match
                         )
