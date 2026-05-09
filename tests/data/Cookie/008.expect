@@ -1,0 +1,23 @@
+array(3) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(9) "PHPSESSID"
+    [1]=>
+    string(15) "298zf09hf012fh2"
+  }
+  [1]=>
+  array(2) {
+    [0]=>
+    string(9) "csrftoken"
+    [1]=>
+    string(14) "u32t4o3tb3gg43"
+  }
+  [2]=>
+  array(2) {
+    [0]=>
+    string(4) "_gat"
+    [1]=>
+    string(1) "1"
+  }
+}

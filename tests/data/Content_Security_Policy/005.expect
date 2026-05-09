@@ -1,0 +1,12 @@
+array(1) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(11) "default-src"
+    [1]=>
+    array(1) {
+      [0]=>
+      string(4) "self"
+    }
+  }
+}

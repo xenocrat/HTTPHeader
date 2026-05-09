@@ -1,0 +1,16 @@
+array(2) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(7) "Session"
+    [1]=>
+    string(15) "298zf09hf012fh2"
+  }
+  [1]=>
+  array(2) {
+    [0]=>
+    string(3) "foo"
+    [1]=>
+    string(3) "bar"
+  }
+}

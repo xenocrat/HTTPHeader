@@ -1,0 +1,8 @@
+array(3) {
+  ["unit"]=>
+  string(5) "bytes"
+  ["range"]=>
+  string(9) "100-67589"
+  ["size"]=>
+  string(1) "*"
+}

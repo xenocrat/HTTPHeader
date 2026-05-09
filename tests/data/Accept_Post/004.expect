@@ -1,8 +1,17 @@
 array(3) {
   [0]=>
-  string(16) "application/json"
+  array(1) {
+    ["type"]=>
+    string(16) "application/json"
+  }
   [1]=>
-  string(10) "text/plain"
+  array(1) {
+    ["type"]=>
+    string(10) "text/plain"
+  }
   [2]=>
-  string(10) "image/webp"
+  array(1) {
+    ["type"]=>
+    string(10) "image/webp"
+  }
 }

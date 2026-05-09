@@ -1,4 +1,7 @@
 array(1) {
   [0]=>
-  string(3) "*/*"
+  array(1) {
+    ["type"]=>
+    string(3) "*/*"
+  }
 }

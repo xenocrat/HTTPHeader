@@ -1,4 +1,9 @@
 array(1) {
-  [2]=>
-  string(24) "text/plain;charset=utf-8"
+  [0]=>
+  array(2) {
+    ["type"]=>
+    string(10) "text/plain"
+    ["charset"]=>
+    string(5) "utf-8"
+  }
 }

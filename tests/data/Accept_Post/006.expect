@@ -1,12 +1,16 @@
 array(2) {
   [0]=>
-  array(1) {
+  array(2) {
     ["type"]=>
     string(16) "application/json"
+    ["charset"]=>
+    string(5) "utf-8"
   }
   [1]=>
-  array(1) {
+  array(2) {
     ["type"]=>
     string(10) "text/plain"
+    ["charset"]=>
+    string(6) "utf-16"
   }
 }

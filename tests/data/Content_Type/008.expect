@@ -1,0 +1,6 @@
+array(2) {
+  ["type"]=>
+  string(19) "multipart/form-data"
+  ["boundary"]=>
+  string(21) "ExampleBoundaryString"
+}
