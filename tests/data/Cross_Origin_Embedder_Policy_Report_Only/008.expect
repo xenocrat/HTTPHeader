@@ -1,0 +1,6 @@
+array(2) {
+  ["directive"]=>
+  string(12) "require-corp"
+  ["report-to"]=>
+  string(13) "coep-endpoint"
+}
