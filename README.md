@@ -1013,7 +1013,7 @@ Array
 ``` php
 public static HTTPHeader::Cross_Origin_Embedder_Policy(
     string $string
-): string|null|false
+): array|null|false
 ```
 
 #### Parameters
@@ -1024,7 +1024,17 @@ public static HTTPHeader::Cross_Origin_Embedder_Policy(
 
 #### Return Values
 
-Returns a policy directive. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+Returns an array containing the policy directive and optional paramter, if present. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
+
+```
+Array
+(
+    ["directive"] => require-corp
+    ["report-to"] => coep-endpoint
+)
+```
 
 ### `Cross_Origin_Opener_Policy`
 
