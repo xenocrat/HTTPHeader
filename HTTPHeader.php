@@ -464,7 +464,9 @@
                 self::trim_whitespace($params);
                 self::filter_no_empty($params);
 
-                $array = array("type" => array_shift($params));
+                $array = array(
+                    "type" => array_shift($params)
+                );
 
                 foreach ($params as $param) {
                     if (
@@ -509,7 +511,9 @@
                 self::trim_whitespace($params);
                 self::filter_no_empty($params);
 
-                $array = array("type" => array_shift($params));
+                $array = array(
+                    "type" => array_shift($params)
+                );
 
                 foreach ($params as $param) {
                     if (
@@ -1160,7 +1164,9 @@
             if (empty($params))
                 return null;
 
-            $return = array("disposition" => array_shift($params));
+            $return = array(
+                "disposition" => array_shift($params)
+            );
 
             foreach ($params as $param) {
                 if (
@@ -1320,16 +1326,23 @@
 
             foreach ($policy as &$directive) {
                 $params = explode(" ", $directive);
-                $directive = array(array_shift($params), $params);
+                self::trim_whitespace($params);
+                self::filter_no_empty($params);
 
-                foreach ($directive[1] as &$param) {
-                    if (preg_match("/^'.+'$/", $param))
-                        $param = trim($param, "'");
+                $directive = array(
+                    array_shift($params)
+                );
+
+                if (!empty($params)) {
+                    foreach ($params as &$param) {
+                        if (preg_match("/^'.+'$/", $param))
+                            $param = trim($param, "'");
+                    }
+
+                    $directive[1] = $params;
                 }
             }
 
-            self::trim_whitespace($policy);
-            self::filter_no_empty($policy);
             return $policy;
         }
 
@@ -1353,16 +1366,23 @@
 
             foreach ($policy as &$directive) {
                 $params = explode(" ", $directive);
-                $directive = array(array_shift($params), $params);
+                self::trim_whitespace($params);
+                self::filter_no_empty($params);
 
-                foreach ($directive[1] as &$param) {
-                    if (preg_match("/^'.+'$/", $param))
-                        $param = trim($param, "'");
+                $directive = array(
+                    array_shift($params)
+                );
+
+                if (!empty($params)) {
+                    foreach ($params as &$param) {
+                        if (preg_match("/^'.+'$/", $param))
+                            $param = trim($param, "'");
+                    }
+
+                    $directive[1] = $params;
                 }
             }
 
-            self::trim_whitespace($policy);
-            self::filter_no_empty($policy);
             return $policy;
         }
 
@@ -1390,7 +1410,9 @@
             if (empty($params))
                 return null;
 
-            $return = array("type" => array_shift($params));
+            $return = array(
+                "type" => array_shift($params)
+            );
 
             foreach ($params as $param) {
                 if (
@@ -1460,7 +1482,7 @@
 
         public static function Cross_Origin_Embedder_Policy(
             $string
-        ): string|null|false {
+        ): array|null|false {
             $value = self::header_from_string(
                 "Cross-Origin-Embedder-Policy",
                 $string
@@ -1469,14 +1491,101 @@
             if ($value === false)
                 return false;
 
-            switch ($value) {
+            $params = explode(";", $value);
+            self::trim_whitespace($params);
+            self::filter_no_empty($params);
+
+            if (empty($params))
+                return null;
+
+            $return = array(
+                "directive" => array_shift($params)
+            );
+
+            switch ($return["directive"]) {
                 case "unsafe-none":
                 case "require-corp":
                 case "credentialless":
-                    return $value;
+                    break;
                 default:
                     return null;
             }
+
+            foreach ($params as $param) {
+                if (
+                    !preg_match(
+                        "/^(report-to)=(.+)$/",
+                        $param,
+                        $match
+                    )
+                )
+                    return null;
+
+                if (preg_match("/^\".+\"$/", $match[2])) {
+                    $match[2] = stripslashes(
+                        substr($match[2], 1, -1)
+                    );
+                }
+
+                $return[$match[1]] = $match[2];
+            }
+
+            self::trim_whitespace($return);
+            return $return;
+        }
+
+        public static function Cross_Origin_Embedder_Policy_Report_Only(
+            $string
+        ): array|null|false {
+            $value = self::header_from_string(
+                "Cross-Origin-Embedder-Policy-Report-Only",
+                $string
+            );
+
+            if ($value === false)
+                return false;
+
+            $params = explode(";", $value);
+            self::trim_whitespace($params);
+            self::filter_no_empty($params);
+
+            if (empty($params))
+                return null;
+
+            $return = array(
+                "directive" => array_shift($params)
+            );
+
+            switch ($return["directive"]) {
+                case "unsafe-none":
+                case "require-corp":
+                case "credentialless":
+                    break;
+                default:
+                    return null;
+            }
+
+            foreach ($params as $param) {
+                if (
+                    !preg_match(
+                        "/^(report-to)=(.+)$/",
+                        $param,
+                        $match
+                    )
+                )
+                    return null;
+
+                if (preg_match("/^\".+\"$/", $match[2])) {
+                    $match[2] = stripslashes(
+                        substr($match[2], 1, -1)
+                    );
+                }
+
+                $return[$match[1]] = $match[2];
+            }
+
+            self::trim_whitespace($return);
+            return $return;
         }
 
         public static function Cross_Origin_Opener_Policy(
@@ -1494,6 +1603,7 @@
                 case "unsafe-none":
                 case "same-origin-allow-popups":
                 case "same-origin":
+                case "noopener-allow-popups":
                     return $value;
                 default:
                     return null;
@@ -2887,7 +2997,9 @@
                 if (empty($params))
                     return null;
 
-                $metric = array("name" => array_shift($params));
+                $metric = array(
+                    "name" => array_shift($params)
+                );
 
                 foreach ($params as $param) {
                     if (
