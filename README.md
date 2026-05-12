@@ -1106,7 +1106,7 @@ DateTimeImmutable Object
 ``` php
 public static HTTPHeader::Device_Memory(
     string $string = null
-): float|null|false
+): int|null|false
 ```
 
 #### Parameters
@@ -1117,7 +1117,7 @@ public static HTTPHeader::Device_Memory(
 
 #### Return Values
 
-Returns a non-negative float representing the device memory in GiB. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+Returns a non-negative integer representing the device memory in GiB. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
 ### `Digest`
 
