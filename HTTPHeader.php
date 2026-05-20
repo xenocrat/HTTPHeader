@@ -1653,7 +1653,7 @@
 
         public static function Device_Memory(
             $string = null
-        ): float|null|false {
+        ): int|null|false {
             if (!isset($string)) {
                 $value = self::header_from_server(
                     "HTTP_DEVICE_MEMORY"
@@ -1671,7 +1671,7 @@
             return preg_match(
                 "/^[0-9\.]+$/",
                 $value
-            ) ? floatval($value) : null ;
+            ) ? intval($value) : null ;
         }
 
         public static function Digest(
