@@ -1,0 +1,16 @@
+array(2) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(7) "sha-256"
+    [1]=>
+    string(46) ":47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=:"
+  }
+  [1]=>
+  array(2) {
+    [0]=>
+    string(7) "unixsum"
+    [1]=>
+    string(3) "256"
+  }
+}
