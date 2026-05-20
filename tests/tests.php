@@ -69,6 +69,12 @@
 				var_dump(HTTPHeader::$method($source));
 
 				$result = ob_get_clean();
+				$result = preg_replace(
+					"/(object\([^)]+\))\#[0-9]+/",
+					"$1",
+					$result
+				);
+
 				$passed = strcmp($expect, $result) === 0;
 
 				$data[$method][$number]['result'] = $result;
