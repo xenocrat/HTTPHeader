@@ -740,6 +740,42 @@ Array
 )
 ```
 
+### `Content_Digest`
+
+``` php
+public static HTTPHeader::Content_Digest(
+    string $string
+): array|null|false
+```
+
+#### Parameters
+
+* _$string_
+
+  A string containing one or more headers, or a complete HTTP message.
+
+#### Return Values
+
+Returns an array of arrays containing the digest algorithms and values. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
+
+#### Examples
+
+```
+Array
+(
+    [0] => Array
+        (
+            [0] => sha-256
+            [1] => X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE=
+        )
+    [1] => Array
+        (
+            [0] => unixsum
+            [1] => 30637
+        )
+)
+```
+
 ### `Content_Disposition`
 
 ``` php
@@ -1119,12 +1155,12 @@ public static HTTPHeader::Device_Memory(
 
 Returns a non-negative integer representing the device memory in GiB. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
-### `Digest`
+### `DNT`
 
 ``` php
-public static HTTPHeader::Digest(
-    string $string
-): array|null|false
+public static HTTPHeader::DNT(
+    string $string = null
+): int|null|false
 ```
 
 #### Parameters
@@ -1135,25 +1171,7 @@ public static HTTPHeader::Digest(
 
 #### Return Values
 
-Returns an array of arrays containing the digest algorithms and values. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
-
-#### Examples
-
-```
-Array
-(
-    [0] => Array
-        (
-            [0] => sha-256
-            [1] => X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE=
-        )
-    [1] => Array
-        (
-            [0] => unixsum
-            [1] => 30637
-        )
-)
-```
+Returns the integer `0`, `1`, or `null` if the value is indeterminate. Returns `false` if the header field is not present or empty.
 
 ### `Downlink`
 
@@ -1173,10 +1191,10 @@ public static HTTPHeader::Downlink(
 
 Returns a non-negative float representing the downlink rate in Mbps. Returns `false` if the header field is not present or empty, and `null` if the field value is noticeably malformed.
 
-### `DNT`
+### `Early_Data`
 
 ``` php
-public static HTTPHeader::DNT(
+public static HTTPHeader::Early_Data(
     string $string = null
 ): int|null|false
 ```
@@ -1189,7 +1207,7 @@ public static HTTPHeader::DNT(
 
 #### Return Values
 
-Returns the integer `0`, `1`, or `null` if the value is indeterminate. Returns `false` if the header field is not present or empty.
+Returns the integer `1`, or `null` if the value is indeterminate. Returns `false` if the header field is not present or empty.
 
 ### `ECT`
 
