@@ -1,0 +1,8 @@
+object(DateTimeImmutable) (3) {
+  ["date"]=>
+  string(26) "2024-10-29 16:56:32.000000"
+  ["timezone_type"]=>
+  int(2)
+  ["timezone"]=>
+  string(3) "GMT"
+}
