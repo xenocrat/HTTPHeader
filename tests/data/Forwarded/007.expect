@@ -1,0 +1,9 @@
+array(1) {
+  [0]=>
+  array(2) {
+    ["for"]=>
+    string(10) "192.0.2.60"
+    ["host"]=>
+    string(11) "example.com"
+  }
+}

@@ -1,0 +1,11 @@
+array(1) {
+  [0]=>
+  array(3) {
+    ["for"]=>
+    string(11) "192.168.0.1"
+    ["by"]=>
+    string(14) "slash" escaped"
+    ["host"]=>
+    string(11) "example.com"
+  }
+}
