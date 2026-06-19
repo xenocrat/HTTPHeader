@@ -32,12 +32,12 @@ $result = HTTPHeader::Accept("Accept: text/html\r\nAccept-Encoding: gzip");
 
 ## Methods
 
-### `extract`
+### `_extract`
 
 #### Description
 
 ``` php
-public static HTTPHeader::extract(
+public static HTTPHeader::_extract(
     string $string
 ): array
 ```
