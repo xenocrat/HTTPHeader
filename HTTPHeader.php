@@ -253,7 +253,7 @@
             );
         }
 
-        public static function extract(
+        public static function _extract(
             $string
         ): array {
             if (!is_string($string))
