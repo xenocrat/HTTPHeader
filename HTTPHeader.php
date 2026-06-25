@@ -92,8 +92,9 @@
                     "/(?<!\\\\)\"/",
                     $string
                 ) % 2 != 0
-            )
+            ) {
                 return null;
+            }
 
             $array = explode($delimiter, $string);
             $chunk = "";
@@ -152,8 +153,9 @@
                     "/(?<!\\\\)\)/",
                     $string,
                 )
-            )
+            ) {
                 return null;
+            }
 
             $array = explode($delimiter, $string);
             $chunk = "";
@@ -199,8 +201,9 @@
                         (:[0-9]{1,5})?(\/|$)/ix",
                     $string
                 )
-            )
+            ) {
                 return null;
+            }
 
             $origin = parse_url($string);
             return ($origin !== false) ? $origin : null ;
@@ -218,8 +221,9 @@
                         [ ][0-9]{2}:[0-9]{2}:[0-9]{2}[ ]GMT$/x",
                     $string
                 )
-            )
+            ) {
                 return null;
+            }
 
             $date = date_create_immutable($string);
             return ($date !== false) ? $date : null ;
@@ -891,8 +895,9 @@
                             $param,
                             $match
                         )
-                    )
+                    ) {
                         return null;
+                    }
 
                     $pn = trim($match[1], " ");
                     $pv = trim($match[2], " ");
@@ -907,8 +912,9 @@
                                 $authority,
                                 PREG_UNMATCHED_AS_NULL
                             )
-                        )
+                        ) {
                             return null;
+                        }
 
                         $service["protocol"] = rawurldecode($pn);
                         $service["host"] = $authority[1];
@@ -921,8 +927,9 @@
                                         "/^[0-9]+$/",
                                         $pv
                                     )
-                                )
+                                ) {
                                     return null;
+                                }
 
                                 $service["ma"] = intval($pv);
                                 break;
@@ -965,8 +972,9 @@
                     $value,
                     $match
                 )
-            )
+            ) {
                 return null;
+            }
 
             $return = array("host" => $match[1]);
 
@@ -1132,8 +1140,9 @@
                         $param,
                         $match
                     )
-                )
+                ) {
                     return null;
+                }
 
                 $return[] = array($match[1], $match[2]);
             }
@@ -1176,8 +1185,9 @@
                         $match,
                         PREG_UNMATCHED_AS_NULL
                     )
-                )
+                ) {
                     return null;
+                }
 
                 $return[$match[1]] = isset($match[2]) ?
                     $match[3] :
@@ -1293,8 +1303,9 @@
                     $value,
                     $match
                 )
-            )
+            ) {
                 return null;
+            }
 
             $return = array(
                 "unit" => $match[1],
@@ -1421,8 +1432,9 @@
                         $param,
                         $match
                     )
-                )
+                ) {
                     return null;
+                }
 
                 $return[$match[1]] = $match[2];
             }
@@ -1471,8 +1483,9 @@
                         $pair,
                         $match
                     )
-                )
+                ) {
                     return null;
+                }
 
                 $cookies[] = array($match[1], $match[3]);
             }
@@ -1788,8 +1801,9 @@
                     "/^(W\/)?\".+\"$/",
                     $value
                 )
-            )
+            ) {
                 return stripslashes($value);
+            }
 
             return null;
         }
@@ -1920,19 +1934,21 @@
 
             if (
                 preg_match(
-                    "/^([^@]+|\".+\")@[a-z0-9\-\.\[\]:]+$/ix",
+                    "/^([^@]+|\".+\")@[a-z0-9\-\.\[\]:]+$/iu",
                     $value
                 )
-            )
+            ) {
                 return $value;
+            }
 
             if (
                 preg_match(
-                    "/<([^@]+|\".+\")@[a-z0-9\-\.\[\]:]+>/ix",
+                    "/<([^@]+|\".+\")@[a-z0-9\-\.\[\]:]+>/iu",
                     $value
                 )
-            )
+            ) {
                 return $value;
+            }
 
             return null;
         }
@@ -1956,12 +1972,14 @@
 
             if (
                 !preg_match(
-                    "/^([a-z0-9\[\.][a-z0-9:\-\.]+?[a-z0-9\]\.])(:([0-9]{1,5}))?$/i",
+                    "/^([a-z0-9][a-z0-9\-\.]+[a-z0-9]\.?)
+                        (:([0-9]{1,5}))?$/ix",
                     $value,
                     $match
                 )
-            )
+            ) {
                 return null;
+            }
 
             $return = array("host" => $match[1]);
 
@@ -2005,8 +2023,9 @@
                         "/^((W\/)?\".+\"|\*)$/",
                         $etag
                     )
-                )
+                ) {
                     return null;
+                }
 
                 $etag = stripslashes($etag);
             }
@@ -2068,8 +2087,9 @@
                         "/^((W\/)?\".+\"|\*)$/",
                         $etag
                     )
-                )
+                ) {
                     return null;
+                }
 
                 $etag = stripslashes($etag);
             }
@@ -2099,8 +2119,9 @@
                     "/^(W\/)?\".+\"$/",
                     $value
                 )
-            )
+            ) {
                 return stripslashes($value);
+            }
 
             return self::rfc5322_date_immutable($value);
         }
@@ -2158,8 +2179,9 @@
                         $param,
                         $match
                     )
-                )
+                ) {
                     return null;
+                }
 
                 $return[$match[1]] = $match[2];
             }
@@ -2223,8 +2245,9 @@
                         $uri,
                         $extracted
                     )
-                )
+                ) {
                     return null;
+                }
 
                 $directive = array($extracted[1], array());
 
@@ -2235,8 +2258,9 @@
                             $param,
                             $match
                         )
-                    )
+                    ) {
                         return null;
+                    }
 
                     $pn = $match[1];
                     $pv = trim($match[2], " ");
@@ -2343,8 +2367,9 @@
                         $policy,
                         $match
                     )
-                )
+                ) {
                     return null;
+                }
 
                 $directive = $match[1];
 
@@ -2553,8 +2578,9 @@
                     $value,
                     $match
                 )
-            )
+            ) {
                 return null;
+            }
 
             $return = array(
                 "unit" => $match[1],
@@ -2627,8 +2653,9 @@
                     "/^[0-9]+$/",
                     $value
                 )
-            )
+            ) {
                 return intval($value);
+            }
 
             return self::rfc5322_date_immutable($value);
         }
@@ -2931,8 +2958,9 @@
                             $directive,
                             $match
                         )
-                    )
+                    ) {
                         return null;
+                    }
 
                     $identifiers[$count]["comment"] = stripslashes($match[1]);
                     $count++;
@@ -2989,8 +3017,9 @@
                             $param,
                             $match
                         )
-                    )
+                    ) {
                         return null;
+                    }
 
                     $pn = $match[1];
                     $pv = trim($match[2], " ");
@@ -3076,8 +3105,9 @@
                             $param,
                             $match
                         )
-                    ) 
+                    ) {
                         return null;
+                    }
 
                     $return[0] = array($match[1], $match[3]);
                 } else {
@@ -3123,8 +3153,9 @@
                                         "/^-?[0-9]+$/",
                                         $pv
                                     )
-                                )
+                                ) {
                                     return null;
+                                }
 
                                 $pv = intval($pv);
                                 break;
@@ -3561,8 +3592,9 @@
                         $match,
                         PREG_UNMATCHED_AS_NULL
                     )
-                )
+                ) {
                     return null;
+                }
 
                 $proxy = array();
 
