@@ -1,0 +1,6 @@
+array(2) {
+  ["host"]=>
+  string(8) "foo-bar."
+  ["port"]=>
+  string(4) "8080"
+}

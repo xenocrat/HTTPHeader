@@ -1,0 +1,10 @@
+array(4) {
+  [0]=>
+  string(42) ""33a64df551425fcc55e4d42a148795d9f25f89d4""
+  [1]=>
+  string(8) "W/"0815""
+  [2]=>
+  string(7) "W/"999""
+  [3]=>
+  string(10) "W/"foobar""
+}
