@@ -9,7 +9,8 @@
 	ob_start();
 	header("Content-Type: text/html; charset=UTF-8");
 
-	function scan_data(): array {
+	function scan_data(
+	): array {
 		$dirs = new DirectoryIterator(dirname(__FILE__).DIR.'data');
 		$data = array();
 
@@ -51,7 +52,9 @@
 		return $data;
 	}
 
-	function run_tests($data): array {
+	function run_tests(
+		$data
+	): array {
 		foreach ($data as $method => $tests) {
 			foreach ($tests as $number => $values) {
 				if (!method_exists("xenocrat\HTTPHeader", $method))
@@ -85,7 +88,9 @@
 		return $data;
 	}
 
-	function display_results($data): void {
+	function display_results(
+		$data
+	): void {
 		foreach ($data as $method => $tests) {
 			echo '<table>'."\n";
 			echo '<colgroup>'."\n";
