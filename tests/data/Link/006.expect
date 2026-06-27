@@ -1,0 +1,62 @@
+array(4) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(37) "https://api.example.com/issues?page=2"
+    [1]=>
+    array(1) {
+      [0]=>
+      array(2) {
+        [0]=>
+        string(3) "rel"
+        [1]=>
+        string(4) "prev"
+      }
+    }
+  }
+  [1]=>
+  array(2) {
+    [0]=>
+    string(37) "https://api.example.com/issues?page=4"
+    [1]=>
+    array(1) {
+      [0]=>
+      array(2) {
+        [0]=>
+        string(3) "rel"
+        [1]=>
+        string(4) "next"
+      }
+    }
+  }
+  [2]=>
+  array(2) {
+    [0]=>
+    string(38) "https://api.example.com/issues?page=10"
+    [1]=>
+    array(1) {
+      [0]=>
+      array(2) {
+        [0]=>
+        string(3) "rel"
+        [1]=>
+        string(4) "last"
+      }
+    }
+  }
+  [3]=>
+  array(2) {
+    [0]=>
+    string(37) "https://api.example.com/issues?page=1"
+    [1]=>
+    array(1) {
+      [0]=>
+      array(2) {
+        [0]=>
+        string(3) "rel"
+        [1]=>
+        string(5) "first"
+      }
+    }
+  }
+}

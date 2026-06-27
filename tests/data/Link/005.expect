@@ -1,0 +1,47 @@
+array(3) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(23) "https://one.example.com"
+    [1]=>
+    array(1) {
+      [0]=>
+      array(2) {
+        [0]=>
+        string(3) "rel"
+        [1]=>
+        string(10) "preconnect"
+      }
+    }
+  }
+  [1]=>
+  array(2) {
+    [0]=>
+    string(23) "https://two.example.com"
+    [1]=>
+    array(1) {
+      [0]=>
+      array(2) {
+        [0]=>
+        string(3) "rel"
+        [1]=>
+        string(10) "preconnect"
+      }
+    }
+  }
+  [2]=>
+  array(2) {
+    [0]=>
+    string(25) "https://three.example.com"
+    [1]=>
+    array(1) {
+      [0]=>
+      array(2) {
+        [0]=>
+        string(3) "rel"
+        [1]=>
+        string(10) "preconnect"
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+array(3) {
+  ["scheme"]=>
+  string(4) "http"
+  ["host"]=>
+  string(11) "example.com"
+  ["port"]=>
+  int(80)
+}
