@@ -1,0 +1,32 @@
+array(3) {
+  [0]=>
+  array(2) {
+    [0]=>
+    string(18) "picture-in-picture"
+    [1]=>
+    array(0) {
+    }
+  }
+  [1]=>
+  array(2) {
+    [0]=>
+    string(11) "geolocation"
+    [1]=>
+    array(2) {
+      [0]=>
+      string(4) "self"
+      [1]=>
+      string(20) "https://example.com/"
+    }
+  }
+  [2]=>
+  array(2) {
+    [0]=>
+    string(6) "camera"
+    [1]=>
+    array(1) {
+      [0]=>
+      string(1) "*"
+    }
+  }
+}

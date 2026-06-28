@@ -1,0 +1,1 @@
+Permissions-Policy: geolocation=(self "https://a.example.com" "https://b.example.com")

@@ -1,0 +1,8 @@
+array(3) {
+  [0]=>
+  string(8) "no-cache"
+  [2]=>
+  string(7) "foo-bar"
+  [3]=>
+  string(3) "baz"
+}

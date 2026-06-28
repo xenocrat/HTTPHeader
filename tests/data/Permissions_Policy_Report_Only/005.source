@@ -1,0 +1,1 @@
+Permissions-Policy-Report-Only: picture-in-picture=(), geolocation=(self https://example.com/), camera=*
