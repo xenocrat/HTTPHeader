@@ -2241,7 +2241,7 @@
 
                 if (
                     !preg_match(
-                        "/^<(.+)>$/",
+                        "/^<([\x20-\x7f]+)>$/",
                         $uri,
                         $extracted
                     )
@@ -2384,9 +2384,17 @@
                 switch ($directive) {
                     case "accelerometer":
                     case "ambient-light-sensor":
+                    case "aria-notify":
                     case "autoplay":
                     case "battery":
+                    case "bluetooth":
                     case "camera":
+                    case "captured-surface-control":
+                    case "ch-ua-high-entropy-values":
+                    case "compute-pressure":
+                    case "cross-origin-isolated":
+                    case "deferred-fetch":
+                    case "deferred-fetch-minimal":
                     case "display-capture":
                     case "document-domain":
                     case "encrypted-media":
@@ -2399,10 +2407,16 @@
                     case "hid":
                     case "identity-credentials-get":
                     case "idle-detection":
+                    case "language-detector":
                     case "local-fonts":
+                    case "local-network":
+                    case "local-network-access":
+                    case "loopback-network":
                     case "magnetometer":
                     case "microphone":
                     case "midi":
+                    case "on-device-speech-recognition":
+                    case "otp-credentials":
                     case "payment":
                     case "picture-in-picture":
                     case "publickey-credentials-create":
@@ -2411,8 +2425,125 @@
                     case "serial":
                     case "speaker-selection":
                     case "storage-access":
+                    case "translator":
+                    case "summarizer":
                     case "usb":
                     case "web-share":
+                    case "window-management":
+                    case "xr-spatial-tracking":
+                        break;
+                    default:
+                        return null;
+                }
+
+                foreach ($allowlist as &$origin) {
+                    if (preg_match("/^\".+\"$/", $origin)) {
+                        $origin = stripslashes(
+                            substr($origin, 1, -1)
+                        );
+                    }
+                }
+
+                $policy = array($directive, $allowlist);
+            }
+
+            self::trim_whitespace($policies);
+            self::filter_no_empty($policies);
+            return $policies;
+        }
+
+        public static function Permissions_Policy_Report_Only(
+            $string
+        ): array|null|false {
+            $value = self::header_from_string(
+                "Permissions-Policy-Report-Only",
+                $string
+            );
+
+            if ($value === false)
+                return false;
+
+            $policies = self::explode_preserve_quoted(",", $value);
+
+            if ($policies === null)
+                return null;
+
+            self::trim_whitespace($policies);
+            self::filter_no_empty($policies);
+
+            if (empty($policies))
+                return null;
+
+            foreach ($policies as &$policy) {
+                if (
+                    !preg_match(
+                        "/^([a-zA-Z0-9\-]+)=(\*|\(([^)]*)\))$/",
+                        $policy,
+                        $match
+                    )
+                ) {
+                    return null;
+                }
+
+                $directive = $match[1];
+
+                $allowlist = self::explode_preserve_quoted(
+                    " ",
+                    isset($match[3]) ? $match[3] : $match[2]
+                );
+
+                if ($allowlist === null)
+                    return null;
+
+                switch ($directive) {
+                    case "accelerometer":
+                    case "ambient-light-sensor":
+                    case "aria-notify":
+                    case "autoplay":
+                    case "battery":
+                    case "bluetooth":
+                    case "camera":
+                    case "captured-surface-control":
+                    case "ch-ua-high-entropy-values":
+                    case "compute-pressure":
+                    case "cross-origin-isolated":
+                    case "deferred-fetch":
+                    case "deferred-fetch-minimal":
+                    case "display-capture":
+                    case "document-domain":
+                    case "encrypted-media":
+                    case "execution-while-not-rendered":
+                    case "execution-while-out-of-viewport":
+                    case "fullscreen":
+                    case "gamepad":
+                    case "geolocation":
+                    case "gyroscope":
+                    case "hid":
+                    case "identity-credentials-get":
+                    case "idle-detection":
+                    case "language-detector":
+                    case "local-fonts":
+                    case "local-network":
+                    case "local-network-access":
+                    case "loopback-network":
+                    case "magnetometer":
+                    case "microphone":
+                    case "midi":
+                    case "on-device-speech-recognition":
+                    case "otp-credentials":
+                    case "payment":
+                    case "picture-in-picture":
+                    case "publickey-credentials-create":
+                    case "publickey-credentials-get":
+                    case "screen-wake-lock":
+                    case "serial":
+                    case "speaker-selection":
+                    case "storage-access":
+                    case "translator":
+                    case "summarizer":
+                    case "usb":
+                    case "web-share":
+                    case "window-management":
                     case "xr-spatial-tracking":
                         break;
                     default:
